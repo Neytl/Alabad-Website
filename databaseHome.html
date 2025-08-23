@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>The Cabinet</title>
+    <meta name="description" content="Music Box database editor.">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="noindex">
+    <link rel="shortcut icon" type="image/png" href="imgs/Favicon.png">
+    <link href='css/styles.css' rel='stylesheet' type='text/css'>
+    <link href='css/databaseHome.css' rel='stylesheet' type='text/css'>
+    <link rel="preload" href="./css/fonts/OpenSans.woff2" as="font" type="font/woff2" crossorigin>
+</head>
+<body>
+    <div id="pageContainer" class="backgroundColor">
+        <!--Nav-->
+        <div id="nav">
+            <div id="menuButton" title="Menu" class="navItem">
+                <span class="smallIconButton">
+                    <img src="imgs/icons/menu.png" alt="Menu">
+                </span>
+            </div>
+            <hr>
+            <div class="navPageLink navItem" id="currentPage">
+                <img src="imgs/icons/home.png" alt="Home">
+                <span>Home</span>
+            </div>
+            <hr>
+            <div class="navPageLink navItem" id="toSongs">
+                <img src="imgs/icons/songs.png" alt="Songs">
+                <span>Songs</span>
+            </div>
+            <hr>
+            <!--Tabs-->
+            <div id="tabsContainer">
+                <div id="tabs" class="noTranslation">
+
+                </div>
+                <!--Tab Overflow-->
+                <div id="moreTabsContainer">
+                    <div id="moreTabsButtonContainer" class="hidden">
+                        <div title="More Tabs" id="moreTabsButton" class="smallIconButton">
+                            <img src="imgs/icons/options.png" alt="New Song">
+                        </div>
+                        <hr>
+                    </div>
+                    <div id="moreTabs" class="hidden noTranslation">
+
+                    </div>
+                </div>
+
+                <!--New Song Button-->
+                <div title="New Song" id="newSongButton" class="smallIconButton">
+                    <img src="imgs/icons/newSong.png" alt="New Song">
+                    <div class="infoPromptContainer newSong">
+                        <div class="infoPrompt">Choose an option to upload a new song</div>
+                        <div class="promptArrow">➔</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Body-->
+        <div id="content">
+            <img id="backgroundImage" style="background-image: url(../imgs/Chord-Chart-Banner.webp)">
+            <!--Title and Search-->
+            <div id="mainDiv">
+                <!--Menu-->
+                <div id="menuDiv" class="hidden">
+                    <!--Color Theme-->
+                    <div id="themeMenuDiv">
+                        <div id="themeContainer">
+                            <div class="onoffswitch">
+                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="colorThemeSwitch" tabindex="0" checked>
+                                <label class="onoffswitch-label" for="myonoffswitch">
+                                    <span class="onoffswitch-inner"></span>
+                                    <span class="onoffswitch-switch"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Language-->
+                    <div id="languageMenuDiv">
+                        <div id="languageSettingSelect" class="noTranslation">
+                            <div id="languageSelectDisplay">
+                                <div id="currentLanguageContainer">
+                                    <img src="imgs/icons/language.png" alt="Language">
+                                    <div id="languageValue">English</div>
+                                </div>
+                                <div>˅</div>
+                            </div>
+                            <div id="languageOptions">
+                                <div id="toEnglish">
+                                    <div>English</div>
+                                </div>
+                                <div id="toSpanish">
+                                    <div>Español</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--The Cabinet-->
+                <div class="center" id="title">
+                    <img src="imgs/Logo.webp" alt="Logo">
+                </div>
+
+                <!--Search-->
+                <div class="centerItems">
+                    <div id="searchContainer">
+                        <!--Search Bar-->
+                        <div id="searchBar">
+                            <div id="searchButton" title="Search" class="centerItems">
+                                <img src="imgs/icons/search.png" alt="Search">
+                            </div>
+                            <input type="text" placeholder="Search Christian Music" autocomplete="off" id="searchInput">
+                        </div>
+
+                        <!--Search Results-->
+                        <div id="searchResultsContainer">
+                            <div id="searchResults" class="hidden">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Quick Links-->
+                <div class="homeLinks" id="quickLinks">
+                    <div class="promptLink" id="uploadLink">
+                        <img src="imgs/icons/upload.png" alt="Upload">
+                        <span>Upload Song</span>
+                    </div>
+                    <div class="promptLink" id="pasteLink">
+                        <img src="imgs/icons/paste.png" alt="Cabinet">
+                        <span>Paste Song</span>
+                    </div>
+                    <div class="promptLink" id="unfinishedSongsLink">
+                        <img src="imgs/icons/pencil.png" alt="Edit">
+                        <span>Unfinished Songs</span>
+                    </div>
+                    <div class="promptLink" id="testsLink">
+                        <img src="imgs/icons/note.png" alt="Cabinet">
+                        <span>Run Tests</span>
+                    </div>
+                </div>
+            </div>
+
+            <!--Footer-->
+            <div id="footer">
+                <span class="noSelect">Contact -</span><span id="email" class="noTranslation">TheCabinetCharts@gmail.com</span>
+            </div>
+        </div>
+    </div>
+
+    <!--File Upload-->
+    <input type="file" multiple id="file" class="hidden" accept=".doc, .docx, .rtf, .pdf, .txt">
+
+    <!--Scripts-->
+    <script src="js/translations.js"></script>
+    <script src="js/utility.js"></script>
+    <script src="js/databaseGeneral.js"></script>
+    <script src="js/databaseHome.js"></script>
+</body>
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>The Cabinet</title>
+    <meta name="description" content="Music Box database editor.">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="noindex">
+    <link rel="shortcut icon" type="image/png" href="imgs/Favicon.png">
+    <link href='css/styles.css' rel='stylesheet' type='text/css'>
+    <link href='css/songs.css' rel='stylesheet' type='text/css'>
+    <link href='css/songsAndView.css' rel='stylesheet' type='text/css'>
+    <link rel="preload" href="./css/fonts/OpenSans.woff2" as="font" type="font/woff2" crossorigin>
+</head>
+<body>
+    <div id="pageContainer" class="backgroundColor">
+        <!--Nav-->
+        <div id="nav">
+            <div id="menuButton" title="Menu" class="navItem">
+                <span class="smallIconButton">
+                    <img src="imgs/icons/menu.png" alt="Menu">
+                </span>
+            </div>
+            <hr>
+            <div class="navPageLink navItem" id="toHome">
+                <img src="imgs/icons/home.png" alt="Home">
+                <span>Home</span>
+            </div>
+            <hr>
+            <div class="navPageLink navItem" id="currentPage">
+                <img src="imgs/icons/songs.png" alt="Songs">
+                <span>Songs</span>
+            </div>
+            <hr>
+            <!--Tabs-->
+            <div id="tabsContainer">
+                <div id="tabs" class="noTranslation">
+
+                </div>
+                <!--Tab Overflow-->
+                <div id="moreTabsContainer">
+                    <div id="moreTabsButtonContainer" class="hidden">
+                        <div title="More Tabs" id="moreTabsButton" class="smallIconButton">
+                            <img src="imgs/icons/options.png" alt="New Song">
+                        </div>
+                        <hr>
+                    </div>
+                    <div id="moreTabs" class="hidden noTranslation">
+
+                    </div>
+                </div>
+
+                <!--New Song Button-->
+                <div title="New Song" id="newSongButton" class="smallIconButton">
+                    <img src="imgs/icons/newSong.png" alt="New Song">
+                </div>
+            </div>
+        </div>
+
+        <!--Main Page Section-->
+        <div id="mainDiv" class="backgroundColor">
+            <!--Menu-->
+            <div id="menuDiv" class="hidden">
+                <!--Color Theme-->
+                <div id="themeMenuDiv" class="menuDropdown">
+                    <div id="themeContainer">
+                        <div class="onoffswitch">
+                            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="colorThemeSwitch" tabindex="0" checked>
+                            <label class="onoffswitch-label" for="myonoffswitch">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Language-->
+                <div id="languageMenuDiv">
+                    <div id="languageSettingSelect" class="noTranslation">
+                        <div id="languageSelectDisplay">
+                            <div id="currentLanguageContainer">
+                                <img src="imgs/icons/language.png" alt="Language">
+                                <div id="languageValue">English</div>
+                            </div>
+                            <div>˅</div>
+                        </div>
+                        <div id="languageOptions">
+                            <div id="toEnglish">
+                                <div>English</div>
+                            </div>
+                            <div id="toSpanish">
+                                <div>Español</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Refine darkout page-->
+            <div id="darkOut"></div>
+
+            <!--Browsing-->
+            <div id="browsing">
+                <span id="browseAllSongs"><span>All Songs</span><span> </span><span id="numSongs"></span></span>
+                <div>|</div>
+                <span id="browsePraiseSongs"><span>Praise</span><span> </span><span id="numPraiseSongs"></span></span>
+                <div>|</div>
+                <span id="browseWorshipSongs"><span>Worship</span><span> </span><span id="numWorshipSongs"></span></span>
+            </div>
+
+            <!--Browsing-->
+            <div id="refreshContainer">
+                <span id="refreshDatabaseButton" class="smallIconButton" title="Refresh the DB">
+                    <img src="imgs/icons/refresh.png" alt="Resfresh">
+                </span>
+            </div>
+
+            <!--Search-->
+            <div id="searchDiv" class="centerItems ">
+                <div id="searchContainer">
+                    <!--Search Bar-->
+                    <div id="searchBar">
+                        <div class="infoPromptContainer search">
+                            <div class="infoPrompt">Search for a song name or artist</div>
+                            <div class="promptArrow">➔</div>
+                        </div>
+                        <div id="searchButton" title="Search" class="centerItems">
+                            <img src="imgs/icons/search.png" alt="Search">
+                            <div class="infoPromptContainer translations">
+                                <div class="infoPrompt">Start searches with "*" to find translations</div>
+                                <div class="promptArrow">➔</div>
+                            </div>
+                        </div>
+                        <input type="text" placeholder="Search Christian Music" autocomplete="off" id="searchInput">
+                    </div>
+
+                    <!--Search Results Dropdown-->
+                    <div id="searchResultsContainer">
+                        <div id="searchResults" class="hidden">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--Refine Search Tags-->
+            <div id="refineTags">
+
+            </div>
+
+
+            <!--Refine Search Dropdown-->
+            <div id="refineSearchSticky">
+                <div id="refineSearchDropdownContainer">
+                    <div class="centerItems">
+                        <div id="refineSearchButton">
+                            <span>Refine Search</span>
+                            <div class="infoPromptContainer refine">
+                                <div class="infoPrompt">Click here to refine search results</div>
+                                <div class="promptArrow">➔</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="refineSearchDropdown" class="hidden">
+                        <!--Close button-->
+                        <div id="collapseRefineSearchButton" class="refineSearchBox">
+                            <div>✖</div>
+                        </div>
+
+                        <!--Refine Result Type-->
+                        <div class="refineSearchExpandable">
+                            <div class="refineSearchTitle refineSearchBox">
+                                <div>Type</div>
+                                <div>˅</div>
+                            </div>
+                            <div id="resultTypeExpandable" class="expandable">
+                                <div class="refineSearchBox">
+                                    <div>Any</div>
+                                    <input id="anyTypeRefine" class="radio" type="checkbox" checked>
+                                </div>
+                                <div class="refineSearchBox">
+                                    <div>Songs</div>
+                                    <input id="songTypeRefine" class="radio" type="checkbox">
+                                </div>
+                                <div class="refineSearchBox">
+                                    <div>Artists</div>
+                                    <input id="artistTypeRefine" class="radio" type="checkbox">
+                                </div>
+                                <div class="refineSearchBox">
+                                    <div>Playlists</div>
+                                    <input id="playlistTypeRefine" class="radio" type="checkbox">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Refine Language-->
+                        <div class="refineSearchExpandable">
+                            <div class="refineSearchTitle refineSearchBox">
+                                <div>Language</div>
+                                <div>˅</div>
+                            </div>
+                            <div id="languageExpandable" class="expandable">
+                                <div class="refineSearchBox">
+                                    <div>Any</div>
+                                    <input id="anyLanguageRefine" class="radio" type="checkbox" checked>
+                                </div>
+                                <div class="refineSearchBox">
+                                    <div>English</div>
+                                    <input id="englishRefine" class="radio" type="checkbox">
+                                </div>
+                                <div class="refineSearchBox">
+                                    <div>Spanish</div>
+                                    <input id="spanishRefine" class="radio" type="checkbox">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Refine Style-->
+                        <div class="refineSearchExpandable">
+                            <div class="refineSearchTitle refineSearchBox">
+                                <div>Styles</div>
+                                <div>˅</div>
+                            </div>
+                            <div id="stylesExpandable" class="expandable">
+                                <div class="refineSearchBox">
+                                    <div>Praise</div>
+                                    <input type="checkbox" id="PraiseStyleCB" data-style-type="Praise">
+                                </div>
+                                <div class="refineSearchBox">
+                                    <div>Worship</div>
+                                    <input type="checkbox" id="WorshipStyleCB" data-style-type="Worship">
+                                </div>
+                                <div class="refineSearchBox">
+                                    <div>Christmas</div>
+                                    <input type="checkbox" id="ChristmasStyleCB" data-style-type="Christmas">
+                                </div>
+                                <div class="refineSearchBox">
+                                    <div>Latin</div>
+                                    <input type="checkbox" id="LatinStyleCB" data-style-type="Latin">
+                                </div>
+                                <div class="refineSearchBox">
+                                    <div>Easter</div>
+                                    <input type="checkbox" id="EasterStyleCB" data-style-type="Easter">
+                                </div>
+                                <div class="refineSearchBox">
+                                    <div>Corito</div>
+                                    <input type="checkbox" id="CoritoStyleCB" data-style-type="Corito">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Refine Lyrics-->
+                        <div class="refineSearchExpandable">
+                            <div class="refineSearchTitle refineSearchBox">
+                                <div>Lyrics</div>
+                                <div>˅</div>
+                            </div>
+                            <div id="lyricsExpandable" class="expandable">
+                                <div class="refineSearchBox">
+                                    <input id="refineLyricsSearch" type="text" placeholder="Contains...">
+                                    <input id="refineLyricsCB" type="checkbox">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Reset Refinements-->
+                        <div id="resetRefineSearchButton" class="refineSearchBox">
+                            <div>
+                                <img src="imgs/icons/refresh.png" alt="Reset">
+                            </div>
+                            <div>Reset Options</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--Sort Options Row-->
+            <div id="searchOptions">
+                <!--Sort Results-->
+                <div id="sortOptions">
+                    <span id="relevance" class="pickedSort">Relevance</span>
+                    <span id="alphabetical"><span>Alphabetical</span><span id="alphaArrow"></span></span>
+                </div>
+            </div>
+
+            <!--Search Results-->
+            <div id="resultsContainer" class="foregroundColor">
+                <div id="numResultsDiv">
+                    <span id="numberResults"></span>
+                    <span> </span>
+                    <span id="resultsText"></span>
+                </div>
+                <div id="resultsDiv" class="translateTitles">
+
+                </div>
+                <div id="errorMessageDiv">
+                    Loading Results...
+                </div>
+            </div>
+
+            <!--Playlist Info-->
+            <div id="playlistInfo" class="hidden translateTitles">
+                <div id="playlistHeader">
+                    <span id="playlistName" title="Open Playlist"></span>
+                    <span id="closePlaylistInfoButton" class="smallIconButton">&times</span>
+                    <div id="playlistLinks">
+                        <div title="Open in YouTube" class="songLink">
+                            <img src="imgs/icons/YouTube.png" alt="YouTube">
+                            <a id="playlistLink" target="_blank" href="www.youtube.com">YouTube</a>
+                        </div>
+                        <span title="Share Playlist" id="sharePlaylist" class="smallIconButton foreground">
+                            <img src="imgs/icons/share.png" alt="Share">
+                        </span>
+                    </div>
+                </div>
+                <div id="playlistSongs">
+
+                </div>
+            </div>
+        </div>
+
+        <!--Back To Top Button-->
+        <div id="backToTopButton" title="Back to top" class="hidden passiveButton">
+            <img src="imgs/icons/up.png" alt="To Top">
+        </div>
+    </div>
+
+    <!--File Upload-->
+    <input type="file" multiple id="file" class="hidden" accept=".doc, .docx, .rtf, .pdf, .txt">
+
+    <!--Scripts-->
+    <script src="js/translations.js"></script>
+    <script src="js/utility.js"></script>
+    <script src="js/databaseGeneral.js"></script>
+    <script src="js/infoPopup.js"></script>
+    <script src="js/buildResults.js"></script>
+    <script src="js/songs.js"></script>
+</body>
+</html>

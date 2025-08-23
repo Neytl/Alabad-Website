@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Music Box</title>
+    <meta name="description" content="Download and print Christian music for free!">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" type="image/png" href="imgs/Favicon.png">
+    <link href='css/home.min.css' rel='stylesheet' type='text/css'>
+    <!--<link href='css/home.css' rel='stylesheet' type='text/css'>-->
+    <link rel="preload" href="./css/fonts/OpenSans.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="./css/fonts/Playwrite.woff2" as="font" type="font/woff2" crossorigin>
+</head>
+<body>
+    <div id="pageContainer" class="backgroundColor">
+        <div id="backgroundImageContainer">
+            <img id="backgroundImage" src="../imgs/Background.jpg" alt="Background">
+        </div>
+
+        <!--Nav-->
+        <div id="navWrapper">
+            <div id="homeNav">
+                <!--Language-->
+                <div id="languageMenuContainer">
+                    <div id="languageSelectDisplay" title="Language">
+                        <img src="imgs/icons/globe.png" alt="Language">
+                    </div>
+                    <div id="languageOptions">
+                        <a href="home">
+                            <img src="imgs/icons/USFlag.png" alt="Language">
+                            <span>English</span>
+                        </a>
+                        <a href="/">
+                            <img src="imgs/icons/MexicoFlag.png" alt="Langauge">
+                            <span>Español</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="rightNav">
+                    <!--Ko-Fi-->
+                    <a href="https://ko-fi.com/cajademusica" title="Support Us" id="kofiButton">
+                        <img id="kofiImage" src="imgs/kofi-cup.webp" alt="Support Us">
+                    </a>
+
+                    <!--Charts link-->
+                    <a id="chartsPageLink" href="charts" title="Chord Charts Vierwer">
+                        <img src="imgs/icons/note.png" alt="Chord Charts">
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!--Body-->
+        <div id="content">
+            <div>
+                <div id="headerAndSearchContainer">
+                    <!--Logo-->
+                    <a id="logoContainer" href="home">
+                        <img id="logo" src="imgs/LargeLogo.webp" alt="Logo">
+                        <span>Music Box</span>
+                    </a>
+
+                    <!--Search-->
+                    <div class="centerItems">
+                        <div id="searchContainer">
+                            <!--Search Bar-->
+                            <div id="searchBar">
+                                <div id="searchButton" title="Search" class="centerItems">
+                                    <img src="imgs/icons/search.png" alt="Search">
+                                </div>
+                                <input type="text" placeholder="Search Christian Music" autocomplete="off" id="searchInput">
+                            </div>
+
+                            <!--Search Results-->
+                            <div id="searchResultsContainer">
+                                <div id="searchResults" class="hidden">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Search Popup-->
+        <div id="searchPopup" class="hidden">
+            <div id="searchAndCancel">
+                <!--Search Bar-->
+                <div id="popupSearchBar">
+                    <div id="popupSearchInputButton">
+                        <img src="imgs/icons/search.png" alt="Search">
+                    </div>
+                    <input type="text" placeholder="Search" autocomplete="off" id="popupSearchInput">
+                    <div id="popupClearSearchButton" class="hidden">
+                        <img src="imgs/icons/close.png" alt="Close">
+                    </div>
+                </div>
+                <!--Cancel Search-->
+                <div id="popupCancelSearchButton">
+                    <span>Cancel</span>
+                </div>
+            </div>
+
+            <!--No Results-->
+            <div id="popupNoResults" class="hidden">
+                <span>No Results Found</span>
+            </div>
+
+            <!--Searching-->
+            <div id="popupLoadingResults" class="hidden">
+                <span>Searching...</span>
+            </div>
+
+            <!--Search Results-->
+            <div id="popupSearchResults">
+
+            </div>
+        </div>
+    </div>
+
+    <!--Scripts-->
+    <script type="text/javascript" src="js/home.min.js" charset="iso-8859-1"></script>
+    <!--<script type="text/javascript" src="js/home.js" charset="iso-8859-1"></script>
+    <script type="text/javascript" src="js/utility.js" charset="iso-8859-1"></script>-->
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Caja de Música</title>
+    <meta name="description" content="Tablas de acordes hecho fácil para dispositivos móviles. Música cristiana.">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" type="image/png" href="imgs/Favicon.png">
+    <link href='css/viewerHome.min.css' rel='stylesheet' type='text/css'>
+    <link rel="preload" href="./css/fonts/OpenSans.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="./css/fonts/Playwrite.woff2" as="font" type="font/woff2" crossorigin>
+</head>
+<body>
+    <div id="pageContainer">
+        <!--Settings Menu-->
+        <div class="sideMenu hidden" id="settingsMenu">
+            <!--Set List-->
+            <div class="menuSection hidden" id="setListSongsSection">
+                <!--Set List Name-->
+                <div id="setListNameContainer" class="setListNameContainer">
+                    <a id="setListName" href="tabla?set_list=local">Set List</a>
+                </div>
+
+                <!--Set List Songs-->
+                <div class="menuSectionOptions" id="setListSongs">
+
+                </div>
+            </div>
+
+            <!--Settings Icons-->
+            <div id="settingsIconsContainer">
+                <!--Language-->
+                <div id="languageMenuContainer" class="popupMenuContainer">
+                    <div id="languageSelectDisplay" class="settingsIconButton" title="Language">
+                        <img class="settingsIconButtonImage" src="imgs/icons/globe.png" alt="Language">
+                    </div>
+
+                    <div id="languageOptions" class="popupMenu">
+                        <a href="charts">
+                            <img src="imgs/icons/USFlag.png" alt="Language">
+                            <span>English</span>
+                        </a>
+                        <a href="tablas">
+                            <img src="imgs/icons/MexicoFlag.png" alt="Langauge">
+                            <span>Español</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!--Dark/Light Mode-->
+                <div id="darkModeButton" class="settingsIconButton">
+                    <img class="settingsIconButtonImage" id="darkModeIcon" src="imgs/icons/dark-mode.png" alt="Dark Mode">
+                </div>
+
+                <!--Account Popup-->
+                <div id="accountMenuContainer" class="popupMenuContainer">
+                    <div id="accountMenuButton" class="iconTitle">
+                        <img alt="User" src="imgs/icons/account.png">
+                        <span id="loggedInUser"></span>
+                    </div>
+
+                    <div id="accountMenu" class="popupMenu">
+                        <!--Show ALL Songs in searches-->
+                        <div class="menuSection" id="unfinishedSongsSection">
+                            <div class="menuSectionTitle noToggle" id="showUnfinishedSongsToggle">
+                                <div class="iconTitle">
+                                    <input type="checkbox" id="showUnfinishedSongsCheckBox">
+                                    <span>Incluye TODAS las canciones en búsquedas</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Log Out-->
+                        <div class="menuSection" id="logOutSection">
+                            <div class="menuSectionTitle noToggle" id="logOutButton">
+                                <div class="iconTitle"><img alt="User" src="imgs/icons/account.png"><span>Cerrar Sesión</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Log In-->
+                <div id="openLoginPopupButton">
+                    <div class="iconTitle"><img alt="User" src="imgs/icons/account.png"><span>Iniciar Sesión</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!--Main Content-->
+        <div id="contentContainer">
+            <div id="returnToCenterCover"></div>
+            <!--Nav-->
+            <div id="nav">
+                <!--Menu Button-->
+                <div id="settingsMenuButton" class="navButton">
+                    <img src="imgs/icons/menu.png" alt="Menu">
+                </div>
+
+                <div id="rightNav">
+                    <!--Charts link-->
+                    <a id="chartsPageLink" href="/" title="Imprimir Canciones" class="navButton">
+                        <img src="imgs/icons/print.png" alt="Print Page">
+                    </a>
+
+                    <!--Search button-->
+                    <div id="searchButton" class="navButton">
+                        <img src="imgs/icons/search.png" alt="Search">
+                    </div>
+                </div>
+            </div>
+            <div id="mainContent">
+                <div>
+                    <a id="logoContainer" href="tablas">
+                        <img src="imgs/LargeLogo.webp" alt="Logo">
+                        <span style="font-size: 2.8em;">Caja de Música</span>
+                    </a>
+                </div>
+                <div>
+                    <div id="fakeSearchBar">
+                        <span>Busca Música Cristiana</span>
+                    </div>
+                </div>
+            </div>
+
+            <!--Search Popup-->
+            <div id="searchPopup" class="hidden">
+                <div id="searchAndCancel">
+                    <!--Search Bar-->
+                    <div id="searchBar">
+                        <div id="searchInputButton">
+                            <img src="imgs/icons/search.png" alt="Search">
+                        </div>
+                        <input type="text" placeholder="Buscar" autocomplete="off" id="searchInput">
+                        <div id="clearSearchButton" class="hidden">
+                            <img src="imgs/icons/close.png" alt="Close">
+                        </div>
+                    </div>
+                    <!--Cancel Search-->
+                    <div id="cancelSearchButton">
+                        <span>Cancelar</span>
+                    </div>
+                </div>
+
+                <!--No Results-->
+                <div id="noResults" class="hidden">
+                    <span>No Resultados</span>
+                </div>
+
+                <!--Searching-->
+                <div id="popupLoadingResults" class="hidden">
+                    <span>Buscando...</span>
+                </div>
+
+                <!--Search Results-->
+                <div id="searchResults">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Login Popup-->
+    <div id="loginPopupContainer" class="hidden">
+        <div id="loginPopup">
+            <div id="closeLoginPopupButton">
+                <span class="smallIconButton">&times;</span>
+            </div>
+            <form id="loginFields">
+                <div class="loginFieldLabel">
+                    <img src="imgs/icons/account.png">
+                    <label for="loginUsername">Usuario</label>
+                </div>
+                <input autocomplete="username" type="text" id="loginUsername">
+                <div class="loginFieldLabel">
+                    <img src="imgs/icons/lock.png">
+                    <label for="loginPassword">Contraseña</label>
+                </div>
+                <input type="password" id="loginPassword" autocomplete="current-password">
+            </form>
+
+            <span id="loginMessage"></span>
+
+            <div id="loginButton">Iniciar Sesión</div>
+        </div>
+    </div>
+
+
+    <!--Scripts-->
+    <script src="js/viewerHome.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+/*******************************************************************************
+**** Screen Sizes
+********************************************************************/
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    :root #title {
+        font-size: .65em;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+
+}
+
+/*******************************************************************************
+ **** Home
+ ******************************************************************************/
+
+html, body {
+    height: 100%;
+}
+
+#title {
+    padding: 3em 0;
+    user-select: none;
+}
+
+    #title img {
+        width: 8em;
+        filter: none;
+    }
+
+#pageContainer {
+    justify-content: space-between;
+    position: relative;
+}
+
+#mainDiv {
+    font-size: 1.1em;
+    width: 100%;
+    padding: 4em 0;
+}
+
+#content {
+    flex-grow: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-image: linear-gradient(#ffffff80, #aeb5d180);
+    box-shadow: inset black 0px 2px 3em -2em;
+}
+
+    #content > div {
+        z-index: 2;
+    }
+
+#backgroundImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: .1;
+}
+
+
+/*******************************************
+ **** Home links
+ *******************************************/
+
+.homeLinks {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    user-select: none;
+}
+
+.promptLink {
+    width: 9em;
+    height: 7em;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: .6em;
+    border-radius: .3em;
+    cursor: pointer;
+}
+
+    .promptLink > img {
+        width: 2em;
+        height: 2em;
+    }
+
+    .promptLink > span {
+        text-align: center;
+    }
+
+
+/*******************************************
+ **** Main Section
+ *******************************************/
+
+#quickLinks .promptLink:hover {
+    background-color: var(--foreground-color);
+}
+
+#quickLinks {
+    padding-top: 1.5em;
+}
+
+/*******************************************************************************
+ **** Footer
+ ******************************************************************************/
+
+#footer {
+    display: flex;
+    justify-content: center;
+    gap: .5em;
+    padding-bottom: .5em;
+    color: var(--text-color);
+}

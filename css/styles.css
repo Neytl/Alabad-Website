@@ -1,0 +1,875 @@
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-stretch: 100%;
+    font-display: swap;
+    src: url(/css/fonts/OpenSans.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/*********************************************************************
+ **** Screen Sizes
+ ********************************************************************/
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    :root {
+        font-size: .8em;
+    }
+
+        :root #searchInput {
+            width: 18em;
+        }
+
+    #nav > .navPageLink {
+        min-width: 2em;
+    }
+
+        #nav > .navPageLink > span {
+            display: none;
+        }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    :root {
+        font-size: .9em;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    :root {
+        font-size: 1em;
+    }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    :root {
+        font-size: 1em;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    :root {
+        font-size: 1em;
+    }
+}
+
+/*********************************************************************
+ **** Light Theme Colors
+ ********************************************************************/
+
+:root {
+    /* Nav & Menu & Hovered buttons */
+    --prominent-color: #43679f;
+    /* Buttons & Nav Current Page */
+    --passive-color: #5a84c5;
+    /* Buttons & Nav Current Page */
+    --weak-color: #6d84b4;
+    /* Main background */
+    --background-color: #ebedf2;
+    /* Foreground */
+    --foreground-color: white;
+    /* Text */
+    --text-color: #202124;
+    /* Button/other text */
+    --auxilary-text-color: white;
+    /* Faded Text */
+    --faded-text-color: #898F9C;
+    /* Borders */
+    --thin-border: solid var(--text-color) 2px;
+    --extra-thin-border: solid var(--faded-text-color) 1px;
+    /* Default Hover Shadow */
+    --hover-shadow: var(--text-color) 0 0;
+    /* Button Shadow */
+    --button-shadow: var(--text-color) 0 0 0.4em -0.1em;
+    /* Shadow between page layers */
+    --layer-shadow: inset var(--text-color) 0 0 0.6em -0.3em;
+    /* Chord color */
+    --chord-color: steelblue;
+    /* Link Color */
+    --link-color: var(--prominent-color);
+    /* Link Hover Color */
+    --link-hover-color: var(--passive-color);
+}
+
+
+    /*********************************************************************
+ **** Dark Theme Colors
+ ********************************************************************/
+
+    :root.dark {
+        /* Nav & Menu & Hovered buttons */
+        --prominent-color: #20405b;
+        /* Buttons & Nav Current Page */
+        --passive-color: #3d6176;
+        /* Buttons & Nav Current Page */
+        --weak-color: #0e4972;
+        /* Main background */
+        --background-color: #202124;
+        /* Foreground */
+        --foreground-color: #26292c;
+        /* Text */
+        --text-color: white;
+        /* Button/other text */
+        --auxilary-text-color: white;
+        /* Faded Text */
+        --faded-text-color: #898F9C;
+        /* Borders */
+        --thin-border: solid var(--text-color) 2px;
+        /* Default Hover Shadow */
+        --hover-shadow: var(--text-color) 0 0;
+        /* Shadow between page layers */
+        --layer-shadow: inset black 0 0 0.6em -0.3em;
+        /* Chord color */
+        --chord-color: #90b5eb;
+        /* Link Color */
+        --link-color: var(--text-color);
+        /* Link Hover Color */
+        --link-hover-color: var(--faded-text-color);
+    }
+
+.dark img {
+    filter: invert(1);
+}
+
+    .dark img[alt="YouTube"] {
+        filter: none;
+    }
+
+.dark a {
+    color: var(--link-color);
+}
+
+
+/*********************************************************************
+ **** Colors
+ ********************************************************************/
+
+/* Nav & Menu */
+html .prominentColor, #nav, #nav #rightNav, #nav #menuButton, #menuDiv, .menuSettingSelect option, .button:hover {
+    background-color: var(--prominent-color);
+    color: var(--auxilary-text-color);
+}
+
+/* Butttons */
+html .fadedText, .roundButton, .leftArrow, .rightArrow {
+    background-color: var(--faded-text-color);
+    color: var(--auxilary-text-color);
+}
+
+/* Main Background */
+html .foregroundColor {
+    background-color: var(--foreground-color);
+}
+
+/* Secondary background */
+html .backgroundColor {
+    background-color: var(--background-color);
+}
+
+/* Nav Current Page */
+html .passiveColor, #nav .navPageLink:hover, .button {
+    background-color: var(--passive-color);
+    color: var(--auxilary-text-color);
+}
+
+
+/*********************************************************************
+ **** General / Font Theme
+ ********************************************************************/
+
+body {
+    font-family: 'Open Sans', Arial, sans-serif;
+    color: var(--text-color);
+}
+
+img, input[type="image"] {
+    pointer-events: none;
+}
+
+
+/*********************************************************************
+ **** General Styles
+ ********************************************************************/
+
+#pageContainer {
+    position: absolute;
+    height: 100%;
+    width: auto;
+    min-width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    margin: 0;
+}
+
+#mainDiv {
+    position: relative;
+    /*overflow: hidden;*/
+}
+
+h2 {
+    font-size: 2em;
+    text-align: center;
+}
+
+input[type=image], #collapsibleContent, #nav, .iconButton {
+    user-select: none;
+}
+
+select {
+    cursor: pointer;
+    background-color: var(--foreground-color);
+    color: var(--text-color);
+}
+
+
+/*********************************************************************
+ **** Classes
+ ********************************************************************/
+
+.center {
+    text-align: center;
+}
+
+.centerItems {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hidden {
+    visibility: hidden;
+    display: none !important;
+}
+
+.noSelect, img {
+    user-select: none;
+}
+
+
+/*********************************
+ **** Small Icon Button
+ *********************************/
+
+.smallIconButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    width: 1.6em;
+    height: 1.6em;
+    transition: all ease .6s;
+    cursor: pointer;
+}
+
+    .smallIconButton.inactive img {
+        filter: invert(.5);
+    }
+
+    .smallIconButton.inactive:hover img {
+        filter: invert(0);
+    }
+
+html.dark .smallIconButton.inactive:hover img {
+    filter: invert(1);
+}
+
+.smallIconButton img {
+    width: 1em;
+    height: 1em;
+}
+
+.smallIconButton:hover {
+    background-color: var(--foreground-color);
+}
+
+.smallIconButton.foreground:hover {
+    background-color: var(--background-color);
+}
+
+
+/*********************************************************************
+ **** Navigation
+ ********************************************************************/
+
+#nav {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 3.4em;
+}
+
+.navItem {
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+}
+
+#nav #currentPage {
+    cursor: default;
+    background-color: var(--passive-color);
+    text-decoration: underline;
+}
+
+#nav #navSplit {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+}
+
+#nav #rightNav {
+    padding: 0 1em;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border: none;
+    grid-gap: 1em;
+}
+
+.navPageLink {
+    min-width: 5em;
+    text-align: center;
+    cursor: pointer;
+    align-items: center;
+}
+
+    .navPageLink img {
+        width: 1em;
+        height: 1em;
+        filter: invert(1);
+    }
+
+    .navPageLink span {
+        padding: 0 .5em;
+    }
+
+#nav hr {
+    width: .5em;
+    height: .5em;
+    border-radius: 100%;
+    border: none;
+    background-color: var(--auxilary-text-color);
+    margin: 0 .3em;
+}
+
+
+/*********************************************************************
+ **** Menu
+ ********************************************************************/
+
+#menuButton {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3.4em;
+    padding: 0;
+}
+
+    #menuButton .smallIconButton {
+        font-size: 1.7em;
+    }
+
+    #menuButton:hover .smallIconButton {
+        background-color: var(--passive-color);
+    }
+
+    #menuButton img {
+        filter: invert(1);
+        font-size: .8em;
+    }
+
+#menuDiv {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-bottom: var(--thin-border);
+    border-right: var(--thin-border);
+    z-index: 5;
+    border-bottom-right-radius: 1em;
+}
+
+    #menuDiv > div:first-child {
+        border-top: none;
+        box-shadow: inset var(--text-color) 0 .5em 1em -.5em;
+    }
+
+    #menuDiv > div {
+        min-width: 10em;
+        padding: 1em;
+        border-top: var(--thin-border);
+    }
+
+
+/*******************************************
+ **** Language Options
+ *******************************************/
+
+#languageMenuDiv {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    user-select: none;
+}
+
+#languageSettingSelect {
+    width: 100%;
+    position: relative;
+}
+
+#languageSelectDisplay {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 .4em;
+}
+
+#languageMenuDiv:hover #languageValue {
+    text-decoration: underline;
+}
+
+#languageOptions {
+    position: absolute;
+    display: none;
+    background-color: var(--prominent-color);
+    padding: .5em;
+    right: 0;
+    border-radius: .5em;
+}
+
+#languageSettingSelect.open #languageOptions {
+    display: block;
+}
+
+#languageSelectDisplay img {
+    height: 1.2em;
+}
+
+#currentLanguageContainer {
+    display: flex;
+    align-items: center;
+    gap: .4em;
+}
+
+#currentLanguageContainer img {
+    filter: invert(1);
+}
+
+#languageOptions > div {
+    padding: .4em;
+}
+
+    #languageOptions > div:hover > div:first-child {
+        text-decoration: underline;
+    }
+
+
+/*********************************************************************
+ **** Tabs
+ ********************************************************************/
+#tabsContainer {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    width: 0em;
+}
+
+#tabs {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    overflow: auto;
+}
+
+.tab {
+    padding: 1em;
+    position: relative;
+    width: 10em;
+    min-width: 10em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#nav .tab:hover {
+    --background-color: var(--passive-color);
+}
+
+.tab > span {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.tab.currentPage {
+    cursor: default;
+    text-decoration: underline;
+    background-color: var(--passive-color);
+}
+
+.tab .tabCloseButton {
+    position: absolute;
+    top: .2em;
+    right: .2em;
+    padding: 0;
+}
+
+#nav .tabCloseButton:hover {
+    background-color: var(--prominent-color);
+}
+
+.tabName {
+    white-space: nowrap;
+}
+
+
+
+/*******************************************
+ **** Tabs Overflow
+ *******************************************/
+
+#moreTabsContainer {
+    position: relative;
+}
+
+#moreTabsButtonContainer {
+    display: flex;
+    align-items: center;
+}
+
+#moreTabsButton:hover {
+    background-color: var(--passive-color);
+}
+
+#moreTabsButton img {
+    filter: invert(1);
+    transform: rotate(90deg);
+}
+
+#moreTabs {
+    position: absolute;
+    right: 0;
+    top: 2.4em;
+    background-color: var(--prominent-color);
+    display: flex;
+    flex-direction: column-reverse;
+    z-index: 3;
+    box-shadow: var(--hover-shadow) .5em;
+    padding: .5em;
+    border-bottom-left-radius: 1em;
+    border-bottom-right-radius: 1em;
+}
+
+    #moreTabs hr {
+        display: none;
+    }
+
+    /* Algin tab names to the left */
+    #moreTabs > div { 
+        justify-content: left;
+    }
+
+/*******************************************
+ **** New Song Button
+ *******************************************/
+
+#newSongButton {
+    font-size: 1.5em;
+}
+
+    #newSongButton img {
+        filter: invert(1);
+    }
+
+    #newSongButton:hover {
+        background-color: var(--passive-color);
+    }
+
+
+/*******************************************************************************
+ **** Dropdowns
+ ******************************************************************************/
+
+.dropdown {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--foreground-color);
+    border-radius: 1em;
+    padding: .5em;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: var(--hover-shadow) .5em;
+    z-index: 3;
+}
+
+    .dropdown img {
+        width: 1em;
+        height: 1em;
+    }
+
+.dropdownOption {
+    display: flex;
+    flex-direction: row;
+    gap: .3em;
+    align-items: center;
+    padding: .6em;
+}
+
+    .dropdownOption:hover {
+        background-color: var(--background-color);
+        text-decoration: underline;
+    }
+
+    .dropdownOption span {
+        width: max-content;
+    }
+
+
+
+/*********************************************************************
+ **** Search
+ ********************************************************************/
+
+#searchContainer {
+    position: relative;
+}
+
+#searchBar {
+    height: 2em;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    border: none;
+    box-shadow: var(--hover-shadow) 0.1em;
+    padding: .1em;
+    border-radius: .6em;
+    background-color: var(--foreground-color);
+}
+
+    #searchBar.focused, #searchBar:hover, #searchContainer #searchResults {
+        box-shadow: var(--hover-shadow) .2em;
+    }
+
+#searchInput {
+    background-color: transparent;
+    resize: none;
+    outline: none;
+    border: none;
+    height: 2.5em;
+    width: 28em;
+    color: var(--text-color);
+}
+
+#searchButton {
+    cursor: pointer;
+    padding: .3em;
+}
+
+    #searchButton > img {
+        width: 1em;
+        height: 1em;
+        padding-left: .2em;
+    }
+
+#searchResultsContainer {
+    position: relative;
+    width: -webkit-fill-available;
+}
+
+.hasResults > #searchBar {
+    border-end-end-radius: 0;
+    border-end-start-radius: 0;
+}
+
+.hasResults #searchResults {
+    display: block;
+}
+
+#searchResults {
+    display: none;
+    position: absolute;
+    z-index: 4;
+    width: -webkit-fill-available;
+    background-color: white;
+    user-select: none;
+    border-end-end-radius: .6em;
+    border-end-start-radius: .6em;
+    background-color: var(--foreground-color);
+}
+
+.searchResult {
+    display: flex;
+    align-items: center;
+    gap: .3em;
+    cursor: pointer;
+    padding: .4em .6em .4em .2em;
+}
+
+    .searchResult:last-child {
+        border-end-end-radius: .6em;
+        border-end-start-radius: .6em;
+        padding-bottom: .6em;
+    }
+
+    .searchResult:hover, .searchResult.hovering {
+        background-color: var(--background-color);
+    }
+
+    .searchResult img {
+        width: 1.2em;
+        height: 1.2em;
+        margin-right: .1em;
+    }
+
+    .searchResult > div:last-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+
+/*****************************************************
+ **** Info Prompt
+ *****************************************************/
+
+.infoPromptContainer {
+    position: absolute;
+    left: 0;
+}
+
+div:not(.prompted) > .infoPromptContainer {
+    display: none;
+}
+
+.infoPrompt {
+    font-style: italic;
+    border-radius: .5em;
+    background-color: var(--foreground-color);
+    color: var(--text-color);
+    box-shadow: #ffb100 0 0 1em;
+    user-select: none;
+    padding: 0.5em;
+}
+
+.infoPrompt {
+    top: -2.5em;
+    left: -10em;
+    width: 7em;
+    height: 4em;
+}
+
+.promptArrow {
+    top: -.75em;
+    left: -1.3em;
+    width: 1.1em;
+    height: 1.1em;
+    border-radius: 100%;
+}
+
+.infoPrompt, .promptArrow {
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: var(--foreground-color);
+    color: var(--text-color);
+    box-shadow: #ffb100 0 0 1em;
+}
+
+/*******************************************************************************
+ **** Light/Dark Mode Slider
+ ******************************************************************************/
+
+.onoffswitch {
+    position: relative;
+    width: 5em;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.onoffswitch-checkbox {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.onoffswitch-label {
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 1.25em;
+}
+
+.onoffswitch-inner {
+    width: 200%;
+    margin-left: -100%;
+    display: block;
+    transition: margin 0.3s ease-in 0s;
+}
+
+    .onoffswitch-inner:before, .onoffswitch-inner:after {
+        width: 50%;
+        height: 30px;
+        float: left;
+        display: block;
+        line-height: 2em;
+        font-weight: bold;
+        box-sizing: border-box;
+    }
+
+    .onoffswitch-inner:before {
+        padding-left: 10px;
+        background-color: var(--background-color);
+        content: "Light";
+        color: var(--faded-text-color);
+    }
+
+    .onoffswitch-inner:after {
+        padding-right: 10px;
+        background-color: var(--background-color);
+        content: "Dark";
+        color: var(--text-color);
+        text-align: right;
+    }
+
+.onoffswitch-switch {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 46px;
+    width: 18px;
+    margin: 6px;
+    display: block;
+    background: #FFFFFF;
+    border: 2px solid #999999;
+    border-radius: 20px;
+    transition: all 0.3s ease-in 0s;
+}
+
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px;
+}
+
+#themeContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.hidden .onoffswitch-switch {
+    transition: none;
+}

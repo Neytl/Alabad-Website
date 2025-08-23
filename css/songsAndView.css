@@ -1,0 +1,267 @@
+/*******************************************************************************
+**** Screen Sizes
+********************************************************************/
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .songLink a {
+        display: none;
+    }
+
+    :root #mainDiv .resultInfoContainer {
+        display: flex;
+    }
+}
+
+/*********************************************************************
+ **** Buttons - Songs/View
+ ********************************************************************/
+
+input[type=button], .iconButton {
+    font-family: Arial, sans-serif;
+}
+
+.button {
+    padding: .5em;
+    border: var(--extra-thin-border);
+    border-radius: 0.4em;
+    text-align: center;
+    outline: none;
+    cursor: pointer;
+}
+
+    .button:hover {
+        box-shadow: var(--button-shadow);
+    }
+
+input[type=button] {
+    cursor: pointer;
+}
+
+
+/*********************************
+ **** Passive Button - Songs/View
+ *********************************/
+
+.passiveButton {
+    width: 1.5em;
+    height: 1.5em;
+    opacity: .5;
+    padding: 0.4em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    background-color: var(--passive-color);
+    cursor: pointer;
+    box-shadow: var(--button-shadow);
+    z-index: 1;
+}
+
+    .passiveButton:hover {
+        background-color: var(--weak-color);
+        opacity: 1;
+    }
+
+    .passiveButton img {
+        width: 1.5em;
+        height: 1.5em;
+        filter: invert(1);
+    }
+
+
+/*********************************
+ **** Song Info Popup
+ *********************************/
+
+.infoPopup {
+    position: fixed;
+    padding: 1em;
+    background-color: var(--foreground-color);
+    border-radius: .8em;
+    box-shadow: var(--hover-shadow) .5em;
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+    z-index: 5;
+}
+
+    .infoPopup > div > span:first-child {
+        font-weight: bold;
+        margin-right: .3em;
+    }
+
+    .infoPopup .title {
+        text-align: center;
+        text-decoration: underline;
+        font-style: italic;
+        font-size: 1.2em;
+    }
+
+.songInfoSearchLink {
+    color: var(--link-color);
+    text-decoration: underline;
+    cursor: pointer;
+}
+.songInfoSearchLink:hover {
+    color: var(--link-hover-color);
+}
+
+.languageInfoContainer {
+    display: flex;
+    align-items: center;
+}
+.languageInfoContainer .smallIconButton {
+    margin-left: .3em;
+}
+
+/*********************************
+ **** YouTube Link
+ *********************************/
+
+.songLink {
+    display: flex;
+    align-items: center;
+    gap: .2em;
+    color: var(--text-color);
+}
+
+    .songLink span {
+        transition: all .3s ease;
+    }
+
+#resultsDiv .songLink.songNameContainer {
+    min-width: 10em;
+    width: auto;
+}
+
+.songLink:hover > .artist, .songLink:hover > a {
+    color: var(--link-hover-color);
+    text-decoration: underline;
+}
+
+.songLink img {
+    width: 1em;
+    height: 1em;
+}
+
+
+/*******************************************************************************
+ **** Search Results
+ ******************************************************************************/
+
+.result {
+    height: 2.6em;
+    padding: 0 .5em;
+    border-bottom: var(--extra-thin-border);
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+    display: grid;
+    gap: 1em;
+}
+
+    .result:hover {
+        background-color: var(--background-color);
+    }
+
+    .result:first-child {
+        border-top: var(--extra-thin-border);
+    }
+
+    .result img {
+        width: 1em;
+        height: 1em;
+    }
+
+.resultTitle {
+    font-size: 1.2em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.resultInfoContainer {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+
+
+/*******************************************************************************
+ **** Playlist
+ ******************************************************************************/
+
+#playlistHeader {
+    display: flex;
+    flex-direction: column;
+}
+
+#playlistName {
+    font-size: 1.5em;
+    font-weight: bold;
+    text-overflow: ellipsis;
+}
+
+#playlistLinks {
+    padding: .5em;
+    padding-top: 0;
+    font-size: 1.2em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+#playlistSongs .result {
+    gap: 0;
+    grid-template-columns: 1.5em 1fr;
+}
+
+    #playlistSongs .result:hover {
+        grid-template-columns: 1.5em 1fr 3em;
+    }
+
+    #playlistSongs .result span {
+        display: flex;
+        align-items: center;
+    }
+
+    #playlistSongs .result.currentSong {
+        cursor: default;
+        background-color: var(--weak-color);
+    }
+
+        #playlistSongs .result.currentSong .resultTitle {
+            color: white;
+        }
+
+    #playlistSongs .result .resultTitle {
+        text-overflow: ellipsis;
+        display: block; /* Needed to allow for ellipsis text overflow */
+    }
+
+#playlistSongs .songNameContainer {
+    overflow: hidden;
+}
+
+#playlistSongs .resultInfoContainer {
+    justify-content: space-between;
+    display: none;
+}
+
+#playlistSongs .result:hover .resultInfoContainer {
+    display: flex;
+}
+
+#addToPlaylistContainer {
+    padding: .5em 0;
+    border-bottom: var(--extra-thin-border);
+    cursor: pointer;
+    height: 1.5em;
+}
+
+    #addToPlaylistContainer:hover #addToPlaylistButton {
+        background-color: var(--foreground-color);
+    }

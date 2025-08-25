@@ -1,32 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <title>Caja de Música</title>
-    <meta name="description" content="Descargar e impremir música cristiana gratis!">
+    <title>Alabad</title>
+    <meta name="description" content="Tablas de acordes hecho fácil para dispositivos móviles. Música cristiana.">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" type="image/png" href="imgs/Favicon.png">
-    <link href='css/home.min.css' rel='stylesheet' type='text/css'>
-    <link rel="preload" href="./css/fonts/OpenSans.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="./css/fonts/Playwrite.woff2" as="font" type="font/woff2" crossorigin>
+    <link href='css/viewerHome.min.css' rel='stylesheet' type='text/css'>
+    <link rel="preload" href="./css/fonts/OpenSans.woff2" as="font" type="font/woff2">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="pageContainer" class="backgroundColor">
-        <div id="backgroundImageContainer">
-            <img id="backgroundImage" src="../imgs/Background.jpg" alt="Background">
-        </div>
+    <div id="pageContainer">
+        <!--Settings Menu-->
+        <div class="sideMenu hidden" id="settingsMenu">
+            <!--Set List-->
+            <div class="menuSection hidden" id="setListSongsSection">
+                <!--Set List Name-->
+                <div id="setListNameContainer" class="setListNameContainer">
+                    <a id="setListName" href="tabla?set_list=local">Set List</a>
+                </div>
 
-        <!--Nav-->
-        <div id="navWrapper">
-            <div id="homeNav">
+                <!--Set List Songs-->
+                <div class="menuSectionOptions" id="setListSongs">
+
+                </div>
+            </div>
+
+            <!--Settings Icons-->
+            <div id="settingsIconsContainer">
                 <!--Language-->
-                <div id="languageMenuContainer">
-                    <div id="languageSelectDisplay" title="Idioma">
-                        <img src="imgs/icons/globe.png" alt="Language">
+                <div id="languageMenuContainer" class="popupMenuContainer">
+                    <div id="languageSelectDisplay" class="settingsIconButton" title="Language">
+                        <img class="settingsIconButtonImage" src="imgs/icons/globe.png" alt="Language">
                     </div>
-                    <div id="languageOptions">
-                        <a href="home">
-                            <img src="imgs/icons/USFlag.png" alt="Langauge">
+
+                    <div id="languageOptions" class="popupMenu">
+                        <a href="charts">
+                            <img src="imgs/icons/USFlag.png" alt="Language">
                             <span>English</span>
                         </a>
                         <a href="/">
@@ -36,90 +49,146 @@
                     </div>
                 </div>
 
-                <div id="rightNav">
-                    <!--Ko-Fi-->
-                    <a href="https://ko-fi.com/cajademusica" title="Apóyanos" id="kofiButton">
-                        <img id="kofiImage" src="imgs/kofi-cup.webp" alt="Apóyanos">
-                    </a>
-
-                    <!--Charts link-->
-                    <a id="chartsPageLink" href="tablas" title="Ver Tablas de Acordes">
-                        <img src="imgs/icons/note.png" alt="Chord Charts">
-                    </a>
+                <!--Dark/Light Mode-->
+                <div id="darkModeButton" class="settingsIconButton">
+                    <img class="settingsIconButtonImage" id="darkModeIcon" src="imgs/icons/dark-mode.png" alt="Dark Mode">
                 </div>
-            </div>
-        </div>
 
-        <!--Body-->
-        <div id="content">
-            <div>
-                <div id="headerAndSearchContainer">
-                    <!--Logo-->
-                    <a id="logoContainer" href="/">
-                        <img id="logo" src="imgs/LargeLogo.webp" alt="Logo">
-                        <span>Caja de Música</span>
-                    </a>
+                <!--Account Popup-->
+                <div id="accountMenuContainer" class="popupMenuContainer">
+                    <div id="accountMenuButton" class="iconTitle">
+                        <img alt="User" src="imgs/icons/account.png">
+                        <span id="loggedInUser"></span>
+                    </div>
 
-                    <!--Search-->
-                    <div class="centerItems">
-                        <div id="searchContainer">
-                            <!--Search Bar-->
-                            <div id="searchBar">
-                                <div id="searchButton" title="Search" class="centerItems">
-                                    <img src="imgs/icons/search.png" alt="Buscar">
+                    <div id="accountMenu" class="popupMenu">
+                        <!--Show ALL Songs in searches-->
+                        <div class="menuSection" id="unfinishedSongsSection">
+                            <div class="menuSectionTitle noToggle" id="showUnfinishedSongsToggle">
+                                <div class="iconTitle">
+                                    <input type="checkbox" id="showUnfinishedSongsCheckBox">
+                                    <span>Incluye TODAS las canciones en búsquedas</span>
                                 </div>
-                                <input type="text" placeholder="Buscar" autocomplete="off" id="searchInput">
                             </div>
+                        </div>
 
-                            <!--Search Results-->
-                            <div id="searchResultsContainer">
-                                <div id="searchResults" class="hidden">
-
-                                </div>
+                        <!--Log Out-->
+                        <div class="menuSection" id="logOutSection">
+                            <div class="menuSectionTitle noToggle" id="logOutButton">
+                                <div class="iconTitle"><img alt="User" src="imgs/icons/account.png"><span>Cerrar Sesión</span></div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!--Log In-->
+                <div id="openLoginPopupButton">
+                    <div class="iconTitle"><img alt="User" src="imgs/icons/account.png"><span>Iniciar Sesión</span></div>
+                </div>
             </div>
         </div>
 
-        <!--Search Popup-->
-        <div id="searchPopup" class="hidden">
-            <div id="searchAndCancel">
-                <!--Search Bar-->
-                <div id="popupSearchBar">
-                    <div id="popupSearchInputButton">
+        <!--Main Content-->
+        <div id="contentContainer">
+            <div id="returnToCenterCover"></div>
+            <!--Nav-->
+            <div id="nav">
+                <!--Menu Button-->
+                <div id="settingsMenuButton" class="navButton">
+                    <img src="imgs/icons/menu.png" alt="Menu">
+                </div>
+
+                <div id="rightNav">
+                    <!--Charts link-->
+                    <a id="chartsPageLink" href="imprimir" title="Imprimir Canciones" class="navButton">
+                        <img src="imgs/icons/print.png" alt="Print Page">
+                    </a>
+
+                    <!--Search button-->
+                    <div id="searchButton" class="navButton">
                         <img src="imgs/icons/search.png" alt="Search">
                     </div>
-                    <input type="text" placeholder="Buscar" autocomplete="off" id="popupSearchInput">
-                    <div id="popupClearSearchButton" class="hidden">
-                        <img src="imgs/icons/close.png" alt="Close">
+                </div>
+            </div>
+            <div id="mainContent">
+                <div>
+                    <!--Logo-->
+                    <a id="logoContainer" href="/">
+                        <img src="imgs/LargeLogo.png" alt="Logo">
+                        <span>Alabad</span>
+                    </a>
+                </div>
+                <div>
+                    <div id="fakeSearchBar">
+                        <span>Busca Música Cristiana</span>
                     </div>
                 </div>
-                <!--Cancel Search-->
-                <div id="popupCancelSearchButton">
-                    <span>Cancelar</span>
+            </div>
+
+            <!--Search Popup-->
+            <div id="searchPopup" class="hidden">
+                <div id="searchAndCancel">
+                    <!--Search Bar-->
+                    <div id="searchBar">
+                        <div id="searchInputButton">
+                            <img src="imgs/icons/search.png" alt="Search">
+                        </div>
+                        <input type="text" placeholder="Buscar" autocomplete="off" id="searchInput">
+                        <div id="clearSearchButton" class="hidden">
+                            <img src="imgs/icons/close.png" alt="Close">
+                        </div>
+                    </div>
+                    <!--Cancel Search-->
+                    <div id="cancelSearchButton">
+                        <span>Cancelar</span>
+                    </div>
                 </div>
-            </div>
 
-            <!--No Results-->
-            <div id="popupNoResults" class="hidden">
-                <span>No Resultados</span>
-            </div>
+                <!--No Results-->
+                <div id="noResults" class="hidden">
+                    <span>No Resultados</span>
+                </div>
 
-            <!--Searching-->
-            <div id="popupLoadingResults" class="hidden">
-                <span>Buscando...</span>
-            </div>
+                <!--Searching-->
+                <div id="popupLoadingResults" class="hidden">
+                    <span>Buscando...</span>
+                </div>
 
-            <!--Search Results-->
-            <div id="popupSearchResults">
+                <!--Search Results-->
+                <div id="searchResults">
 
+                </div>
             </div>
         </div>
     </div>
 
+    <!--Login Popup-->
+    <div id="loginPopupContainer" class="hidden">
+        <div id="loginPopup">
+            <div id="closeLoginPopupButton">
+                <span class="smallIconButton">&times;</span>
+            </div>
+            <form id="loginFields">
+                <div class="loginFieldLabel">
+                    <img src="imgs/icons/account.png">
+                    <label for="loginUsername">Usuario</label>
+                </div>
+                <input autocomplete="username" type="text" id="loginUsername">
+                <div class="loginFieldLabel">
+                    <img src="imgs/icons/lock.png">
+                    <label for="loginPassword">Contraseña</label>
+                </div>
+                <input type="password" id="loginPassword" autocomplete="current-password">
+            </form>
+
+            <span id="loginMessage"></span>
+
+            <div id="loginButton">Iniciar Sesión</div>
+        </div>
+    </div>
+
+
     <!--Scripts-->
-    <script type="text/javascript" src="js/home.min.js" charset="iso-8859-1"></script>
+    <script src="js/viewerHome.min.js"></script>
 </body>
 </html>

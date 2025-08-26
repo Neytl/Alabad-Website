@@ -1583,9 +1583,9 @@ function printSongWithoutUpdating() {
     localStorage.setItem("specialPrintRequest", JSON.stringify(songData));
 
     if (usingSpanish()) {
-        window.open("imprimir.html", "_blank");
+        window.open("imprimiendo.html", "_blank");
     } else {
-        window.open("print.html", "_blank");
+        window.open("printing.html", "_blank");
     }
 }
 

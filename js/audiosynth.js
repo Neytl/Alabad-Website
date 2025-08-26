@@ -412,7 +412,7 @@ function playMelody() {
     playing = true;
     get("hearKeyButton").classList.add("playing");
 
-    let melodySongData = (pageName == "print" ? printData : songData);
+    let melodySongData = (pageName == "printing" ? printData : songData);
 
     let songEntity = {
         "id": melodySongData.id,

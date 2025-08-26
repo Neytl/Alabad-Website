@@ -530,7 +530,7 @@ function updateSearchResults(event) {
 
             // Search on click
             result.addEventListener("mousedown", function () {
-                window.location.href = (usingSpanish() ? "imprimir" : "print") + "?song_id=" + songEntity.id;
+                window.location.href = (usingSpanish() ? "imprimiendo" : "printing") + "?song_id=" + songEntity.id;
             });
 
             result.name = songEntity.songName;
@@ -696,7 +696,7 @@ function updateSearchResultsForDBPage(event) {
 }
 
 function onHomePage() {
-    return pageName == "/" || pageName == "home";
+    return pageName == "imprimir" || pageName == "print";
 }
 
 function trySelectFirstOption(event) {

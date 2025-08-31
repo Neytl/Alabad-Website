@@ -8,7 +8,7 @@
     <!--<meta name="mobile-web-app-capable" content="yes">-->
     <link rel="shortcut icon" type="image/png" href="imgs/Favicon.png">
     <link href='css/viewer.min.css' rel='stylesheet' type='text/css'>
-    <!--<link href='css/viewerCommon.css' rel='stylesheet' type='text/css'>
+<!--    <link href='css/viewerCommon.css' rel='stylesheet' type='text/css'>
     <link href='css/viewer.css' rel='stylesheet' type='text/css'>-->
     <link rel="preload" href="./css/fonts/OpenSans.woff2" as="font" type="font/woff2" crossorigin>
 </head>
@@ -283,11 +283,14 @@
                 <div id="songText">
 
                 </div>
-
             </div>
 
             <div id="songEditingContainer" class="hidden">
                 <textarea id="songEditingText" spellcheck="false"></textarea>
+            </div>
+
+            <div id="loadingCover">
+                <span id="loading">Loading<span></span></span>
             </div>
 
             <!--Search Popup-->

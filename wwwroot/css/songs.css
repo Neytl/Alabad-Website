@@ -1,0 +1,539 @@
+/*******************************************************************************
+**** Screen Sizes
+********************************************************************/
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    :root #playlistSongs .result {
+        grid-template-columns: 1.5em 1fr 3em;
+    }
+}
+
+/*******************************************************************************
+ **** Search Page
+ ******************************************************************************/
+
+#mainDiv {
+    display: flex;
+    flex-direction: column;
+    padding: .5em;
+    padding-bottom: 0;
+}
+
+body, html {
+    height: 100%;
+}
+
+#mainDiv, #resultsContainer {
+    flex-grow: 1;
+}
+
+#searchDiv {
+    margin-top: 2em;
+    margin-bottom: 1.3em;
+}
+
+#backToTopButton {
+    position: fixed;
+    right: .5em;
+    bottom: .5em;
+}
+
+
+/*******************************************************************************
+ **** Browsing
+ ******************************************************************************/
+
+#browsing {
+    display: flex;
+    gap: .5em;
+}
+
+    #browsing > span {
+        color: var(--link-color);
+        text-decoration: underline;
+        cursor: pointer;
+        user-select: none;
+    }
+
+        #browsing > span:hover {
+            color: var(--link-hover-color);
+        }
+
+#refreshContainer {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 0.5em;
+}
+
+/*******************************************************************************
+ **** Sort Results
+ ******************************************************************************/
+#searchOptions {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: .5em;
+}
+
+#sortOptions {
+    display: flex;
+    gap: 1em;
+}
+
+    #sortOptions > span {
+        cursor: pointer;
+        user-select: none;
+    }
+
+        #sortOptions > span:hover {
+            border-bottom: solid var(--text-color) 0.1em;
+        }
+
+.pickedSort {
+    border-bottom: solid var(--text-color) 0.1em;
+    font-weight: bold;
+}
+
+#alphSortedResults {
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+}
+
+    #alphSortedResults.reversed {
+        flex-direction: column-reverse;
+    }
+
+.fileLetter {
+    color: var(--auxilary-text-color);
+    background-color: var(--weak-color);
+    font-size: 1.5em;
+    padding-left: .5em;
+}
+
+
+/*******************************************************************************
+ **** Search Results
+ ******************************************************************************/
+
+#resultsContainer .resultInfoContainer {
+    display: none;
+    justify-content: right;
+}
+
+    #resultsContainer .result:hover .resultInfoContainer, #resultsContainer .resultInfoContainer.prompted {
+        display: flex;
+    }
+
+#numResultsDiv {
+    color: var(--faded-text-color);
+}
+
+#resultsContainer {
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+    padding: 1em;
+    box-shadow: var(--layer-shadow);
+}
+
+.result:hover .resultTitle {
+    text-decoration: underline;
+}
+
+.resultTitle:hover {
+    color: var(--link-hover-color);
+}
+
+.smallIconButton:hover {
+    background-color: var(--foreground-color);
+}
+
+.artist {
+    overflow: hidden;
+    max-width: 9em;
+    text-overflow: ellipsis;
+}
+
+#resultsDiv .songLink {
+    width: fit-content;
+}
+
+/*******************************************************************************
+ **** Info Prompts
+ ******************************************************************************/
+
+.infoPrompt {
+    left: -11em;
+    width: 8em;
+}
+
+.infoPromptContainer {
+    pointer-events: none;
+}
+
+    /*Input prompt*/
+    .infoPromptContainer.search > .infoPrompt {
+        height: 4em;
+        width: 8em;
+        left: -11em;
+    }
+
+/*Refine search prompt*/
+#refineSearchButton {
+    position: relative;
+}
+
+.infoPromptContainer.refine > .infoPrompt {
+    width: 7em;
+    height: 4em;
+    left: -10em;
+}
+
+.infoPromptContainer.refine > .promptArrow {
+    left: -1.5em;
+    top: -1.4em;
+    color: black;
+}
+
+
+/*Translation prompt*/
+.infoPromptContainer.translations > .infoPrompt {
+    height: 3em;
+    width: 11em;
+    left: -14em;
+}
+
+/*Translation info prompt*/
+.infoPrompt.translationsButton {
+    height: 2em;
+    width: 14em;
+    left: -17em;
+    top: -1.5em;
+}
+
+/*******************************************************************************
+ **** Refine Search - General
+ ******************************************************************************/
+
+#refineTags {
+    display: flex;
+    gap: .5em;
+    padding: 0 0.4em 0.4em 0.4em;
+    min-height: 2.4em;
+    flex-wrap: wrap;
+}
+
+#refineSearchButton {
+    padding: .3em .8em .3em .65em;
+    border: solid var(--text-color) 1px;
+    border-radius: 0.4em;
+    text-align: center;
+    outline: none;
+    user-select: none;
+    cursor: pointer;
+    color: var(--auxilary-text-color);
+    background-color: var(--passive-color);
+    font-style: italic;
+}
+
+    #refineSearchButton:hover {
+        box-shadow: var(--hover-shadow) .2em;
+        background-color: var(--prominent-color);
+    }
+
+
+/*******************************************************************************
+ **** Refine Search Darkout
+ ******************************************************************************/
+
+body.locked {
+    overflow-y: hidden;
+}
+
+    body.locked #darkOut {
+        display: block;
+    }
+
+#darkOut {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: .5;
+    z-index: 2;
+}
+
+
+/*******************************************************************************
+ **** Refine Search Dropdown - General Styles
+ ******************************************************************************/
+
+#refineSearchSticky {
+    z-index: 3;
+    position: sticky;
+    top: .5em;
+    height: 0;
+    padding-right: .5em;
+}
+
+#refineSearchDropdownContainer {
+    float: right;
+    z-index: 3;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+}
+
+#refineSearchDropdown {
+    position: absolute;
+    border: solid var(--text-color) 1px;
+    user-select: none;
+    border-radius: .4em;
+    padding-bottom: .2em;
+    background-color: var(--prominent-color);
+    color: var(--auxilary-text-color);
+    width: 14em;
+}
+
+.refineSearchBox {
+    padding: .5em .6em .5em .8em;
+    border-bottom: solid var(--text-color) 1px;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    height: 1.5em;
+}
+
+    .refineSearchBox:hover {
+        background-color: #a2b1d1;
+    }
+
+    .refineSearchBox.refineSearchTitle > div:last-child {
+        width: 1em;
+    }
+
+    .refineSearchBox.refineSearchTitle:hover {
+        background-color: #567ac5;
+    }
+
+.expandable {
+    max-height: 0em;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.expanded #resultTypeExpandable.expandable {
+    max-height: 11em;
+}
+
+.expanded #languageExpandable.expandable {
+    max-height: 8em;
+}
+
+.expanded #stylesExpandable.expandable {
+    max-height: 16em;
+}
+
+.expanded #lyricsExpandable.expandable {
+    max-height: 3em;
+}
+
+.expandable > div {
+    padding-left: 1.2em;
+    background-color: var(--passive-color);
+    color: #efefef;
+}
+
+#resetRefineSearchButton {
+    justify-content: center;
+    align-items: center;
+    border-bottom: none;
+    font-style: italic;
+}
+
+    #resetRefineSearchButton img {
+        height: 1em;
+        filter: invert(1);
+    }
+
+    #resetRefineSearchButton:hover {
+        background-color: #567ac5;
+    }
+
+
+#stylesExpandable > div > div {
+    display: flex;
+    align-items: center;
+}
+
+#stylesExpandable img {
+    height: 1.2em;
+    filter: invert(1);
+    padding-left: .4em;
+}
+
+
+/*******************************************************************************
+ **** Refine Search Dropdown - Close button
+ ******************************************************************************/
+
+#collapseRefineSearchButton {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 1em;
+    color: var(--auxilary-text-color);
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+#refineSearchDropdownContainer:hover #collapseRefineSearchButton {
+    color: var(--faded-text-color);
+}
+
+    #refineSearchDropdownContainer:hover #collapseRefineSearchButton:hover {
+        background-color: inherit;
+        color: var(--auxilary-text-color);
+    }
+
+
+/*******************************************************************************
+ **** Refine Search Inputs
+ ******************************************************************************/
+
+.refineSearchBox > input {
+    pointer-events: none;
+}
+
+#refineSearchDropdown input[type="checkbox"] {
+    background-color: var(--passive-color);
+    appearance: none;
+    font: inherit;
+    color: var(--auxilary-text-color);
+    width: 1em;
+    height: 1em;
+    border: 0.15em solid var(--auxilary-text-color);
+    border-radius: 0.15em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    #refineSearchDropdown input[type="checkbox"]::before {
+        content: "";
+        background-color: var(--auxilary-text-color);
+        width: 0.5em;
+        height: 0.5em;
+        transform: scale(0);
+        transition: 120ms transform ease-in-out;
+    }
+
+    #refineSearchDropdown input[type="checkbox"]:checked::before {
+        transform: scale(1);
+    }
+
+    #refineSearchDropdown input[type="checkbox"].radio, #refineSearchDropdown input[type="checkbox"].radio::before {
+        border-radius: 50%;
+    }
+
+#refineLyricsSearch {
+    pointer-events: all;
+    width: 12em;
+}
+
+
+/*******************************************************************************
+ **** Refine Tags
+ ******************************************************************************/
+
+.refineTag {
+    width: fit-content;
+    height: 2em;
+    border-radius: .7em;
+    padding: 0 .6em 0 .4em;
+    background-color: var(--passive-color);
+    color: var(--auxilary-text-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: .5em;
+    user-select: none;
+    border: solid var(--text-color) 1px;
+    cursor: pointer;
+}
+
+    .refineTag:hover {
+        background-color: var(--prominent-color);
+        border-color: var(--prominent-color);
+        color: var(--auxilary-text-color);
+        box-shadow: var(--hover-shadow) .2em;
+    }
+
+        .refineTag:hover > .removeRefineTag {
+            font-weight: bold;
+        }
+
+    .refineTag > div:first-child {
+        max-width: 10em;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+
+/*******************************************************************************
+ **** Playlists
+ ******************************************************************************/
+
+#playlistInfo {
+    position: fixed;
+    bottom: 1em;
+    left: 1em;
+    box-shadow: var(--hover-shadow) .5em;
+    border-radius: 1em;
+    padding: .5em;
+    padding-bottom: 1em;
+    width: 18em;
+    z-index: 1;
+    background-color: var(--foreground-color);
+}
+
+#playlistName {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: .2em .3em;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+    #playlistName:hover {
+        text-decoration: underline;
+        color: var(--passive-color);
+    }
+
+#playlistInfo #playlistLinks {
+    padding: 0 0 .2em .3em;
+}
+
+#playlistSongs .resultInfoContainer {
+    justify-content: right;
+}
+
+#playlist > #playlistSongs > .result:not(.currentSong):hover {
+    background-color: var(--background-color);
+}
+
+#closePlaylistInfoButton {
+    position: absolute;
+    top: .3em;
+    right: .3em;
+}
+
+    #closePlaylistInfoButton:hover {
+        background-color: var(--background-color);
+    }

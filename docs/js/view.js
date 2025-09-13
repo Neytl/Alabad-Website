@@ -1579,14 +1579,16 @@ function printSong() {
 
 // Prints the current song data
 function printSongWithoutUpdating() {
-    // Print the song
-    localStorage.setItem("specialPrintRequest", JSON.stringify(songData));
+    window.open("printing.html?song_id=" + songData.id, "_blank");
+    
+    // Print the song - outdated - doesn't work anymore
+/*    localStorage.setItem("specialPrintRequest", JSON.stringify(songData));
 
     if (usingSpanish()) {
         window.open("imprimiendo.html", "_blank");
     } else {
         window.open("printing.html", "_blank");
-    }
+    }*/
 }
 
 //*****************************

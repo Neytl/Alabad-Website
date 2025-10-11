@@ -24,6 +24,16 @@ window.addEventListener("load", function () {
         });
     });
 
+    get("sundaySetLink").addEventListener("click", function () {
+        fetch(dbUrl + "/setListById/ICCM").then(response => response.json()).then(result => {
+            result.songs.forEach(song => {
+                saveNewTabData(song);
+            });
+
+            loadTabs();
+        });
+    });
+
     // Email select
     get("email").addEventListener("click", () => selectText("email"));
 

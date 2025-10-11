@@ -59,7 +59,8 @@ function forEachElement(selector, callback) {
 
 // Checks if an event clicked on the specified element
 function clickedOn(event, id) {
-    return event.target.closest("#" + id) === get(id);
+    return event.target.closest("#" + id) != null;
+    //return event.target.closest("#" + id) === get(id);
 }
 
 // Checks if an event clicked on the specified element

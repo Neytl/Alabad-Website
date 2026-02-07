@@ -32,31 +32,26 @@
                             <img src="imgs/icons/more.png">
                         </div>
                         <div id="setListOptions" class="popupMenu">
+                            <!--Add song to saved set-->
+                            <div id="addSetListSongButton">
+                                <img src="imgs/icons/add.png" alt="Edit">
+                                <span>Canción</span>
+                            </div>
                             <!--Edit Set List-->
                             <div id="editSetListSongButton">
                                 <img src="imgs/icons/pencil.png" alt="Edit">
                                 <span>Editar</span>
-                            </div>
-                            <!--Unlock Set List-->
-                            <div id="unlockSetListSongButton">
-                                <img src="imgs/icons/pencil.png" alt="Edit">
-                                <span>Desbloquear</span>
-                            </div>
-                            <!--Save Set List-->
-                            <div id="saveSetListSongButton">
-                                <img src="imgs/icons/save.png" alt="Save">
-                                <span>Guardar</span>
-                            </div>
-                            <!--Share-->
-                            <div id="shareSetListButton">
-                                <img src="imgs/icons/share.png" alt="Share">
-                                <span>Compartir</span>
                             </div>
                             <!--YouTube-->
                             <a id="setListLink" href="" target="_blank" class="YTContainer hidden">
                                 <img src="imgs/icons/YouTube.png" alt="YT">
                                 <span>YouTube</span>
                             </a>
+                            <!--Share-->
+                            <div id="shareSetListButton">
+                                <img src="imgs/icons/share.png" alt="Share">
+                                <span>Compartir</span>
+                            </div>
                             <!--Print-->
                             <a class="menuButton" id="printSetListButton" href="imprimiendo">
                                 <img src="imgs/icons/print.png" alt="Print">
@@ -66,6 +61,11 @@
                             <div id="deleteSetListButton">
                                 <img src="imgs/icons/trash.png" alt="Delete">
                                 <span>Borrar</span>
+                            </div>
+                            <!--Close Saved Set List-->
+                            <div id="clearSetListButton">
+                                <img src="imgs/icons/close.png" alt="Close">
+                                <span>Cerrar Set</span>
                             </div>
                         </div>
                     </div>
@@ -341,6 +341,13 @@
 
         <!--Info Menu-->
         <div class="sideMenu" id="infoMenu">
+            <!--Edit Song-->
+            <div class="menuSection hidden" id="editSongSection">
+                <div class="menuSectionTitle noToggle" id="editSongButton">
+                    <div class="iconTitle"><img alt="edit" src="imgs/icons/pencil.png"><span>Editar la Canción</span></div>
+                </div>
+            </div>
+
             <!--Display Type-->
             <div class="menuSection">
                 <div class="menuSectionTitle noToggle noHover">
@@ -370,6 +377,7 @@
                     <img src="imgs/icons/up.png" alt="Expand">
                 </div>
                 <div class="menuSectionOptions">
+                    <div id="onePageSizeButton">• Una Pagina</div>
                     <div id="smallSizeButton">• Pequeño</div>
                     <div id="mediumSizeButton">• Mediano</div>
                     <div id="largeSizeButton">• Grande</div>
@@ -411,7 +419,7 @@
                 </a>
             </div>
 
-            <!--Versions-->
+            <!--Versions (not in use)-->
             <div class="menuSection closed hidden">
                 <div class="menuSectionTitle" id="moreVersionsButton">
                     <div>Más Versiones</div>
@@ -419,13 +427,6 @@
                 </div>
                 <div class="menuSectionOptions" id="versions">
 
-                </div>
-            </div>
-
-            <!--Edit Song-->
-            <div class="menuSection hidden" id="editSongSection">
-                <div class="menuSectionTitle noToggle" id="editSongButton">
-                    <div class="iconTitle"><img alt="edit" src="imgs/icons/pencil.png"><span>Editar la Canción</span></div>
                 </div>
             </div>
         </div>

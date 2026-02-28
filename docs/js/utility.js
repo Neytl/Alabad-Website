@@ -438,108 +438,117 @@ function updateSearchResults(event) {
         {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                //"Authorization": !!token ? "Bearer " + token : ""
             },
             body: JSON.stringify({
                 searchText: searchText,
-                language: language,
-                token: localStorage.getItem("token"),
+                language: language
             })
         }
-    ).then(response => response.json()).then(responseJson => {
+    ).then(response => {
         removeChildren(resultsDiv);
         currentHovering = -1;
         loadingInitialSearchResults = false;
 
-        // Could not connect to db
-        if (noDBConnection(responseJson)) {
-            let result = make("div");
-            result.classList.add("searchResult");
+        if (!response.ok) {
+            // Could not connect to db
+            if (noDBConnection(responseJson)) {
+                let result = make("div");
+                result.classList.add("searchResult");
 
-            let iconContainer = make("div");
-            iconContainer.classList.add("centerItems");
-            result.appendChild(iconContainer);
-            let icon = make("img");
-            icon.src = "imgs/icons/noResults.png";
-            iconContainer.appendChild(icon);
+                let iconContainer = make("div");
+                iconContainer.classList.add("centerItems");
+                result.appendChild(iconContainer);
+                let icon = make("img");
+                icon.src = "imgs/icons/noResults.png";
+                iconContainer.appendChild(icon);
 
-            let nameDiv = make("div");
-            result.appendChild(nameDiv);
-            nameDiv.innerHTML = "Unable to connect";
+                let nameDiv = make("div");
+                result.appendChild(nameDiv);
+                nameDiv.innerHTML = "Unable to connect";
 
-            resultsDiv.appendChild(result);
-            get("searchContainer").classList.add("hasResults");
-            return;
-        }
-
-        numResults = responseJson.length;
-
-        if (numResults === 0) {
-            showNoResults();
-            return;
-        } else if (!resultsDiv.classList.contains("hidden")) {
-            get("searchContainer").classList.add("hasResults");
-        }
-
-        // The current result number
-        let resultNumber = 0;
-
-        // Display results
-        responseJson.forEach(function (songEntity) {
-            // Song Title
-            let songTitle = songEntity.songName;
-
-            // - Replace accents to...
-            let simplifiedSongTitle = songTitle.toLowerCase().replaceAll('�', 'n').replaceAll('�', 'a').replaceAll('�', 'e').replaceAll('�', 'i').replaceAll('�', 'o').replaceAll('�', 'u').replaceAll('�', 'u');
-
-            // - Bold all search string matches
-            simplifiedSongTitle = simplifiedSongTitle.replace(new RegExp("(" + searchText + ")", "ig"), "<strong-$1>/strong-");
-
-            for (let i = 0; i < simplifiedSongTitle.length; i++) {
-                switch (simplifiedSongTitle.charAt(i)) {
-                    case '<':
-                        songTitle = [songTitle.slice(0, i), "<strong>", songTitle.slice(i)].join('');
-                        i += 7;
-                        break;
-                    case '>':
-                        songTitle = [songTitle.slice(0, i), "</strong>", songTitle.slice(i)].join('');
-                        i += 8;
-                        break;
-                }
+                resultsDiv.appendChild(result);
+                get("searchContainer").classList.add("hasResults");
+                return;
             }
 
-            // Set result name
-            let result = build({
-                type: "div",
-                class: "searchResult",
-                children: [
-                    build({
-                        type: "div",
-                        class: "centerItems",
-                        child: buildIcon("note.png")
-                    }),
-                    build({
-                        type: "div",
-                        innerHTML: songTitle
-                    })/*,
+            // Bad token - refresh and try again
+            //refreshAccessToken(() => updateSearchResults(event)); // No authentication for this page
+            return;
+        }
+
+        // Process results
+        response.json().then(responseJson => {
+            numResults = responseJson.length;
+
+            if (numResults === 0) {
+                showNoResults();
+                return;
+            } else if (!resultsDiv.classList.contains("hidden")) {
+                get("searchContainer").classList.add("hasResults");
+            }
+
+            // The current result number
+            let resultNumber = 0;
+
+            // Display results
+            responseJson.forEach(function (songEntity) {
+                // Song Title
+                let songTitle = songEntity.songName;
+
+                // - Replace accents to...
+                let simplifiedSongTitle = songTitle.toLowerCase().replaceAll('�', 'n').replaceAll('�', 'a').replaceAll('�', 'e').replaceAll('�', 'i').replaceAll('�', 'o').replaceAll('�', 'u').replaceAll('�', 'u');
+
+                // - Bold all search string matches
+                simplifiedSongTitle = simplifiedSongTitle.replace(new RegExp("(" + searchText + ")", "ig"), "<strong-$1>/strong-");
+
+                for (let i = 0; i < simplifiedSongTitle.length; i++) {
+                    switch (simplifiedSongTitle.charAt(i)) {
+                        case '<':
+                            songTitle = [songTitle.slice(0, i), "<strong>", songTitle.slice(i)].join('');
+                            i += 7;
+                            break;
+                        case '>':
+                            songTitle = [songTitle.slice(0, i), "</strong>", songTitle.slice(i)].join('');
+                            i += 8;
+                            break;
+                    }
+                }
+
+                // Set result name
+                let result = build({
+                    type: "div",
+                    class: "searchResult",
+                    children: [
+                        build({
+                            type: "div",
+                            class: "centerItems",
+                            child: buildIcon("note.png")
+                        }),
+                        build({
+                            type: "div",
+                            innerHTML: songTitle
+                        })/*,
                     build({
                         type: "span",
                         innerHTML: (!!songEntity.artist ? (usingSpanish() ? "por " : "by ") + songEntity.artist : "-")
                     })*/
-                ]
+                    ]
+                });
+
+                // Search on click
+                result.addEventListener("mousedown", function () {
+                    window.location.href = (usingSpanish() ? "imprimiendo" : "printing") + "?song_id=" + songEntity.id;
+                });
+
+                result.name = songEntity.songName;
+                result.dataset.songId = songEntity.id;
+                resultsDiv.appendChild(result);
             });
 
-            // Search on click
-            result.addEventListener("mousedown", function () {
-                window.location.href = (usingSpanish() ? "imprimiendo" : "printing") + "?song_id=" + songEntity.id;
-            });
-
-            result.name = songEntity.songName;
-            result.dataset.songId = songEntity.id;
-            resultsDiv.appendChild(result);
+            trySelectFirstOption(event);
         });
-
-        trySelectFirstOption(event);
     });
 }
 

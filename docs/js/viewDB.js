@@ -252,6 +252,7 @@ function showStyles(styles) {
 //*****************************
 // Log in
 //*****************************
+let token = null;
 
 // Setup events related to loging in
 function setupLoginEvents() {
@@ -287,18 +288,6 @@ function setupLoginEvents() {
 
         runLogin();
     });
-
-    // Connection timeout
-    let loginTime = window.localStorage.getItem("timeLoggedIn");
-
-    if (!!loginTime) {
-        loginTime = parseInt(loginTime);
-        if ((Date.now() - loginTime) / 1000 / 60 / 60 > 5) { // 5 hours to timeout
-            runLogout();
-        }
-    } else {
-        runLogout();
-    }
 }
 
 // Sets the login message text
@@ -333,26 +322,45 @@ function runLogin() {
                 Password: get("loginPassword").value
             })
         }
-    ).then(response => response.json()).then(responseJson => {
-        if (responseJson.title === "Not Found") {
-            setLoginMessage("Login failed");
-            clearLoginFields();
-        } else {
-            let token = JSON.stringify(responseJson);
-            window.localStorage.setItem("token", token.substring(1, token.length - 1));
-            window.localStorage.setItem("timeLoggedIn", Date.now());
-            testDatabaseEditorConnection(true);
+    ).then(response => {
+        if (response.ok) {
+            // Success! Valid Login
+            onValidLogin(response);
+        } else if (response.status === 401) {
+            // Unauthorized - Bad username/password
+            localStorage.setItem("connection", "loggedOut");
+            setLoginMessage("Username or password is incorrect");
+        } else if (response.status === 503) {
+            // Service Unavailable
+            get("loginPassword").value = "";
+            localStorage.setItem("connection", "noConnection");
+            setLoginMessage("Login failed: Could not connect to the database");
         }
     });
+}
 
-    get("loginPassword").value = "";
+async function onValidLogin(response) {
+    let responseJson = await response.json();
+    token = responseJson.accessToken;
+    localStorage.setItem("loggedInUser", get("loginUsername").value);
+    onConnectionEstablished();
 }
 
 // Logout of the cabinet database
 function runLogout() {
-    window.localStorage.removeItem("token");
-    window.localStorage.removeItem("timeLoggedIn")
-    window.localStorage.setItem("connection", "loggedOut");
+    unloadLoggedInFeatures();
+    localStorage.setItem("connection", "loggedOut");
+    localStorage.removeItem("showUnfinishedSongs");
+    token = null;
+    localStorage.removeItem("loggedInUser");
+
+    // Ping the server to delete the refresh token
+    fetch(loginURL + "/logout", {
+        method: 'POST',
+        credentials: 'include'
+    });
+
+    // Close the update tab if open
     let tabButtonClasses = get("dbOptionsButton").classList;
 
     if (tabButtonClasses.contains("chosen")) {
@@ -365,9 +373,17 @@ function runLogout() {
 
 // Called when a connection is established with the database
 function onConnectionEstablished() {
+    localStorage.setItem("connection", "loggedIn");
+    if (!!callMethodOnceConnected) callMethodOnceConnected();
     closeLoginPopup();
+
     get("dbOptionsButton").classList.remove("inactive");
+
+    if (!get("dbOptionsButton").classList.contains("chosen")) {
+        get("dbOptionsButton").click();
+    }
 }
+let callMethodOnceConnected = null;
 
 // Open the login popup
 function openLoginPopup() {
@@ -382,6 +398,7 @@ function closeLoginPopup() {
     unlockTheScreen();
     clearLoginFields();
     clearLoginMessage();
+    callMethodOnceConnected = null;
 }
 
 function locktheScreen() {
@@ -391,45 +408,36 @@ function unlockTheScreen() {
     document.body.classList.remove("locked");
 }
 
-// Test a token to see if valid and test the connection to the database
-function testDatabaseEditorConnection(comingFromLoginPopup) {
-    let connectionStatus = window.localStorage.getItem("connection");
-    if (connectionStatus == "loggedIn" || connectionStatus == "noConnection") return;
-    let token = window.localStorage.getItem("token");
-    if (!token) {
-        window.localStorage.setItem("connection", "loggedOut");
-        return;
-    }
+function refreshAccessToken(callAfterConnected) {
+    get("loginUsername").value = localStorage.getItem("loggedInUser");
+    callMethodOnceConnected = callAfterConnected;
 
-    fetch(updateCabinetURL + "/testConnection", {
-        headers: {
-            "Authorization": "Bearer " + token
-        }
+    fetch(loginURL + "/refresh", {
+        method: 'POST',
+        credentials: 'include'
     }).then(response => {
         if (response.ok) {
-            // Success
-            window.localStorage.setItem("connection", "loggedIn");
-            onConnectionEstablished();
-
-            if (!!comingFromLoginPopup) {
-                get("dbOptionsButton").click();
-            }
-
-            return;
-        }
-
-        if (response.status === 401) {
-            // Unauthorized - Shouldn't be here
-            window.localStorage.removeItem("token");
-            window.localStorage.setItem("connection", "loggedOut");
-        } else if (response.status === 503) {
-            // Service Unavailable
-            window.localStorage.setItem("connection", "noConnection");
-            if (!!comingFromLoginPopup) {
-                alert("Login failed: Could not connect to the database");
-            }
+            // Success! Access token refreshed
+            onValidLogin(response);
+        } else {
+            // Unable to refresh token, log out
+            runLogout();
+            promptLogin();
         }
     });
+}
+
+function promptLogin() {
+    clearLoginFields();
+    setLoginMessage("Session expired...");
+    openLoginPopup();
+}
+
+// Test a token to see if valid and test the connection to the database
+function testDatabaseEditorConnection(comingFromLoginPopup) {
+    // No need to test connection if logged out
+    if (localStorage.getItem("connection") == "loggedOut") return;
+    refreshAccessToken();
 }
 
 
@@ -523,20 +531,20 @@ function deleteCurrentSong() {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem("token")
+                "Authorization": "Bearer " + token
             },
             body: JSON.stringify(deleteEntity)
         }
     ).then(response => {
-        if (logSuccess(response)) {
-            // Save new data
-            songData.id = null;
-            songData.newSong = true;
-            saveTabs();
+        if (!logSuccess(response, deleteCurrentSong)) return;
 
-            // Display
-            setUpDBInputs();
-        }
+        // Save new data
+        songData.id = null;
+        songData.newSong = true;
+        saveTabs();
+
+        // Display
+        setUpDBInputs();
     });
 }
 
@@ -568,13 +576,15 @@ function addCurrentSong() {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem("token")
+                "Authorization": "Bearer " + token
             },
             body: JSON.stringify(newSongData)
         }
-    ).then(response => response.json()).then(responseJson => {
-        if (logSuccess(responseJson)) {
-            // Save
+    ).then(response => {
+        if (!logSuccess(response, addCurrentSong)) return;
+
+        response.json().then(responseJson => {
+            // Save new song data
             songData.id = responseJson.id;
             songData.newSong = false;
 
@@ -598,7 +608,7 @@ function addCurrentSong() {
             // Display
             displaySongNonVariants(); // Artist, song Link, & Song Detail
             setUpDBInputs();
-        }
+        });
     });
 }
 
@@ -618,59 +628,58 @@ function requestUpdate(updateEndpoint, newVaule) {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem("token")
+                "Authorization": "Bearer " + token
             },
             body: JSON.stringify(songEntity)
         }
     ).then(response => {
-        if (!response.title) {
-            switch (updateType) {
-                case "SongName":
-                    songData.songName = newVaule;
-                    setTabName(newVaule);
-                    break;
-                case "Artist":
-                    songData.artist = newVaule;
-                    saveTabs();
-                    displayArtist();
-                    break;
-                case "SongLink":
-                    songData.songLink = newVaule;
-                    saveTabs();
-                    displaySongLink();
-                    break;
-                case "Language":
-                    songData.language = newVaule;
-                    saveTabs();
-                    break;
-                case "IsPublicDomain":
-                    songData.isPublicDomain = newVaule;
-                    saveTabs();
-                    break;
-                case "IsMetaDataCompleted":
-                    songData.isMetadataCompleted = newVaule;
-                    saveTabs();
-                    break;
-                case "IsChartCompleted":
-                    songData.isChartCompleted = newVaule;
-                    saveTabs();
-                    break;
-                case "IsPrintingCompleted":
-                    songData.isPrintingCompleted = newVaule;
-                    saveTabs();
-                    break;
-                case "IsPrimaryVersion":
-                    songData.isPrimaryVersion = newVaule;
-                    saveTabs();
-                    break;
-                case "Notes":
-                    songData.notes = newVaule;
-                    saveTabs();
-                    break;
-            }
-        }
+        if (!logSuccess(response, () => requestUpdate(updateEndpoint, newVaule))) return;
+        console.log(updateType, newVaule);
 
-        logSuccess(response);
+        switch (updateType) {
+            case "SongName":
+                songData.songName = newVaule;
+                setTabName(newVaule);
+                break;
+            case "Artist":
+                songData.artist = newVaule;
+                saveTabs();
+                displayArtist();
+                break;
+            case "SongLink":
+                songData.songLink = newVaule;
+                saveTabs();
+                displaySongLink();
+                break;
+            case "Language":
+                songData.language = newVaule;
+                saveTabs();
+                break;
+            case "IsPublicDomain":
+                songData.isPublicDomain = newVaule;
+                saveTabs();
+                break;
+            case "IsMetadataCompleted":
+                songData.isMetadataCompleted = newVaule;
+                saveTabs();
+                break;
+            case "IsChartCompleted":
+                songData.isChartCompleted = newVaule;
+                saveTabs();
+                break;
+            case "IsPrintingCompleted":
+                songData.isPrintingCompleted = newVaule;
+                saveTabs();
+                break;
+            case "IsPrimaryVersion":
+                songData.isPrimaryVersion = newVaule;
+                saveTabs();
+                break;
+            case "Notes":
+                songData.notes = newVaule;
+                saveTabs();
+                break;
+        }
     });
 }
 
@@ -689,12 +698,12 @@ function requestAddStyle(style) {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem("token")
+                "Authorization": "Bearer " + token
             },
             body: JSON.stringify(styleEntity)
         }
     ).then(response => {
-        if (!logSuccess(response)) return;
+        if (!logSuccess(response, () => addCurrentSong(style))) return;
         if (!songData.styles) songData.styles = [];
         songData.styles.push(style);
         saveTabs();
@@ -716,20 +725,22 @@ function requestRemoveStyle(style) {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem("token")
+                "Authorization": "Bearer " + token
             },
             body: JSON.stringify(styleEntity)
         }
     ).then(response => {
-        if (!logSuccess(response) || !songData.styles) return;
+        if (!logSuccess(response, () => requestRemoveStyle(style))) return;
+        if (!songData.styles) return; // Corrupted data - quit out early
         songData.styles.splice(songData.styles.indexOf(style), 1); // Remove the style
         saveTabs();
     });
 }
 
 // Log whether or not a request was successful
-function logSuccess(response) {
+function logSuccess(response, retryMethod) {
     if (response.ok || !!response.id) {
+        // Briefly show a success marker and return true
         let successMarker = make("img");
         successMarker.classList.add("successMarker")
         successMarker.src = "imgs/icons/check.png";
@@ -740,9 +751,8 @@ function logSuccess(response) {
         return true;
     } else {
         switch (response.status) {
-            case 401: // Login expired
-                runLogout();
-                openLoginPopup();
+            case 401: // Bad token
+                refreshAccessToken(retryMethod);
                 break;
             case 503: // No Connection
                 runLogout();

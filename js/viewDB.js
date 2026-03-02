@@ -314,6 +314,7 @@ function runLogin() {
     fetch(loginURL,
         {
             method: "POST",
+            credentials: 'include',
             headers: {
                 "Content-Type": "application/json"
             },

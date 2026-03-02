@@ -1247,12 +1247,6 @@ function setUpSideMenuTabs() {
                 get("sideMenuContentContainer").classList.add(tabName);
                 get("sideMenuContentContainer").classList.remove("closed");
                 get(tabName + "Container").classList.remove("hidden");
-
-                if (tabName === "dbOptions") {
-                    get("databaseLogoutContainer").classList.remove("hidden");
-                } else {
-                    get("databaseLogoutContainer").classList.add("hidden");
-                }
             } else {
                 this.classList.remove("chosen");
                 get("sideMenuContentContainer").classList.add("closed");

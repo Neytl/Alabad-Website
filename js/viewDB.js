@@ -344,6 +344,7 @@ async function onValidLogin(response) {
     let responseJson = await response.json();
     token = responseJson.accessToken;
     localStorage.setItem("loggedInUser", get("loginUsername").value);
+    localStorage.setItem("refreshToken", responseJson.refreshToken); // TODO: Remove once problem with mobile fixed
     onConnectionEstablished();
 }
 
@@ -358,7 +359,12 @@ function runLogout() {
     // Ping the server to delete the refresh token
     fetch(loginURL + "/logout", {
         method: 'POST',
-        credentials: 'include'
+        credentials: 'include',
+        // TODO: Remove once problem with mobile fixed:
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(localStorage.getItem("refreshToken"))
     });
 
     // Close the update tab if open
@@ -415,7 +421,12 @@ function refreshAccessToken(callAfterConnected) {
 
     fetch(loginURL + "/refresh", {
         method: 'POST',
-        credentials: 'include'
+        credentials: 'include',
+        // TODO: Remove once problem with mobile fixed:
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(localStorage.getItem("refreshToken"))
     }).then(response => {
         if (response.ok) {
             // Success! Access token refreshed

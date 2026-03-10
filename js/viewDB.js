@@ -629,7 +629,9 @@ function requestUpdate(updateEndpoint, newVaule) {
     if (!newVaule && !updateEndpoint.startsWith("updateIs")) newVaule = null;
 
     let songEntity = {
-        id: songData.id
+        id = songData.id,
+        artist = songData.artist, // Needed for metadata completeness check
+        songLink = songData.songLink // Needed for metadata completeness check
     };
 
     let updateType = updateEndpoint.substring(6);

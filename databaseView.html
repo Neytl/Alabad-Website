@@ -189,7 +189,7 @@
                                 </div>
                                 <hr>
                                 <!--Media - Print/Download-->
-                                <div class="editingSection" id="downloadPrintContainer">
+                                <div class="editingSection hidden" id="downloadPrintContainer">
                                     <span title="Print (ctrl+p)" id="printButton" class="smallIconButton">
                                         <img src="imgs/icons/print.png" alt="Print">
                                     </span>
@@ -201,7 +201,7 @@
                                         <div class="promptArrow">➔</div>
                                     </div>
                                 </div>
-                                <hr>
+                                <hr class="hidden">
                                 <!--Reset-->
                                 <div class="editingSection">
                                     <span class="smallIconButton" title="Undo All Changes" id="resetButton">
@@ -211,7 +211,7 @@
                                 <hr>
                                 <!--Font-->
                                 <div id="fontEditing" class="editingSection">
-                                    <select id="fontStyleSelect" class="noTranslation select Arial">
+                                    <select id="fontStyleSelect" class="noTranslation select Arial hidden">
                                         <option class="Arial">Arial</option>
                                     </select>
                                     <div id="fontSizeContainer">
@@ -365,7 +365,7 @@
                                         <!--Song Name-->
                                         <div class="toggleEditDBInput">
                                             <div title="Song Name" class="dbButton editDBInput">
-                                                <div title="Song Name" id="songNameData">New Song</div>
+                                                <div title="Song Name" id="songNameData">Nueva Canción</div>
                                                 <div class="imageButton">
                                                     <img src="imgs/icons/pencil.png" alt="Edit">
                                                 </div>
@@ -426,6 +426,14 @@
                                             </select>
                                         </div>
 
+                                    </div>
+
+                                    <div>
+                                    </div>
+
+                                    <div id="savedSongEditContainer">
+                                        <hr>
+
                                         <!--Public Domain?-->
                                         <div class="dbUpdateCheckboxContainer">
                                             <div>Public Domain?</div>
@@ -437,24 +445,19 @@
                                             <div>Primary Version?</div>
                                             <input type="checkbox" checked id="isPrimaryVersion" class="dbUpdateCheckbox">
                                         </div>
-                                    </div>
 
-                                    <div>
-                                    </div>
-
-                                    <div id="savedSongEditContainer">
                                         <hr>
 
                                         <!--Song Completeness>-->
-                                        <div class="dbUpdateCheckboxContainer">
+                                        <div class="dbUpdateCheckboxContainer hidden">
                                             <div>Metadata Complete?</div>
                                             <input type="checkbox" id="isMetadataCompleted" class="dbUpdateCheckbox">
                                         </div>
                                         <div class="dbUpdateCheckboxContainer">
-                                            <div>Chart Complete?</div>
+                                            <div>Verified Chords?</div>
                                             <input type="checkbox" id="isChartCompleted" class="dbUpdateCheckbox">
                                         </div>
-                                        <div class="dbUpdateCheckboxContainer">
+                                        <div class="dbUpdateCheckboxContainer hidden">
                                             <div>Printing Complete?</div>
                                             <input type="checkbox" id="isPrintingCompleted" class="dbUpdateCheckbox">
                                         </div>

@@ -578,6 +578,7 @@ function saveSongData(newData) {
     songData.html = newData.html;
     songData.shortenedChart = newData.shortenedChart;
     songData.title = newData.title;
+    songData.language = newData.language;
 
     // Modifiers
     songData.hasChords = newData.hasChords;
@@ -1390,8 +1391,7 @@ async function postNewText(text) {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                "text": text,
-                language: (!!songData ? songData.language : null)
+                "text": text
             })
         }
     ).then(response => response.json());
@@ -1411,9 +1411,9 @@ function postTextAndDisplay() {
         newKeyRequest = undefined;
     }
 
-    if (!!songData.language) {
-        requestPayload.language = songData.language;
-    }
+    //if (!!songData.language) {
+    //    requestPayload.language = songData.language;
+    //}
 
     fetch(mainUrl + "/parseText",
         {

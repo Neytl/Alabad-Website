@@ -250,6 +250,369 @@ function showStyles(styles) {
 
 
 //*****************************
+// Utitlity
+//*****************************
+
+// e.g. "Renuevame#54"
+function getSongIdTag() {
+    return songData.songName + "#" + songData.id;
+}
+
+//*****************************
+// DB input style events
+//*****************************
+
+// Switch from edit metadata to view
+function hideUpdate(inputElements) {
+    inputElements.showDBValueDiv.classList.remove("hidden");
+    inputElements.dbInputDiv.classList.add("hidden");
+}
+
+// Update metadata of a song
+function tryUpdate(inputElements) {
+    // Toggle edit/view
+    hideUpdate(inputElements);
+
+    let newValue = inputElements.dbInput.value;
+    let showValueDiv = inputElements.showValue;
+
+    // No Update
+    if (isInvalidUpdateRequest(showValueDiv, newValue)) {
+        return;
+    }
+
+    // Update styles for add/edit
+    if (!!newValue) {
+        showValueDiv.innerHTML = newValue;
+        showValueDiv.classList.remove("italics");
+        inputElements.editButtonImg.src = "./imgs/icons/pencil.png";
+    } else {
+        showValueDiv.innerHTML = "Add " + showValueDiv.title;
+        showValueDiv.classList.add("italics");
+        inputElements.editButtonImg.src = "./imgs/icons/add.png";
+    }
+
+    // Show song name on update
+    if (songData.newSong && inputElements.showValue.id === "songNameData") {
+        setTabName(newValue);
+    }
+
+    // Update
+    if (!songData.newSong) {
+        requestUpdate(inputElements.dbInput.id, newValue)
+    }
+}
+
+// Checks if a metadata update request is invalid
+function isInvalidUpdateRequest(showValueDiv, newValue) {
+    // Name did not change
+    if (showValueDiv.innerHTML === newValue) {
+        return true;
+    }
+
+    // Song name must be 1 to 50 characters
+    switch (showValueDiv.id) {
+        case "songNameData":
+            return (!newValue || newValue.length > 50); // Song name must be 1 to 50 characters
+        case "artistData":
+            return newValue.length > 50; // Artist must be 0 to 50 characters
+        default:
+            return false;
+    }
+}
+
+//*****************************
+// Requests
+//*****************************
+
+// Send request to delete current song - stays open as new song
+function deleteCurrentSong() {
+    let deleteEntity = {
+        "id": songData.id
+    };
+
+    // Request Delete
+    //console.log("Delete song \"" + getSongIdTag() + "\"");
+
+    fetch(updateCabinetURL + "/deleteSong",
+        {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+            },
+            body: JSON.stringify(deleteEntity)
+        }
+    ).then(response => {
+        if (!logSuccess(response, deleteCurrentSong)) return;
+
+        // Save new data
+        songData.id = null;
+        songData.newSong = true;
+        saveTabs();
+
+        // Display
+        setUpDBInputs();
+    });
+}
+
+// Send request to add current song - reloads with new id
+function addCurrentSong() {
+    let newSongData = {};
+
+    // Metadata
+    newSongData.songName = songData.songName;
+
+    if (!get("artistData").classList.contains("italics")) {
+        newSongData.artist = get("artistData").innerHTML;
+    }
+
+    if (!get("songLinkData").classList.contains("italics")) {
+        newSongData.songLink = get("songLinkData").innerHTML;
+    }
+
+    newSongData.language = get("languageData").value;
+    newSongData.isPrimaryVersion = get("isPrimaryVersion").checked;
+    newSongData.isPublicDomain = get("isPublicDomain").checked;
+
+    // Text
+    newSongData.text = songData.text;
+
+    // Request Add
+    fetch(updateCabinetURL + "/addSong",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+            },
+            body: JSON.stringify(newSongData)
+        }
+    ).then(response => {
+        if (!logSuccess(response, addCurrentSong)) return;
+
+        response.json().then(responseJson => {
+            // Save new song data
+            songData.id = responseJson.id;
+            songData.newSong = false;
+
+            if (!!responseJson.artist) {
+                songData.artist = responseJson.artist;
+            }
+
+            if (!!responseJson.songLink) {
+                songData.songLink = responseJson.songLink;
+            }
+
+            songData.language = responseJson.language;
+            songData.isPrimaryVersion = responseJson.isPrimaryVersion;
+            newSongData.isPublicDomain = responseJson.isPublicDomain;
+            newSongData.isMetadataCompleted = responseJson.isMetadataCompleted;
+            newSongData.isChartCompleted = responseJson.isChartCompleted;
+            newSongData.isPrintingCompleted = responseJson.isPrintingCompleted;
+            songData.styles = responseJson.styles;
+            saveTabs();
+
+            // Display
+            displaySongNonVariants(); // Artist, song Link, & Song Detail
+            setUpDBInputs();
+        });
+    });
+}
+
+// Send request to update metadata
+function requestUpdate(updateEndpoint, newVaule) {
+    if (!newVaule && !updateEndpoint.startsWith("updateIs")) newVaule = null;
+
+    let songEntity = {
+        id: songData.id,
+        artist: songData.artist, // Needed for metadata completeness check
+        songLink: songData.songLink // Needed for metadata completeness check
+    };
+
+    let updateType = updateEndpoint.substring(6);
+    songEntity[updateType] = newVaule;
+
+    fetch(updateCabinetURL + "/" + updateEndpoint,
+        {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+            },
+            body: JSON.stringify(songEntity)
+        }
+    ).then(response => {
+        if (!logSuccess(response, () => requestUpdate(updateEndpoint, newVaule))) return;
+        console.log(updateType, newVaule);
+
+        switch (updateType) {
+            case "SongName":
+                songData.songName = newVaule;
+                setTabName(newVaule);
+                break;
+            case "Artist":
+                songData.artist = newVaule;
+                saveTabs();
+                displayArtist();
+                break;
+            case "SongLink":
+                songData.songLink = newVaule;
+                saveTabs();
+                displaySongLink();
+                break;
+            case "Language":
+                songData.language = newVaule;
+                saveTabs();
+                break;
+            case "IsPublicDomain":
+                songData.isPublicDomain = newVaule;
+                saveTabs();
+                break;
+            case "IsMetadataCompleted":
+                songData.isMetadataCompleted = newVaule;
+                saveTabs();
+                break;
+            case "IsChartCompleted":
+                songData.isChartCompleted = newVaule;
+                saveTabs();
+                break;
+            case "IsPrintingCompleted":
+                songData.isPrintingCompleted = newVaule;
+                saveTabs();
+                break;
+            case "IsPrimaryVersion":
+                songData.isPrimaryVersion = newVaule;
+                saveTabs();
+                break;
+            case "Notes":
+                songData.notes = newVaule;
+                saveTabs();
+                break;
+        }
+    });
+}
+
+// Send request to add song style to current song
+function requestAddStyle(style) {
+    //console.log("Request add style \"" + style + "\" to " + getSongIdTag());
+
+    let styleEntity = {
+        "id": songData.id,
+        "styles": [style]
+    }
+
+    // Request add style
+    fetch(updateCabinetURL + "/addStyle",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+            },
+            body: JSON.stringify(styleEntity)
+        }
+    ).then(response => {
+        if (!logSuccess(response, () => addCurrentSong(style))) return;
+        if (!songData.styles) songData.styles = [];
+        songData.styles.push(style);
+        saveTabs();
+    });
+}
+
+// Send request to remove song style from current song
+function requestRemoveStyle(style) {
+    //console.log("Request remove style \"" + style + "\" from " + getSongIdTag());
+
+    let styleEntity = {
+        "id": songData.id,
+        "styles": [style]
+    }
+
+    // Request remove style
+    fetch(updateCabinetURL + "/removeStyle",
+        {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+            },
+            body: JSON.stringify(styleEntity)
+        }
+    ).then(response => {
+        if (!logSuccess(response, () => requestRemoveStyle(style))) return;
+        if (!songData.styles) return; // Corrupted data - quit out early
+        songData.styles.splice(songData.styles.indexOf(style), 1); // Remove the style
+        saveTabs();
+    });
+}
+
+// Log whether or not a request was successful
+function logSuccess(response, retryMethod) {
+    if (response.ok || !!response.id) {
+        // Briefly show a success marker and return true
+        let successMarker = make("img");
+        successMarker.classList.add("successMarker")
+        successMarker.src = "imgs/icons/check.png";
+        get("dbOptionsButton").appendChild(successMarker);
+        setTimeout(function () {
+            get("dbOptionsButton").removeChild(successMarker);
+        }, 1000);
+        return true;
+    } else {
+        switch (response.status) {
+            case 401: // Bad token
+                refreshAccessToken(retryMethod);
+                break;
+            case 503: // No Connection
+                runLogout();
+                alert("Update failed: Could not connect to database");
+                break;
+            case 400: // Bad request - invalid update
+                alert("Update failed: Invalid update");
+                break;
+            default: // Dunno
+                alert("Update failed");
+                break;
+        }
+
+        return false;
+    }
+}
+
+// Load in the next song by ID
+function nextSong() {
+    fetch(dbUrl + "/nextSong/" + songData.id).then(response => response.json()).then(responseJson => {
+        showAdjacentSong(responseJson, "Could not find a next song");
+    });
+}
+
+// Load in the previous song by ID
+function prevSong() {
+    fetch(dbUrl + "/previousSong/" + songData.id).then(response => response.json()).then(responseJson => {
+        showAdjacentSong(responseJson, "Could not find a previous song");
+    });
+}
+
+// Show the next/previous song
+function showAdjacentSong(responseJson, errorMessage) {
+    if (noDBConnection(responseJson) || responseJson.title === "Not Found") {
+        alert(errorMessage);
+        return;
+    }
+
+    // Save & Show data
+    songData.notes = null;
+    saveSongData(responseJson);
+    saveSongMetadata(responseJson);
+    showNewSong();
+
+    // Update tab
+    document.getElementsByClassName("currentPage")[0].childNodes[1].innerHTML = songData.songName;
+}
+
+
+//*****************************
 // Log in
 //*****************************
 let token = null;
@@ -453,367 +816,6 @@ function testDatabaseEditorConnection(comingFromLoginPopup) {
 }
 
 
-//*****************************
-// Utitlity
-//*****************************
-
-// e.g. "Renuevame#54"
-function getSongIdTag() {
-    return songData.songName + "#" + songData.id;
-}
-
-//*****************************
-// DB input style events
-//*****************************
-
-// Switch from edit metadata to view
-function hideUpdate(inputElements) {
-    inputElements.showDBValueDiv.classList.remove("hidden");
-    inputElements.dbInputDiv.classList.add("hidden");
-}
-
-// Update metadata of a song
-function tryUpdate(inputElements) {
-    // Toggle edit/view
-    hideUpdate(inputElements);
-
-    let newValue = inputElements.dbInput.value;
-    let showValueDiv = inputElements.showValue;
-
-    // No Update
-    if (isInvalidUpdateRequest(showValueDiv, newValue)) {
-        return;
-    }
-
-    // Update styles for add/edit
-    if (!!newValue) {
-        showValueDiv.innerHTML = newValue;
-        showValueDiv.classList.remove("italics");
-        inputElements.editButtonImg.src = "./imgs/icons/pencil.png";
-    } else {
-        showValueDiv.innerHTML = "Add " + showValueDiv.title;
-        showValueDiv.classList.add("italics");
-        inputElements.editButtonImg.src = "./imgs/icons/add.png";
-    }
-
-    // Show song name on update
-    if (songData.newSong && inputElements.showValue.id === "songNameData") {
-        setTabName(newValue);
-    }
-
-    // Update
-    if (!songData.newSong) {
-        requestUpdate(inputElements.dbInput.id, newValue)
-    }
-}
-
-// Checks if a metadata update request is invalid
-function isInvalidUpdateRequest(showValueDiv, newValue) {
-    // Name did not change
-    if (showValueDiv.innerHTML === newValue) {
-        return true;
-    }
-
-    // Song name must be 1 to 50 characters
-    switch (showValueDiv.id) {
-        case "songNameData":
-            return (!newValue || newValue.length > 50); // Song name must be 1 to 50 characters
-        case "artistData":
-            return newValue.length > 50; // Artist must be 0 to 50 characters
-        default:
-            return false;
-    }
-}
-
-//*****************************
-// Requests
-//*****************************
-
-// Send request to delete current song - stays open as new song
-function deleteCurrentSong() {
-    let deleteEntity = {
-        "id": songData.id
-    };
-
-    // Request Delete
-    //console.log("Delete song \"" + getSongIdTag() + "\"");
-
-    fetch(updateCabinetURL + "/deleteSong",
-        {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + token
-            },
-            body: JSON.stringify(deleteEntity)
-        }
-    ).then(response => {
-        if (!logSuccess(response, deleteCurrentSong)) return;
-
-        // Save new data
-        songData.id = null;
-        songData.newSong = true;
-        saveTabs();
-
-        // Display
-        setUpDBInputs();
-    });
-}
-
-// Send request to add current song - reloads with new id
-function addCurrentSong() {
-    let newSongData = {};
-
-    // Metadata
-    newSongData.songName = songData.songName;
-
-    if (!get("artistData").classList.contains("italics")) {
-        newSongData.artist = get("artistData").innerHTML;
-    }
-
-    if (!get("songLinkData").classList.contains("italics")) {
-        newSongData.songLink = get("songLinkData").innerHTML;
-    }
-
-    newSongData.language = get("languageData").value;
-    newSongData.isPrimaryVersion = get("isPrimaryVersion").checked;
-    newSongData.isPublicDomain = get("isPublicDomain").checked;
-
-    // Text
-    newSongData.text = songData.text;
-
-    // Request Add
-    fetch(updateCabinetURL + "/addSong",
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + token
-            },
-            body: JSON.stringify(newSongData)
-        }
-    ).then(response => {
-        if (!logSuccess(response, addCurrentSong)) return;
-
-        response.json().then(responseJson => {
-            // Save new song data
-            songData.id = responseJson.id;
-            songData.newSong = false;
-
-            if (!!responseJson.artist) {
-                songData.artist = responseJson.artist;
-            }
-
-            if (!!responseJson.songLink) {
-                songData.songLink = responseJson.songLink;
-            }
-
-            songData.language = responseJson.language;
-            songData.isPrimaryVersion = responseJson.isPrimaryVersion;
-            newSongData.isPublicDomain = responseJson.isPublicDomain;
-            newSongData.isMetadataCompleted = responseJson.isMetadataCompleted;
-            newSongData.isChartCompleted = responseJson.isChartCompleted;
-            newSongData.isPrintingCompleted = responseJson.isPrintingCompleted;
-            songData.styles = responseJson.styles;
-            saveTabs();
-
-            // Display
-            displaySongNonVariants(); // Artist, song Link, & Song Detail
-            setUpDBInputs();
-        });
-    });
-}
-
-// Send request to update metadata
-function requestUpdate(updateEndpoint, newVaule) {
-    if (!newVaule && !updateEndpoint.startsWith("updateIs")) newVaule = null;
-
-    let songEntity = {
-        id = songData.id,
-        artist = songData.artist, // Needed for metadata completeness check
-        songLink = songData.songLink // Needed for metadata completeness check
-    };
-
-    let updateType = updateEndpoint.substring(6);
-    songEntity[updateType] = newVaule;
-
-    fetch(updateCabinetURL + "/" + updateEndpoint,
-        {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + token
-            },
-            body: JSON.stringify(songEntity)
-        }
-    ).then(response => {
-        if (!logSuccess(response, () => requestUpdate(updateEndpoint, newVaule))) return;
-        console.log(updateType, newVaule);
-
-        switch (updateType) {
-            case "SongName":
-                songData.songName = newVaule;
-                setTabName(newVaule);
-                break;
-            case "Artist":
-                songData.artist = newVaule;
-                saveTabs();
-                displayArtist();
-                break;
-            case "SongLink":
-                songData.songLink = newVaule;
-                saveTabs();
-                displaySongLink();
-                break;
-            case "Language":
-                songData.language = newVaule;
-                saveTabs();
-                break;
-            case "IsPublicDomain":
-                songData.isPublicDomain = newVaule;
-                saveTabs();
-                break;
-            case "IsMetadataCompleted":
-                songData.isMetadataCompleted = newVaule;
-                saveTabs();
-                break;
-            case "IsChartCompleted":
-                songData.isChartCompleted = newVaule;
-                saveTabs();
-                break;
-            case "IsPrintingCompleted":
-                songData.isPrintingCompleted = newVaule;
-                saveTabs();
-                break;
-            case "IsPrimaryVersion":
-                songData.isPrimaryVersion = newVaule;
-                saveTabs();
-                break;
-            case "Notes":
-                songData.notes = newVaule;
-                saveTabs();
-                break;
-        }
-    });
-}
-
-// Send request to add song style to current song
-function requestAddStyle(style) {
-    //console.log("Request add style \"" + style + "\" to " + getSongIdTag());
-
-    let styleEntity = {
-        "id": songData.id,
-        "styles": [style]
-    }
-
-    // Request add style
-    fetch(updateCabinetURL + "/addStyle",
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + token
-            },
-            body: JSON.stringify(styleEntity)
-        }
-    ).then(response => {
-        if (!logSuccess(response, () => addCurrentSong(style))) return;
-        if (!songData.styles) songData.styles = [];
-        songData.styles.push(style);
-        saveTabs();
-    });
-}
-
-// Send request to remove song style from current song
-function requestRemoveStyle(style) {
-    //console.log("Request remove style \"" + style + "\" from " + getSongIdTag());
-
-    let styleEntity = {
-        "id": songData.id,
-        "styles": [style]
-    }
-
-    // Request remove style
-    fetch(updateCabinetURL + "/removeStyle",
-        {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + token
-            },
-            body: JSON.stringify(styleEntity)
-        }
-    ).then(response => {
-        if (!logSuccess(response, () => requestRemoveStyle(style))) return;
-        if (!songData.styles) return; // Corrupted data - quit out early
-        songData.styles.splice(songData.styles.indexOf(style), 1); // Remove the style
-        saveTabs();
-    });
-}
-
-// Log whether or not a request was successful
-function logSuccess(response, retryMethod) {
-    if (response.ok || !!response.id) {
-        // Briefly show a success marker and return true
-        let successMarker = make("img");
-        successMarker.classList.add("successMarker")
-        successMarker.src = "imgs/icons/check.png";
-        get("dbOptionsButton").appendChild(successMarker);
-        setTimeout(function () {
-            get("dbOptionsButton").removeChild(successMarker);
-        }, 1000);
-        return true;
-    } else {
-        switch (response.status) {
-            case 401: // Bad token
-                refreshAccessToken(retryMethod);
-                break;
-            case 503: // No Connection
-                runLogout();
-                alert("Update failed: Could not connect to database");
-                break;
-            case 400: // Bad request - invalid update
-                alert("Update failed: Invalid update");
-                break;
-            default: // Dunno
-                alert("Update failed");
-                break;
-        }
-
-        return false;
-    }
-}
-
-// Load in the next song by ID
-function nextSong() {
-    fetch(dbUrl + "/nextSong/" + songData.id).then(response => response.json()).then(responseJson => {
-        showAdjacentSong(responseJson, "Could not find a next song");
-    });
-}
-
-// Load in the previous song by ID
-function prevSong() {
-    fetch(dbUrl + "/previousSong/" + songData.id).then(response => response.json()).then(responseJson => {
-        showAdjacentSong(responseJson, "Could not find a previous song");
-    });
-}
-
-// Show the next/previous song
-function showAdjacentSong(responseJson, errorMessage) {
-    if (noDBConnection(responseJson) || responseJson.title === "Not Found") {
-        alert(errorMessage);
-        return;
-    }
-
-    // Save & Show data
-    songData.notes = null;
-    saveSongData(responseJson);
-    saveSongMetadata(responseJson);
-    showNewSong();
-
-    // Update tab
-    document.getElementsByClassName("currentPage")[0].childNodes[1].innerHTML = songData.songName;
-}
 
 //*****************************
 // Playlists

@@ -418,7 +418,7 @@
                                         </div>
 
                                         <!--Language-->
-                                        <div id="languageUpdateContainer">
+                                        <div id="languageUpdateContainer" class="hidden">
                                             <div>Language:</div>
                                             <select id="languageData">
                                                 <option id="spanishOption">Spanish</option>
@@ -432,36 +432,6 @@
                                     </div>
 
                                     <div id="savedSongEditContainer">
-                                        <hr>
-
-                                        <!--Public Domain?-->
-                                        <div class="dbUpdateCheckboxContainer">
-                                            <div>Public Domain?</div>
-                                            <input type="checkbox" id="isPublicDomain" class="dbUpdateCheckbox">
-                                        </div>
-
-                                        <!--Primary Version?-->
-                                        <div class="dbUpdateCheckboxContainer">
-                                            <div>Primary Version?</div>
-                                            <input type="checkbox" checked id="isPrimaryVersion" class="dbUpdateCheckbox">
-                                        </div>
-
-                                        <hr>
-
-                                        <!--Song Completeness>-->
-                                        <div class="dbUpdateCheckboxContainer hidden">
-                                            <div>Metadata Complete?</div>
-                                            <input type="checkbox" id="isMetadataCompleted" class="dbUpdateCheckbox">
-                                        </div>
-                                        <div class="dbUpdateCheckboxContainer">
-                                            <div>Verified Chords?</div>
-                                            <input type="checkbox" id="isChartCompleted" class="dbUpdateCheckbox">
-                                        </div>
-                                        <div class="dbUpdateCheckboxContainer hidden">
-                                            <div>Printing Complete?</div>
-                                            <input type="checkbox" id="isPrintingCompleted" class="dbUpdateCheckbox">
-                                        </div>
-
                                         <hr>
 
                                         <!--Song Styles-->
@@ -488,6 +458,34 @@
 
                                             <hr>
                                         </div>
+
+                                        <!--Song Completeness>-->
+                                        <div class="dbUpdateCheckboxContainer hidden">
+                                            <div>Metadata Complete?</div>
+                                            <input type="checkbox" id="isMetadataCompleted" class="dbUpdateCheckbox">
+                                        </div>
+                                        <div class="dbUpdateCheckboxContainer">
+                                            <div>Verified Chords?</div>
+                                            <input type="checkbox" id="isChartCompleted" class="dbUpdateCheckbox">
+                                        </div>
+                                        <div class="dbUpdateCheckboxContainer hidden">
+                                            <div>Printing Complete?</div>
+                                            <input type="checkbox" id="isPrintingCompleted" class="dbUpdateCheckbox">
+                                        </div>
+
+                                        <!--Public Domain?-->
+                                        <div class="dbUpdateCheckboxContainer">
+                                            <div>Public Domain?</div>
+                                            <input type="checkbox" id="isPublicDomain" class="dbUpdateCheckbox">
+                                        </div>
+
+                                        <!--Primary Version?-->
+                                        <div class="dbUpdateCheckboxContainer hidden">
+                                            <div>Primary Version?</div>
+                                            <input type="checkbox" checked id="isPrimaryVersion" class="dbUpdateCheckbox">
+                                        </div>
+
+                                        <hr>
 
                                         <!--Notes-->
                                         <div>
@@ -608,7 +606,7 @@
     <script src="js/audiosynth.js"></script>
     <script src="js/infoPopup.js"></script>
     <script src="js/buildResults.js"></script>
-    <script src="js/view.js"></script>
     <script src="js/viewDB.js"></script>
+    <script src="js/view.js"></script>
 </body>
 </html>

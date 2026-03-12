@@ -19,7 +19,7 @@ window.addEventListener("load", function () {
     })
 
     get("testsLink").addEventListener("click", function () {
-        fetch(dbUrl + "/runKeyAlgorithmTests").then(response => response.json()).then(result => {
+        fetch(dbUrl + "/runTests").then(response => response.json()).then(result => {
             alert(result);
         });
     });

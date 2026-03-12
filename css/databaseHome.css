@@ -135,6 +135,38 @@ body {
     padding-top: 1.5em;
 }
 
+
+/*******************************************
+ **** Logo
+ *******************************************/
+
+#logoContainer {
+    user-select: none;
+    filter: none;
+    margin: 12vh 0 1vh 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    #logoContainer img {
+        width: 4.5em;
+        height: 6em;
+        max-width: 30vh;
+        max-height: 30vh;
+        filter: none;
+        filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+    }
+
+    #logoContainer span {
+/*        color: white;*/
+        text-align: center;
+        font-size: 5em;
+        font-family: "Kalam", cursive;
+        padding: 0.3em 0.2em 0 0.1em;
+    }
+
+
 /*******************************************************************************
  **** Footer
  ******************************************************************************/

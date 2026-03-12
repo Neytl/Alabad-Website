@@ -62,7 +62,7 @@
                     </div>
                 </div>
 
-                <div id="rightNav">
+                <div id="rightNav" class="hidden">
                     <!--Search-->
                     <div id="searchContainer">
                         <div id="searchBar">
@@ -173,7 +173,9 @@
                             <div class="row">
                                 <div id="linkDiv"></div>
                                 <span id="songInfo" title="Song Details" class="smallIconButton inactive"><img alt="Info" src="imgs/icons/info.png" alt="Info"></span>
-                                <span id="shareSongButton" title="Share Song" class="smallIconButton"><img alt="Share" src="imgs/icons/share.png"></span>
+                                <div class="hidden">
+                                    <span id="shareSongButton" title="Share Song" class="smallIconButton"><img alt="Share" src="imgs/icons/share.png"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -310,7 +312,7 @@
                                 <!--Key-->
                                 <div id="transposeButtonsDiv">
                                     <!--Hear Key-->
-                                    <div title="Hear Key" id="hearKeyButton" class="smallIconButton">
+                                    <div title="Hear Key" id="hearKeyButton" class="smallIconButton hidden">
                                         <img src="imgs/icons/ear.png" alt="Hear">
                                         <div class="infoPromptContainer">
                                             <div class="infoPrompt">Click to hear the current key</div>
@@ -581,9 +583,11 @@
                                 </div>
 
                                 <!--Playlist Button-->
-                                <div id="playlistButton" data-tab-name="playlist" class="sideMenuOption inactive" title="Playlist">
-                                    <img src="imgs/icons/playlist.png" alt="Playlist">
-                                    <img src="imgs/icons/add.png" id="addToPlaylistIcon" alt="Add">
+                                <div class="hidden">
+                                    <div id="playlistButton" data-tab-name="playlist" class="sideMenuOption inactive" title="Playlist">
+                                        <img src="imgs/icons/playlist.png" alt="Playlist">
+                                        <img src="imgs/icons/add.png" id="addToPlaylistIcon" alt="Add">
+                                    </div>
                                 </div>
                             </div>
                         </div>

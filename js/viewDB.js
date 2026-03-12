@@ -689,6 +689,7 @@ function runLogin() {
     ).then(response => {
         if (response.ok) {
             // Success! Valid Login
+            localStorage.setItem("loggedInUser", get("loginUsername").value);
             onValidLogin(response);
         } else if (response.status === 401) {
             // Unauthorized - Bad username/password
@@ -706,7 +707,6 @@ function runLogin() {
 async function onValidLogin(response) {
     let responseJson = await response.json();
     token = responseJson.accessToken;
-    localStorage.setItem("loggedInUser", get("loginUsername").value);
     localStorage.setItem("refreshToken", responseJson.refreshToken); // TODO: Remove once problem with mobile fixed
     onConnectionEstablished();
 }
@@ -717,7 +717,6 @@ function runLogout() {
     localStorage.setItem("connection", "loggedOut");
     localStorage.removeItem("showUnfinishedSongs");
     token = null;
-    localStorage.removeItem("loggedInUser");
 
     // Ping the server to delete the refresh token
     fetch(loginURL + "/logout", {
@@ -779,7 +778,6 @@ function unlockTheScreen() {
 }
 
 function refreshAccessToken(callAfterConnected) {
-    get("loginUsername").value = localStorage.getItem("loggedInUser");
     callMethodOnceConnected = callAfterConnected;
 
     fetch(loginURL + "/refresh", {

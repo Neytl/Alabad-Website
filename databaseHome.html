@@ -18,20 +18,25 @@
     <div id="pageContainer" class="backgroundColor">
         <!--Nav-->
         <div id="nav">
-            <div id="menuButton" title="Menu" class="navItem">
+            <div id="menuButton" title="Menu" class="navItem hidden">
                 <span class="smallIconButton">
                     <img src="imgs/icons/menu.png" alt="Menu">
                 </span>
             </div>
-            <hr>
+            <hr class="hidden">
             <div class="navPageLink navItem" id="currentPage">
-                <img src="imgs/icons/home.png" alt="Home">
-                <span>Home</span>
+                <img src="imgs/icons/note.png" alt="Home">
+                <span>Songs</span>
+            </div>
+            <hr>
+            <div class="navPageLink navItem" id="toCharts">
+                <img src="imgs/icons/fullChart.png" alt="Charts">
+                <span>Charts</span>
             </div>
             <hr>
             <div class="navPageLink navItem" id="toSongs">
-                <img src="imgs/icons/songs.png" alt="Songs">
-                <span>Songs</span>
+                <img src="imgs/icons/search.png" alt="Songs">
+                <span>Search</span>
             </div>
             <hr>
             <!--Tabs-->
@@ -65,6 +70,7 @@
 
         <!--Body-->
         <div id="content">
+            <!--<img id="backgroundImage" style="background-image: url(../imgs/Background.jpg)">-->
             <img id="backgroundImage" style="background-image: url(../imgs/Chord-Chart-Banner.webp)">
             <!--Title and Search-->
             <div id="mainDiv">
@@ -144,11 +150,11 @@
                         <img src="imgs/icons/church.png" alt="Set">
                         <span>Sunday Set</span>
                     </div>
-                    <div class="promptLink" id="unfinishedSongsLink">
+                    <div class="promptLink hidden" id="unfinishedSongsLink">
                         <img src="imgs/icons/pencil.png" alt="Edit">
                         <span>Unfinished Songs</span>
                     </div>
-                    <div class="promptLink" id="testsLink">
+                    <div class="promptLink hidden" id="testsLink">
                         <img src="imgs/icons/note.png" alt="Cabinet">
                         <span>Run Tests</span>
                     </div>
@@ -156,7 +162,7 @@
             </div>
 
             <!--Footer-->
-            <div id="footer">
+            <div id="footer" class="hidden">
                 <span class="noSelect">Contact -</span><span id="email" class="noTranslation">TheCabinetCharts@gmail.com</span>
             </div>
         </div>

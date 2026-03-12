@@ -70,6 +70,13 @@ function loadGeneralUserEvents() {
         });
     }
 
+    // Charts Nav Button
+    if (!!get("toCharts")) {
+        get("toCharts").addEventListener("click", function () {
+            window.location.href = "/";
+        });
+    }
+
     // Search Nav Button
     if (!!get("toSongs")) {
         get("toSongs").addEventListener("click", function () {

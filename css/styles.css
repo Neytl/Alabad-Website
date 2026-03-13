@@ -313,8 +313,12 @@ html.dark .smallIconButton.inactive:hover img {
     justify-content: center;
 }
 
-#nav #currentPage {
-    cursor: default;
+a.navItem {
+    text-decoration: none;
+    color: inherit;
+}
+
+#nav .currentPage {
     background-color: var(--passive-color);
     text-decoration: underline;
 }
@@ -360,11 +364,17 @@ html.dark .smallIconButton.inactive:hover img {
     margin: 0 .3em;
 }
 
+#nav #navSplitDivider {
+    margin: 0;
+    height: 100%;
+    border-radius: 0;
+    width: 0.1em;
+    background-color: var(--weak-color);
+}
 
 /*********************************************************************
  **** Menu
  ********************************************************************/
-
 #menuButton {
     cursor: pointer;
     display: flex;
@@ -480,7 +490,12 @@ html.dark .smallIconButton.inactive:hover img {
     align-items: center;
     flex-grow: 1;
     width: 0em;
+    font-style: italic;
 }
+
+    #tabsContainer .navPageLink span {
+        padding: 0 0.7em 0 0.3em;
+    }
 
 #tabs {
     display: flex;
@@ -581,6 +596,7 @@ html.dark .smallIconButton.inactive:hover img {
  *******************************************/
 
 #newSongButton {
+    margin: 0 .3em;
     font-size: 1.5em;
 }
 

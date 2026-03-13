@@ -63,27 +63,14 @@ function loadGeneralUserEvents() {
     });
 
     // Nav Links
-    // Home Nav Button
-    if (!!get("toHome")) {
-        get("toHome").addEventListener("click", function () {
-            window.location.href = "databaseHome.html";
-        });
-    }
-
-    // Charts Nav Button
-    if (!!get("toCharts")) {
-        get("toCharts").addEventListener("click", function () {
-            window.location.href = "/";
-        });
-    }
-
-    // Search Nav Button
-    if (!!get("toSongs")) {
-        get("toSongs").addEventListener("click", function () {
+    // Search Nav Button - clear the current search
+    navigation.addEventListener("navigate", (event) => {
+        if (event.navigationType === "traverse") return;
+        const url = new URL(event.destination.url);
+        if (url.pathname.startsWith("/databaseSongs")) {
             clearSearchData();
-            promptToSongs(null);
-        });
-    }
+        }
+    });
 
     // New Song
     get("newSongButton").addEventListener("click", event => {

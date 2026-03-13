@@ -63,20 +63,13 @@
 
                     <div id="accountMenu" class="popupMenu">
                         <!--Show ALL Songs in searches-->
-                        <div class="menuSection" id="unfinishedSongsSection">
+                        <div class="menuSection hidden" id="unfinishedSongsSection">
                             <div class="menuSectionTitle noToggle" id="showUnfinishedSongsToggle">
                                 <div class="iconTitle">
                                     <input type="checkbox" id="showUnfinishedSongsCheckBox">
                                     <span>Incluye TODAS las canciones en búsquedas</span>
                                 </div>
                             </div>
-                        </div>
-
-                        <!--Link to add new songs-->
-                        <div class="menuSection">
-                            <a href="databaseHome.html" class="menuSectionTitle noToggle">
-                                <div class="iconTitle"><img alt="Songs" src="imgs/icons/note.png"><span>Registre una nueva canción</span></div>
-                            </a>
                         </div>
 
                         <!--Log Out-->
@@ -92,6 +85,11 @@
                 <div id="openLoginPopupButton">
                     <div class="iconTitle"><img alt="User" src="imgs/icons/account.png"><span>Iniciar Sesión</span></div>
                 </div>
+
+                <!--Link to add new songs-->
+                <a href="databaseHome.html" class="settingsIconButton hidden" id="addSongLink" title="Registra Una Canción">
+                    <img class="settingsIconButtonImage" alt="Songs" src="imgs/icons/cabinet.png">
+                </a>
             </div>
         </div>
 
@@ -114,7 +112,7 @@
 
                 <div class="navButtonGroup">
                     <!--Charts link-->
-                    <a id="chartsPageLink" href="imprimir" title="Imprimir Canciones" class="navButton">
+                    <a id="chartsPageLink" href="imprimir" title="Imprimir Canciones" class="navButton hidden">
                         <img src="imgs/icons/print.png" alt="Print Page">
                     </a>
 

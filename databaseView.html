@@ -25,18 +25,23 @@
                 </span>
             </div>
             <hr class="hidden">
-            <div class="navPageLink mainNavLink navItem" title="Home" id="toHome">
-                <img src="imgs/icons/songs.png" alt="Home">
-            </div>
-            <hr>
-            <div class="navPageLink mainNavLink navItem" title="Charts" id="toCharts">
-                <img src="imgs/icons/fullChart.png" alt="Charts">
-            </div>
-            <hr>
-            <div class="navPageLink mainNavLink navItem" title="Songs" id="toSongs">
+
+
+            <a href="databaseHome.html" class="navPageLink navItem">
+                <img src="imgs/icons/cabinet.png" alt="Database">
+                <span>Register Song</span>
+            </a>
+            <a href="tabla?set_list=ICCM" class="navPageLink navItem">
+                <img src="imgs/icons/church.png" alt="Sunday">
+                <span>Sunday Set</span>
+            </a>
+            <a href="databaseSongs.html" class="navPageLink navItem" id="toSongs">
                 <img src="imgs/icons/search.png" alt="Songs">
-            </div>
-            <hr>
+                <span>Search</span>
+            </a>
+
+            <hr id="navSplitDivider">
+
             <div id="navSplit">
                 <!--Tabs-->
                 <div id="tabsContainer">

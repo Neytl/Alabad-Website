@@ -25,21 +25,22 @@
                 </span>
             </div>
             <hr class="hidden">
-            <div class="navPageLink navItem" id="currentPage">
-                <img src="imgs/icons/note.png" alt="Home">
-                <span>Songs</span>
-            </div>
-            <hr>
-            <div class="navPageLink navItem" id="toCharts">
-                <img src="imgs/icons/fullChart.png" alt="Charts">
-                <span>Charts</span>
-            </div>
-            <hr>
-            <div class="navPageLink navItem" id="toSongs">
+
+            <a href="databaseHome.html" class="navPageLink navItem currentPage">
+                <img src="imgs/icons/cabinet.png" alt="Database">
+                <span>Register Song</span>
+            </a>
+            <a href="tabla?set_list=ICCM" class="navPageLink navItem">
+                <img src="imgs/icons/church.png" alt="Sunday">
+                <span>Sunday Set</span>
+            </a>
+            <a href="databaseSongs.html" class="navPageLink navItem" id="toSongs">
                 <img src="imgs/icons/search.png" alt="Songs">
                 <span>Search</span>
-            </div>
-            <hr>
+            </a>
+
+            <hr id="navSplitDivider">
+
             <!--Tabs-->
             <div id="tabsContainer">
                 <div id="tabs" class="noTranslation">
@@ -150,7 +151,7 @@
                     </div>
                     <div class="promptLink" id="sundaySetLink">
                         <img src="imgs/icons/church.png" alt="Set">
-                        <span>Sunday Set</span>
+                        <span>Edit Sunday Set</span>
                     </div>
                     <div class="promptLink hidden" id="unfinishedSongsLink">
                         <img src="imgs/icons/pencil.png" alt="Edit">

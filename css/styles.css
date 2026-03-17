@@ -469,9 +469,9 @@ a.navItem {
     gap: .4em;
 }
 
-#currentLanguageContainer img {
-    filter: invert(1);
-}
+    #currentLanguageContainer img {
+        filter: invert(1);
+    }
 
 #languageOptions > div {
     padding: .4em;
@@ -493,7 +493,7 @@ a.navItem {
     font-style: italic;
 }
 
-    #tabsContainer .navPageLink span {
+    #tabsContainer .navPageLink span.tabName {
         padding: 0 0.7em 0 0.3em;
     }
 
@@ -529,11 +529,12 @@ a.navItem {
     background-color: var(--passive-color);
 }
 
-.tab .tabCloseButton {
+#tabsContainer .tabCloseButton {
     position: absolute;
     top: .2em;
     right: .2em;
     padding: 0;
+    font-style: normal;
 }
 
 #nav .tabCloseButton:hover {
@@ -587,7 +588,7 @@ a.navItem {
     }
 
     /* Algin tab names to the left */
-    #moreTabs > div { 
+    #moreTabs > div {
         justify-content: left;
     }
 

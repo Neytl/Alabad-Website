@@ -589,6 +589,7 @@ function saveSongData(newData) {
     // Key
     songData.key = newData.key;
     songData.keyChanges = newData.keyChanges;
+    songData.hasAccidentals = newData.hasAccidentals;
 
     saveTabs();
 }
@@ -1086,47 +1087,42 @@ function displayArtist() {
 //*****************************
 // Display Song - Key
 //*****************************
-var keyOptions = [
-    ["LA", "SIb", "SI", "DO", "REb", "RE", "MIb", "MI", "FA", "SOLb", "SOL", "LAb"],
-    ["LA", "LA#", "SI", "DO", "DO#", "RE", "RE#", "MI", "FA", "FA#", "SOL", "SOL#"],
-    ["A", "Bb", "B", "C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab"],
-    ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"]
-];
 
-// Builds buttons for key changes
-function buildKeyButtons(usingFlats, solfege, minorKey, selectedKey) {
-    let keys = [];
+var flatSolfegeKeys = ["LA", "SIb", "SI", "DO", "REb", "RE", "MIb", "MI", "FA", "SOLb", "SOL", "LAb"];
+var sharpSolfegeKeys = ["LA", "LA#", "SI", "DO", "DO#", "RE", "RE#", "MI", "FA", "FA#", "SOL", "SOL#"];
+var flatLetterKeys = ["A", "Bb", "B", "C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab"];
+var sharpLetterKeys = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
 
-    if (solfege) {
-        if (usingFlats) {
-            keys = keyOptions[0];
-        } else {
-            keys = keyOptions[1];
-        }
-    } else {
-        if (usingFlats) {
-            keys = keyOptions[2];
-        } else {
-            keys = keyOptions[3];
-        }
-    }
+var solfegeKeys = ["LA", "SIb", "SI", "DO", "REb", "RE", "MIb", "MI", "FA", "FA#", "SOL", "LAb"];
+var letterKeys = ["A", "Bb", "B", "C", "Db", "D", "Eb", "E", "F", "F#", "G", "Ab"];
+var minorSolfegeKeys = ["LAm", "SIb", "SIm", "DOm", "DO#m", "REm", "RE#m", "MIm", "FAm", "FA#m", "SOLm", "G#m"];
+var minorLetterKeys = ["Am", "Bbm", "Bm", "Cm", "C#m", "Dm", "D#m", "Em", "Fm", "F#m", "Gm", "G#m"];
 
+// Builds buttons for key changes and displays the current key
+function buildKeyButtons(useFlats, solfege, minorKey, selectedKey) {
+    // Generate the list of keys to display
+    let keys = solfege ? (minorKey ? minorSolfegeKeys : solfegeKeys) : (minorKey ? minorLetterKeys : letterKeys);
+    let currentKeyCheck = solfege ? (useFlats ? flatSolfegeKeys : sharpSolfegeKeys) : (useFlats ? flatLetterKeys : sharpLetterKeys);
     let keyButtons = get("keyButtons");
     removeChildren(keyButtons);
+    let index = -1;
 
     keys.forEach(function (key) {
-        if (minorKey) key += "m";
+        index++;
         let keyButton = make("div");
-        keyButton.innerHTML = key;
 
-        if (key === selectedKey) {
+        if (currentKeyCheck[index] + (minorKey ? "m" : "") === selectedKey) {
+            // Current key - make sure it matches sharps/flats
+            key = selectedKey;
             keyButton.classList.add("selectedKey");
         } else {
+            // Not the current key - transpose on click
             keyButton.addEventListener("click", function () {
                 transposeTo(key);
             });
         }
 
+        keyButton.innerHTML = key.replace("#", "♯").replace("b", "♭");;
         keyButtons.appendChild(keyButton);
     });
 }
@@ -1408,6 +1404,7 @@ function postTextAndDisplay() {
 
     if (!!newKeyRequest) {
         requestPayload.key = newKeyRequest;
+        requestPayload.useDefaultChordChartIsFlat = true;
         newKeyRequest = undefined;
     }
 

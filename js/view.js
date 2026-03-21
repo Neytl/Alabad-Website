@@ -589,7 +589,7 @@ function saveSongData(newData) {
     // Key
     songData.key = newData.key;
     songData.keyChanges = newData.keyChanges;
-    songData.hasAccidentals = newData.hasAccidentals;
+    songData.allowChangingAccidentals = newData.allowChangingAccidentals;
 
     saveTabs();
 }

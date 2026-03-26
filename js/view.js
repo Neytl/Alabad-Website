@@ -219,21 +219,17 @@ function loadUserEvents() {
                     event.preventDefault();
                     get("updateTextButton").click();
                     break;
-                case 'p': // Print the song
-                    event.preventDefault();
-                    get("printButton").click();
-                    break;
+                //case 'p': // Print the song
+                //    event.preventDefault();
+                //    get("printButton").click();
+                //    break;
                 case 'F': // Format Sections
                     if (event.shiftKey) {
                         event.preventDefault();
                         requestFormat();
                     }
                     break;
-                case '1': // Format Planning Center
-                    event.preventDefault();
-                    formatPlanningCenter();
-                    break;
-                case '2': // Add song to the database
+                case 'A': // Add song to the database
                     event.preventDefault();
                     get("addSongButton").click();
                     break;
@@ -915,7 +911,7 @@ function showNewSong() {
 function showOriginalSongInfo() {
     // Fill in empty data
     if (!songData.songName) {
-        if (!!songData.title && songData.title.match(/^[A-Za-z ]+$/g)) {
+        if (!!songData.title && songData.title.match(/^[\p{L} ]+$/gu)) {
             songData.songName = songData.title;
         } else {
             songData.songName = "New Song";
@@ -1589,8 +1585,7 @@ function printSongWithoutUpdating() {
 // Cleans the text for the current song
 function cleanSong(event) {
     buildDropdown(event, [
-        buildDropdownOption("clean.png", "Format Sections", function () { requestFormat() }),
-        buildDropdownOption("clean.png", "Format Planning Center", formatPlanningCenter),
+        buildDropdownOption("clean.png", "Format Sections", requestFormat),
         buildDropdownOption("clean.png", "Decapitalize", function () {
             postCleanedText(songData.text.replace(/([^\nA-ZÑÁÉÍÓÚ]([A-ZÑÁÉÍÓÚ]{2,}))|((?<=[A-ZÑÁÉÍÓÚ])[A-ZÑÁÉÍÓÚ])/g, function (group) { return group.toLowerCase(); }));
         }),
@@ -1605,25 +1600,14 @@ function toTitleCase(str) {
     );
 }
 
-function requestFormat(originalTextFontFamily) {
+function requestFormat() {
     saveCurrentText();
 
     let requestPayload = {
         text: (editing ? lastEditedText : originalSongText),
         key: songData.key,
-        chordChartIsFlat: chordChartIsFlat,
         usingSolfege: usingSolfege
     };
-
-    if (!!songData.language) {
-        requestPayload.language = songData.language;
-    } else {
-        requestPayload.language = get("languageData").value;
-    }
-
-    if (!!originalTextFontFamily) {
-        requestPayload.fontFamily = originalTextFontFamily;
-    }
 
     fetch(mainUrl + "/formatSongText",
         {
@@ -1634,40 +1618,21 @@ function requestFormat(originalTextFontFamily) {
             body: JSON.stringify(requestPayload)
         }
     ).then(response => response.json()).then(responseJson => {
-        saveSongData(responseJson);
-        originalSongText = songData.text;
-        showResponseChordChart(songData);
+        originalSongText = responseJson.text;
+        showResponseChordChart(responseJson);
+
+        // Update song title and artist for unsaved songs
+        if (!songData.id) {
+            if (!!responseJson.artist) {
+                songData.artist = responseJson.artist;
+                get("artistData").innerHTML = songData.artist;
+                get("artistData").classList.remove("italics");
+                get("artistDataButton").src = "./imgs/icons/pencil.png";
+            }
+
+            setTabName(toTitleCase(responseJson.title));
+        }
     });
-}
-
-function formatPlanningCenter() {
-    // Remove dots and fix INTRO formatting
-    originalSongText = songData.text.replace(/\r\n.*\r\n$/, "\r\n").replace(/\./g, " ").replace(/:+/g, ":");
-    let lines = originalSongText.split("\r\n");
-
-    // Remove "Generating Preview" - when song is copy pasted in
-    if (originalSongText.startsWith("\r\nGenerating Preview")) {
-        lines.splice(0, 2);
-    }
-
-    // Remove key from the title
-    lines[0] = lines[0].split('[')[0];
-    lines[0] = lines[0].substring(0, lines[0].length - 1)
-
-    // Capture song title
-    setTabName(toTitleCase(lines[0]));
-
-    // Capture artist
-    get("artistData").innerHTML = lines[1].substring(1, lines[1].length - 1);
-    get("artistData").classList.remove("italics");
-    get("artistDataButton").src = "./imgs/icons/pencil.png";
-
-    // Remove artist line
-    lines.splice(1, 1);
-    originalSongText = lines.join("\r\n");
-
-    // Request the normal format
-    requestFormat("Courier New");
 }
 
 function postCleanedText(newText) {

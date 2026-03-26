@@ -524,7 +524,7 @@ function goToView() {
 // Uploads text from clipboard as a new song
 function newSongFromClipbaord() {
     navigator.clipboard.readText().then(songText => {
-        fetch(mainUrl + "/parseTextDefault",
+        fetch(mainUrl + "/formatSongText",
             {
                 method: "POST",
                 headers: {

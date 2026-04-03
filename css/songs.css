@@ -7,12 +7,39 @@
     :root #playlistSongs .result {
         grid-template-columns: 1.5em 1fr 3em;
     }
+
+    /*Hide YT and info in search results*/
+    :root .youTubeLink, :root #resultsContainer #resultsDiv .resultInfoContainer {
+        display: none;
+    }
+
+    :root .result.sections-Name-YT-Artist-Info, :root .result.sections-Name-Artist-Info {
+        grid-template-columns: 1fr 10em;
+    }
+
+    :root .result.sections-Name-YT-Info, :root .result.sections-Name-Info {
+        grid-template-columns: 1fr;
+    }
+}
+
+.result.sections-Name-YT-Artist-Info {
+    grid-template-columns: 1fr 6em 10em 2em;
+}
+.result.sections-Name-YT-Info {
+    grid-template-columns: 1fr 17em 2em;
+}
+
+.result.sections-Name-Artist-Info {
+    grid-template-columns: 1fr 10em 2em;
+}
+
+.result.sections-Name-Info {
+    grid-template-columns: 1fr 2em;
 }
 
 /*******************************************************************************
  **** Search Page
  ******************************************************************************/
-
 #mainDiv {
     display: flex;
     flex-direction: column;

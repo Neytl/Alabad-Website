@@ -16,7 +16,7 @@ function buildResult(resultData) {
 function buildSongResult(songData) {
     let result = make("div");
     result.classList.add("result");
-    let gridTemplate = "1fr ";
+    let resultSections = "sections-Name-";
 
     // Click to open song
     result.addEventListener("click", function (event) {
@@ -39,16 +39,12 @@ function buildSongResult(songData) {
         //viewSongInNewTab(songData.id);
     });
 
-
     // YouTube
     if (!!songData.songLink) {
-        result.appendChild(buildYTLink(songData));
-
-        if (!songData.artist) {
-            gridTemplate += "17em ";
-        } else {
-            gridTemplate += "6em ";
-        }
+        ytLink = buildYTLink(songData);
+        ytLink.classList.add("youTubeLink")
+        result.appendChild(ytLink);
+        resultSections += "YT-";
     }
 
     // Artist
@@ -58,7 +54,8 @@ function buildSongResult(songData) {
         artistSpan.innerHTML = songData.artist;
         let artistButton = buildSongLink("artist.png", "Artist", artistSpan, "Artist: " + songData.artist);
         result.appendChild(artistButton);
-        gridTemplate += "10em ";
+        //gridTemplate += "10em ";
+        resultSections += "Artist-";
 
         artistButton.addEventListener("click", function () {
             searchByArtist(songData.artist);
@@ -77,9 +74,8 @@ function buildSongResult(songData) {
     result.appendChild(resultInfoContainer);
 
     // Result template
-    gridTemplate += "2em";
-    result.style.gridTemplateColumns = gridTemplate;
-
+    resultSections += "Info";
+    result.classList.add(resultSections);
     return result;
 }
 

@@ -169,21 +169,17 @@ function setUpDBInputs() {
     if (!!songData.artist) {
         get("artistData").innerHTML = songData.artist;
         get("artistData").classList.remove("italics");
-        get("artistDataButton").children[0].src = "./imgs/icons/pencil.png";
     } else {
         get("artistData").innerHTML = "Add Artist";
         get("artistData").classList.add("italics");
-        get("artistDataButton").children[0].src = "./imgs/icons/add.png";
     }
 
     if (!!songData.songLink && songData.songLink != "No Results") {
         get("songLinkData").innerHTML = songData.songLink;
         get("songLinkData").classList.remove("italics");
-        get("songLinkDataButton").children[0].src = "./imgs/icons/pencil.png";
     } else {
         get("songLinkData").innerHTML = "Add YouTube";
         get("songLinkData").classList.add("italics");
-        get("songLinkDataButton").children[0].src = "./imgs/icons/add.png";
     }
 
     // Language
@@ -695,6 +691,17 @@ function runLogin() {
             // Unauthorized - Bad username/password
             localStorage.setItem("connection", "loggedOut");
             setLoginMessage("Username or password is incorrect");
+        } else if (response.status === 429) {
+            // Temporary lockout due to too many failed login attempts
+            get("loginPassword").value = "";
+            localStorage.setItem("connection", "loggedOut");
+            setLoginMessage("Too many failed login attempts. Try again later.");
+            let waitTime = parseInt(response.headers.get('Retry-After'));
+            get("loginButton").classList.add("hidden");
+            setTimeout(() => {
+                clearLoginMessage();
+                get("loginButton").classList.remove("hidden");
+            }, waitTime * 1000);
         } else if (response.status === 503) {
             // Service Unavailable
             get("loginPassword").value = "";

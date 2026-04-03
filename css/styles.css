@@ -145,7 +145,6 @@
     color: var(--link-color);
 }
 
-
 /*********************************************************************
  **** Colors
  ********************************************************************/
@@ -254,6 +253,9 @@ select {
     user-select: none;
 }
 
+img.noInvert {
+    filter: none !important;
+}
 
 /*********************************
  **** Small Icon Button
@@ -316,6 +318,7 @@ html.dark .smallIconButton.inactive:hover img {
 a.navItem {
     text-decoration: none;
     color: inherit;
+    height: stretch;
 }
 
 #nav .currentPage {

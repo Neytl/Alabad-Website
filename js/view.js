@@ -430,30 +430,6 @@ function loadEdittingBarEvents() {
 
     // Clean Song
     get("cleanSongButton").addEventListener("click", cleanSong);
-
-    // Full Screen
-    let fullscreened = false;
-    get("fullscreenButton").addEventListener("click", function () {
-        if (fullscreened) {
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-            } else if (document.webkitExitFullscreen) { /* Safari */
-                document.webkitExitFullscreen();
-            } else if (document.msExitFullscreen) { /* IE11 */
-                document.msExitFullscreen();
-            }
-        } else {
-            let element = get("leftSplit");
-            if (element.requestFullscreen) {
-                element.requestFullscreen();
-            } else if (element.webkitRequestFullscreen) { /* Safari */
-                element.webkitRequestFullscreen();
-            } else if (element.msRequestFullscreen) { /* IE11 */
-                element.msRequestFullscreen();
-            }
-        }
-        fullscreened = !fullscreened;
-    });
 }
 
 // Loads events related to the side menu tabs
@@ -911,7 +887,8 @@ function showNewSong() {
 function showOriginalSongInfo() {
     // Fill in empty data
     if (!songData.songName) {
-        if (!!songData.title && songData.title.match(/^[\p{L} ]+$/gu)) {
+        // Match any letter (including accented), parentheses, or space characters
+        if (!!songData.title && songData.title.match(/^[\p{L}\(\) ]+$/gu)) {
             songData.songName = songData.title;
         } else {
             songData.songName = "New Song";

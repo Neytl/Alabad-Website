@@ -43,7 +43,6 @@ body {
     flex-grow: 1;
 }
 
-
 #title {
     padding: 3em 0;
     user-select: none;
@@ -62,7 +61,7 @@ body {
 #mainDiv {
     font-size: 1.1em;
     width: 100%;
-    padding: 4em 0 1em 0;
+    padding: 1em 0;
 }
 
 #content {
@@ -143,7 +142,7 @@ body {
 #logoContainer {
     user-select: none;
     filter: none;
-    margin: 12vh 0 1vh 0;
+    padding-top: 14vh;
     display: flex;
     justify-content: center;
     align-items: center;

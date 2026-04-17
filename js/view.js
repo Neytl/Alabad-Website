@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // - Song link
     let songId = searchParams.get("song");
     if (!!songId) {
-        window.history.replaceState(null, "", "databaseView.html");
+        window.history.replaceState(null, "", "editSong");
         loadSongRequest(songId);
         return;
     }
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // - Playlist link
     let playlistName = searchParams.get("playlistName");
     if (!!playlistName) {
-        window.history.replaceState(null, "", "databaseView.html");
+        window.history.replaceState(null, "", "editSong");
         let playlistIds = searchParams.getAll("[]");
 
         if (!!playlistIds && playlistIds.length > 0) {
@@ -158,7 +158,7 @@ function loadUserEvents() {
     get("darkOut").addEventListener("click", function () {
         if (get("loginPopup").classList.contains("hidden")) {
             // Close the prompt new song and go to Home
-            window.location.href = "databaseHome.html";
+            window.location.href = "registerSong";
         } else {
             // Close the login popup and stay on page
             closeLoginPopup();
@@ -2493,7 +2493,7 @@ function handleNewSong() {
 // What to do after a search is stored and requested
 function handleSearchRequest() {
     clearRefineSearchData();
-    window.location.href = "databaseSongs.html";
+    window.location.href = "search";
 }
 
 

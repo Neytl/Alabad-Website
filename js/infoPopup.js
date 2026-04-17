@@ -43,7 +43,7 @@ function showSongInfo(songData, event, faceInwards) {
             addTextSpan(responseJson[0], stylesSpan, function () {
                 clearSearchData();
                 sessionStorage.setItem("styles", JSON.stringify([responseJson[0]]));
-                window.location.href = "databaseSongs.html";
+                window.location.href = "search";
             });
 
             for (let i = 1; i < responseJson.length; i++) {
@@ -51,7 +51,7 @@ function showSongInfo(songData, event, faceInwards) {
                 addTextSpan(responseJson[i], stylesSpan, function () {
                     clearSearchData();
                     sessionStorage.setItem("styles", JSON.stringify([responseJson[i]]));
-                    window.location.href = "databaseSongs.html";
+                    window.location.href = "search";
                 });
 
             }
@@ -168,7 +168,7 @@ function addTextSpan(text, container, onclick) {
 function searchText(text) {
     clearSearchData();
     sessionStorage.setItem("search", text);
-    window.location.href = "databaseSongs.html";
+    window.location.href = "search";
 }
 
 //------------------

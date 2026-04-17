@@ -67,7 +67,7 @@ function loadGeneralUserEvents() {
     navigation.addEventListener("navigate", (event) => {
         if (event.navigationType === "traverse") return;
         const url = new URL(event.destination.url);
-        if (url.pathname.startsWith("/databaseSongs")) {
+        if (url.pathname.startsWith("/search")) {
             clearSearchData();
         }
     });
@@ -79,7 +79,7 @@ function loadGeneralUserEvents() {
             buildDropdownOption("paste.png", "Use Copied Text", newSongFromClipbaord),
             buildDropdownOption("search.png", "Search For Song", () => {
                 clearSearchData();
-                window.location.href = "databaseSongs.html";
+                window.location.href = "search";
             })
         ]);
     });
@@ -143,7 +143,7 @@ function loadTabs() {
 }
 
 function isCurrentTab(tabData) {
-    return (pageName === "databaseView") && (tabData.tabId == sessionStorage.getItem("tabIdRequest"));
+    return (pageName === "editSong") && (tabData.tabId == sessionStorage.getItem("tabIdRequest"));
 }
 
 // Builds a tab and appends it to the nav - sets the songData for the current page
@@ -242,9 +242,9 @@ function buildTab(tabData) {
             if (tabsData.length > 0) {
                 loadFirstTab();
             } else {
-                window.location.href = "databaseHome.html";
+                window.location.href = "registerSong";
             }
-        } else if (pageName === "databaseView" && usingPlaylist && !tabData.isPlaylist) {
+        } else if (pageName === "editSong" && usingPlaylist && !tabData.isPlaylist) {
             if (getOpenSongs().length === 0) {
                 get("addToPlaylistContainer").classList.add("hidden");
             }
@@ -275,7 +275,7 @@ function closeCurrentTab() {
     if (tabsData.length > 0) {
         loadFirstTab();
     } else {
-        window.location.href = "databaseHome.html";
+        window.location.href = "registerSong.html";
     }
 }
 
@@ -518,7 +518,7 @@ function setUpInfoPrompt(id) {
 
 // Go to the view page
 function goToView() {
-    window.location.href = "databaseView.html";
+    window.location.href = "editSong";
 }
 
 // Uploads text from clipboard as a new song

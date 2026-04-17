@@ -15,7 +15,7 @@ window.addEventListener("load", function () {
 
     get("unfinishedSongsLink").addEventListener("click", function () {
         sessionStorage.setItem("incompleteSongs", "true");
-        window.location.href = "databaseSongs.html";
+        window.location.href = "search";
     })
 
     get("testsLink").addEventListener("click", function () {
@@ -46,7 +46,7 @@ function buildPlaylistLink(playlistName) {
         type: "div",
         classes: ["promptLink", "noTranlation"],
         onclick: function () {
-            window.location.href = "databaseView.html?playlistName=" + playlistName;
+            window.location.href = "editSong?playlistName=" + playlistName;
         },
         children: [
             buildImage({
@@ -82,7 +82,7 @@ function promptToView(prompt) {
 
 // What to do after a search is stored and requested
 function handleSearchRequest() {
-    window.location.href = "databaseSongs.html";
+    window.location.href = "search";
 }
 
 // Go to view after upload

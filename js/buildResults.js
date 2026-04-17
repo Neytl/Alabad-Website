@@ -206,7 +206,7 @@ function viewPlaylist(playlistMetadata) {
 // Load and open the song in a new chrome tab
 function viewSongInNewTab(id) {
     localStorage.setItem("requestId", id);
-    window.open("databaseView.html", '_blank');
+    window.open("editSong", '_blank');
 }
 
 // Load the song but stay on songs page
@@ -230,7 +230,7 @@ function shareSong(songMetadata) {
 
     navigator.share({
         title: "Song - " + songMetadata.songName,
-        url: homeUrl + "/databaseView.html?song=" + songMetadata.id
+        url: homeUrl + "/editSong?song=" + songMetadata.id
     });
 }
 
@@ -267,7 +267,7 @@ function showPlaylist(playlistMetadata) {
 
     // Share Playlist
     get("sharePlaylist").onclick = function () {
-        let shareUrl = homeUrl + "/databaseView.html?playlistName=" + playlistMetadata.tabName;
+        let shareUrl = homeUrl + "/editSong?playlistName=" + playlistMetadata.tabName;
 
         if (!!playlistMetadata.newPlaylist) {
             songsIds.forEach(id => shareUrl += "&[]=" + id);
@@ -554,7 +554,7 @@ function showPlaylistInfo(playlistMetadata) {
 
         // Share Button
         get("sharePlaylist").onclick = function () {
-            let shareUrl = homeUrl + "/databaseView.html?playlistName=" + playlistMetadata.playlistName;
+            let shareUrl = homeUrl + "/editSong?playlistName=" + playlistMetadata.playlistName;
 
             navigator.share({
                 title: "Playlist - " + playlistMetadata.playlistName,

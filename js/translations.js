@@ -20,7 +20,7 @@ var translationsData = [
         ]
     },
     {
-        pages: ["databaseHome.html"],
+        pages: ["registerSong"],
         tranlations: [
             // Home
             ["The Cabinet", "El Gabinete"],
@@ -55,7 +55,7 @@ var translationsData = [
         ]
     },
     {
-        pages: ["databaseSongs.html", "songs.html"],
+        pages: ["search", "songs.html"],
         tranlations: [
             // Refine Search
             ["Refine Search", "Refinar Busqueda"],
@@ -86,7 +86,7 @@ var translationsData = [
         ]
     },
     {
-        pages: ["databaseView.html"],
+        pages: ["editSong"],
         tranlations: [
             // Problem Loading Song Popup
             ["Problem Loading the Song...", "Problema al Cargar la Canción..."],
@@ -121,7 +121,7 @@ var translationsData = [
         ]
     },
     {
-        pages: ["databaseSongs.html", "songs.html", "databaseView.html"],
+        pages: ["search", "songs.html", "editSong"],
         tranlations: [
             ["Lyrics", "Letra"],
             ["YouTube", "YouTube"],
@@ -179,7 +179,7 @@ function getPageTranslations() {
 
     // No path name found - probably on the home page
     if (!htmlDocName) {
-        htmlDocName = "databaseHome.html";
+        htmlDocName = "registerSong";
     }
 
     let pageTranslations = [];

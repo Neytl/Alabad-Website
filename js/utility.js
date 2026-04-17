@@ -290,7 +290,7 @@ function search() {
 // Sends the user to the songs page with a prompt - action to be completed at once there
 function promptToSongs(prompt) {
     sessionStorage.setItem("prompt", prompt);
-    window.location.href = "databaseSongs.html";
+    window.location.href = "search";
 }
 
 // Clears all saved search data

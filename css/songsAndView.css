@@ -107,14 +107,6 @@ input[type=button] {
     color: var(--link-hover-color);
 }
 
-.languageInfoContainer {
-    display: flex;
-    align-items: center;
-}
-.languageInfoContainer .smallIconButton {
-    margin-left: .3em;
-}
-
 /*********************************
  **** YouTube Link
  *********************************/

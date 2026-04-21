@@ -97,7 +97,6 @@ var translationsData = [
             ["Chords", "Acordes"],
             ["Transpose Options", "Opciones de Transposición"],
             ["No Chords", "No Acordes"],
-            ["Hear Key", "Escuchar Clave"],
             ["Download Song", "Descargar Canción"],
             ["Print", "Imprimir"],
             ["Key:", "Clave:"],
@@ -114,7 +113,6 @@ var translationsData = [
             ["Share Song", "Comparte la Canción"],
             // Prompts
             ["Click to change the key", "Haga click para cambiar la clave"],
-            ["Click to hear the current key", "Escuchar la clave actual"],
             ["Click to download the song", "Descargar la canción"],
             // Playlists
             ["Remove Song", "Eliminar Canción"],

@@ -437,9 +437,6 @@ function loadSideMenuEvents() {
     // Tabs opening/closing
     setUpSideMenuTabs();
 
-    // Audio
-    loadAudio();
-
     // Chord Mods
     get("toggleFlatsButton").addEventListener("click", toggleFlats);
     get("toggleSolfegeButton").addEventListener("click", toggleSolfege);
@@ -576,9 +573,7 @@ function saveSongMetadata(newData) {
     songData.styles = newData.styles;
     songData.isPublicDomain = newData.isPublicDomain;
     songData.isPrimaryVersion = newData.isPrimaryVersion;
-    songData.isMetadataCompleted = newData.isMetadataCompleted;
     songData.isChartCompleted = newData.isChartCompleted;
-    songData.isPrintingCompleted = newData.isPrintingCompleted;
     songData.newSong = false;
     saveTabs();
 }
@@ -1604,7 +1599,6 @@ function requestFormat() {
                 songData.artist = responseJson.artist;
                 get("artistData").innerHTML = songData.artist;
                 get("artistData").classList.remove("italics");
-                get("artistDataButton").src = "./imgs/icons/pencil.png";
             }
 
             setTabName(toTitleCase(responseJson.title));
@@ -1714,11 +1708,6 @@ function loadPrompt(prompt) {
     switch (prompt) {
         case "transpose":
             setUpInfoPrompt("chordOptionsButton");
-            break;
-        case "hear":
-            setUpInfoPrompt("hearKeyButton");
-            setUpSideMenuTabs();
-            get("chordOptionsButton").click();
             break;
         case "download":
             setUpInfoPrompt("downloadPrintContainer");

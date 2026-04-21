@@ -196,9 +196,7 @@ function setUpDBInputs() {
     // Check boxes
     get("isPublicDomain").checked = !!songData.isPublicDomain;
     get("isPrimaryVersion").checked = (songData.newSong || !!songData.isPrimaryVersion);
-    get("isMetadataCompleted").checked = !!songData.isMetadataCompleted;
     get("isChartCompleted").checked = !!songData.isChartCompleted;
-    get("isPrintingCompleted").checked = !!songData.isPrintingCompleted;
 
     // Song Styles
     forEachClassElement("songStyleButton", function (element) {
@@ -281,11 +279,9 @@ function tryUpdate(inputElements) {
     if (!!newValue) {
         showValueDiv.innerHTML = newValue;
         showValueDiv.classList.remove("italics");
-        inputElements.editButtonImg.src = "./imgs/icons/pencil.png";
     } else {
         showValueDiv.innerHTML = "Add " + showValueDiv.title;
         showValueDiv.classList.add("italics");
-        inputElements.editButtonImg.src = "./imgs/icons/add.png";
     }
 
     // Show song name on update
@@ -403,9 +399,7 @@ function addCurrentSong() {
             songData.language = responseJson.language;
             songData.isPrimaryVersion = responseJson.isPrimaryVersion;
             newSongData.isPublicDomain = responseJson.isPublicDomain;
-            newSongData.isMetadataCompleted = responseJson.isMetadataCompleted;
             newSongData.isChartCompleted = responseJson.isChartCompleted;
-            newSongData.isPrintingCompleted = responseJson.isPrintingCompleted;
             songData.styles = responseJson.styles;
             saveTabs();
 
@@ -465,16 +459,8 @@ function requestUpdate(updateEndpoint, newVaule) {
                 songData.isPublicDomain = newVaule;
                 saveTabs();
                 break;
-            case "IsMetadataCompleted":
-                songData.isMetadataCompleted = newVaule;
-                saveTabs();
-                break;
             case "IsChartCompleted":
                 songData.isChartCompleted = newVaule;
-                saveTabs();
-                break;
-            case "IsPrintingCompleted":
-                songData.isPrintingCompleted = newVaule;
                 saveTabs();
                 break;
             case "IsPrimaryVersion":

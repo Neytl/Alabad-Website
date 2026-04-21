@@ -171,18 +171,6 @@
  **** Chord Options - Transpose Key
  *****************************************************/
 
-#hearKeyButton {
-    position: absolute;
-    top: .5em;
-    left: 5.7em;
-}
-
-    #hearKeyButton.playing {
-        cursor: default;
-        background-color: var(--foreground-color);
-        box-shadow: 0em 0em .4em .1em var(--text-color);
-    }
-
 #currentKey {
     width: 5em;
 }

@@ -69,21 +69,16 @@ function showSongInfo(songData, event, faceInwards) {
         // - Song Styles
         infoPopup.appendChild(stylesContainer);
 
-        // - Language / Find Translations
-        infoPopup.appendChild(buildLanguageSongInfo(songData.language, function () {
-            searchText("*" + songData.songName);
-        }));
+        // - Language
+        infoPopup.appendChild(buildLanguageSongInfo(songData.language));
 
         // - ID
         infoPopup.appendChild(makeInfoElement("Song ID", "#" + songData.id, false));
     } else {
         // User Made Song
-        // - Language / Find Translations
-        infoPopup.appendChild(buildLanguageSongInfo("", function () {
-            searchText("*" + songData.songName);
-        }));
+        // - Language
+        infoPopup.appendChild(buildLanguageSongInfo(songData.language));
     }
-
 
     // Events
     infoPopup.addEventListener("mouseleave", function () {
@@ -113,17 +108,10 @@ function showSongInfo(songData, event, faceInwards) {
     }
 }
 
-function buildLanguageSongInfo(data, onclick) {
+function buildLanguageSongInfo(data) {
     // The Text
     let container = makeInfoElement("Language", data, true);
     container.classList.add("languageInfoContainer");
-
-    // The translation button
-    let button = buildSmallIconButton("Search for translations", "update.png");
-    button.classList.add("foreground");
-    button.addEventListener("click", onclick);
-    container.appendChild(button);
-
     return container;
 }
 

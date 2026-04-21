@@ -304,15 +304,6 @@
                             <div id="chordOptionsContainer" class="sideMenuContent hidden">
                                 <!--Key-->
                                 <div id="transposeButtonsDiv">
-                                    <!--Hear Key-->
-                                    <div title="Hear Key" id="hearKeyButton" class="smallIconButton hidden">
-                                        <img src="imgs/icons/ear.png" alt="Hear">
-                                        <div class="infoPromptContainer">
-                                            <div class="infoPrompt">Click to hear the current key</div>
-                                            <div class="promptArrow">➔</div>
-                                        </div>
-                                    </div>
-
                                     <!--Keys-->
                                     <div><span id="keyChangeAsterisk" class="hidden">*</span><span>Key:</span></div>
                                     <div id="keyButtons" class="noTranslation"></div>
@@ -458,18 +449,10 @@
                                             <hr>
                                         </div>
 
-                                        <!--Song Completeness>-->
-                                        <div class="dbUpdateCheckboxContainer hidden">
-                                            <div>Metadata Complete?</div>
-                                            <input type="checkbox" id="isMetadataCompleted" class="dbUpdateCheckbox">
-                                        </div>
+                                        <!--Chords Checked?-->
                                         <div class="dbUpdateCheckboxContainer">
                                             <div>Verified Chords?</div>
                                             <input type="checkbox" id="isChartCompleted" class="dbUpdateCheckbox">
-                                        </div>
-                                        <div class="dbUpdateCheckboxContainer hidden">
-                                            <div>Printing Complete?</div>
-                                            <input type="checkbox" id="isPrintingCompleted" class="dbUpdateCheckbox">
                                         </div>
 
                                         <!--Public Domain?-->
@@ -492,7 +475,6 @@
                                             <textarea id="cabinetNotes" spellcheck="false"></textarea>
                                         </div>
 
-                                        <!--TODO: Translations and Melody...-->
                                         <!--Bottom Stick-->
                                         <div id="databaseLogoutContainer" class="hidden noTranslation">
                                             <hr>
@@ -604,7 +586,6 @@
     <script src="js/translations.js"></script>
     <script src="js/utility.js"></script>
     <script src="js/databaseGeneral.js"></script>
-    <script src="js/audiosynth.js"></script>
     <script src="js/infoPopup.js"></script>
     <script src="js/buildResults.js"></script>
     <script src="js/viewDB.js"></script>

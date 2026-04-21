@@ -139,12 +139,6 @@ window.addEventListener("load", function () {
             setUpInfoPrompt("searchBar");
             setUpInfoPrompt("refineSearchButton");
             break;
-        case "translations": // Through home page prompt
-            setUpInfoPrompt("searchButton");
-            clearSearchData();
-            get("searchInput").value = "*Mighty to Save";
-            search();
-            break;
         default: // Through search button or back button or refresh
             loadSavedSearchOptions();
             loadResults();
@@ -745,11 +739,6 @@ function displayResults(results) {
         if (alphaDirection !== "Down") {
             alphSortedResults.classList.add("reversed");
         }
-    }
-
-    // Translations Prompt
-    if (sessionStorage.getItem("prompt") === "translations") {
-        setUpNewInfoPrompt(getFirst(".resultInfoContainer"), "Or find translations in here");
     }
 
     sessionStorage.removeItem("prompt");

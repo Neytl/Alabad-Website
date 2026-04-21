@@ -224,22 +224,6 @@ body, html {
     color: black;
 }
 
-
-/*Translation prompt*/
-.infoPromptContainer.translations > .infoPrompt {
-    height: 3em;
-    width: 11em;
-    left: -14em;
-}
-
-/*Translation info prompt*/
-.infoPrompt.translationsButton {
-    height: 2em;
-    width: 14em;
-    left: -17em;
-    top: -1.5em;
-}
-
 /*******************************************************************************
  **** Refine Search - General
  ******************************************************************************/

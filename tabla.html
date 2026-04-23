@@ -331,15 +331,13 @@
 
         <!--Info Menu-->
         <div class="sideMenu" id="infoMenu">
-            <!--Edit Song-->
-            <div class="menuSection hidden" id="editSongSection">
-                <div class="menuSectionTitle noToggle" id="editSongButton">
-                    <div class="iconTitle"><img alt="edit" src="imgs/icons/pencil.png"><span>Editar la Canción</span></div>
+            <div class="menuSection relative">
+                <!--Edit Song Text-->
+                <div class="hidden editChartButton" id="editSongButton" title="Editar la Canción">
+                    <img alt="edit" src="imgs/icons/pencil.png">
                 </div>
-            </div>
 
-            <!--Display Type-->
-            <div class="menuSection">
+                <!--Display Type-->
                 <div class="menuSectionTitle noToggle noHover">
                     <div>Tabla</div>
                 </div>
@@ -374,8 +372,13 @@
                 </div>
             </div>
 
-            <!--Song Details-->
-            <div class="menuSection">
+            <div class="menuSection relative">
+                <!--Edit Metadata-->
+                <a target="_blank" href="search" class="editChartButton" id="editSongDetailsLink" title="Editar los Detalles">
+                    <img alt="edit" src="imgs/icons/pencil.png">
+                </a>
+
+                <!--Song Details-->
                 <div class="menuSectionTitle noToggle noHover">
                     <div>Detalles</div>
                 </div>

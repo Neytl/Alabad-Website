@@ -295,7 +295,7 @@ function closeTab(tabData) {
     loadTabs();
 }
 
-// Clears the selected tab id from LC
+// Clears the selected tab id from storage
 function clearSelectedTab() {
     sessionStorage.removeItem("tabIdRequest");
 }

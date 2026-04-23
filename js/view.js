@@ -7,6 +7,14 @@
 
 // Before the page is loaded
 document.addEventListener("DOMContentLoaded", function () {
+    // Load in song request from URL string
+    let songQueryParam = new URLSearchParams(window.location.search).get("song_id");
+    if (!!songQueryParam) {
+        viewSong(songQueryParam);
+        return;
+    }
+
+    // Shared between database pages
     loadGeneralPageStuff();
 
     // Check if already logged in
@@ -1561,6 +1569,7 @@ function cleanSong(event) {
         buildDropdownOption("clean.png", "Decapitalize", function () {
             postCleanedText(songData.text.replace(/([^\nA-ZÑÁÉÍÓÚ]([A-ZÑÁÉÍÓÚ]{2,}))|((?<=[A-ZÑÁÉÍÓÚ])[A-ZÑÁÉÍÓÚ])/g, function (group) { return group.toLowerCase(); }));
         }),
+        buildDropdownOption("clean.png", "Courier > Arial", convertCourierToArial),
         buildDropdownOption("clean.png", "Scale Chords", scaleChords),
     ]);
 }
@@ -1603,6 +1612,66 @@ function requestFormat() {
 
             setTabName(toTitleCase(responseJson.title));
         }
+    });
+}
+function requestFormat() {
+    saveCurrentText();
+
+    let requestPayload = {
+        text: (editing ? lastEditedText : originalSongText),
+        key: songData.key,
+        usingSolfege: usingSolfege
+    };
+
+    fetch(mainUrl + "/formatSongText",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(requestPayload)
+        }
+    ).then(response => response.json()).then(responseJson => {
+        originalSongText = responseJson.text;
+        showResponseChordChart(responseJson);
+
+        // Update song title and artist for unsaved songs
+        if (!songData.id) {
+            if (!!responseJson.artist) {
+                songData.artist = responseJson.artist;
+                get("artistData").innerHTML = songData.artist;
+                get("artistData").classList.remove("italics");
+            }
+
+            setTabName(toTitleCase(responseJson.title));
+        }
+    });
+}
+
+function convertCourierToArial() {
+    saveCurrentText();
+
+    let requestPayload = {
+        text: (editing ? lastEditedText : originalSongText),
+        key: songData.key,
+        usingSolfege: usingSolfege,
+        request: {
+            oldFont: "Courier New",
+            newFont: "Arial"
+        }
+    };
+
+    fetch(mainUrl + "/convertFont",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(requestPayload)
+        }
+    ).then(response => response.json()).then(responseJson => {
+        originalSongText = responseJson.text;
+        showResponseChordChart(responseJson);
     });
 }
 
@@ -2483,14 +2552,4 @@ function handleNewSong() {
 function handleSearchRequest() {
     clearRefineSearchData();
     window.location.href = "search";
-}
-
-
-//*****************************
-// Other - Random Stuff
-//*****************************
-
-// Replaces all words in the edit textarea containing multiple capitalized letters in a row with lower case
-function decapitalizeText() {
-    get("songTextEdit").value = get("songTextEdit").value.replace(/([A-ZÑÁÉÍÓÚ]{2,})/g, function (group) { return group.toLowerCase(); });
 }

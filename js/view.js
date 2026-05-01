@@ -1525,37 +1525,10 @@ function downloadBlob(blob, fileName) {
 
 // Opens the song in the print page
 function printSong() {
-    // Print if settings are already saved, or if printing lyrics
-    if (!!songData.newSong || !!songData.fontSize || songData.display == "Lyrics") {
-        printSongWithoutUpdating();
-        return;
-    }
-
-    // Load in print settings, then print
-    fetch(dbUrl + "/printSettings/" + songData.id).then(response => response.json()).then(responseJson => {
-        if (!responseJson.title || responseJson.title != "Not Found") {
-            songData.fontSize = responseJson.fontSize;
-            songData.numColumns = responseJson.numColumns;
-            saveTabs();
-        }
-
-        // Print the song
-        printSongWithoutUpdating();
-    });
-}
-
-// Prints the current song data
-function printSongWithoutUpdating() {
-    window.open("printing.html?song_id=" + songData.id, "_blank");
-    
-    // Print the song - outdated - doesn't work anymore
-/*    localStorage.setItem("specialPrintRequest", JSON.stringify(songData));
-
-    if (usingSpanish()) {
-        window.open("imprimiendo.html", "_blank");
-    } else {
-        window.open("printing.html", "_blank");
-    }*/
+    songData.displayType = displayType;
+    songData.newPrintRequest = true;
+    localStorage.setItem("printData", JSON.stringify(songData));
+    window.open("printing.html", "_blank");
 }
 
 //*****************************

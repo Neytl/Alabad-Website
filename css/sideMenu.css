@@ -4,8 +4,9 @@
 
 #sideMenuTab {
     width: 4.6em;
-/*    padding-top: 11em;
-*/}
+    /*    padding-top: 11em;
+*/
+}
 
 .topBottomStick {
     position: relative;
@@ -83,8 +84,9 @@
     transition: all .3s ease;
     animation-name: unhide;
     animation-duration: .5s;
-/*    padding-top: 11em;
-*/}
+    /*    padding-top: 11em;
+*/
+}
 
     #sideMenuContentContainer.chordOptions {
         width: 12em;
@@ -461,41 +463,42 @@
 
 
 /*******************************************************************************
- **** Playlist
+ **** PowerPoint
  ******************************************************************************/
 
-#playlist {
-    padding-top: 1em;
-    padding-left: .5em;
+#PowerPointSection {
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
 }
 
-#playlistName {
-    background-color: var(--background-color);
-    color: var(--text-color);
-    margin-top: .2em;
+#PowerPointHeader {
+    width: 100%;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-#playlistSongs > .result:not(.currentSong):hover {
-    background-color: var(--foreground-color);
+    #PowerPointHeader img:first-child {
+        width: 1.5em;
+        height: 1.5em;
+    }
+    #PowerPointHeader img {
+        width: 1em;
+        height: 1em;
+        margin-left: 1em;
+    }
+
+#PowerPointSection .iconButton img {
+    width: 1em;
+    height: 1em;
 }
 
-
-/*******************************************************************************
- **** Playlist - Moving/Labels
- ******************************************************************************/
-
-#playlistSongs .moveIcon, #playlistSongs .playingSongIcon, #playlistSongs .result.currentSong .songNumber, #playlistSongs .songLabel:hover .songNumber, #playlistSongs .result.currentSong .songLabel:hover .playingSongIcon {
+.missingPowerPoint #updatePowerPointSlidesButton, .missingPowerPoint #downloadPowerPointSlidesButton, .missingPowerPoint #hasPowerPointIndicator {
     display: none;
 }
-
-#playlistSongs .result.currentSong .playingSongIcon, #playlistSongs .songLabel:hover .moveIcon {
-    display: block;
-}
-
-.songLabel:hover {
-    cursor: grab;
-}
-
-.dragging > * {
-    opacity: 0;
+#PowerPointSection:not(.missingPowerPoint) #uploadPowerPointSlidesButton, #PowerPointSection:not(.missingPowerPoint) #downloadPowerPointTemplateButton, #PowerPointSection:not(.missingPowerPoint) #missingPowerPointIndicator {
+    display: none;
 }

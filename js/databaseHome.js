@@ -25,7 +25,7 @@ window.addEventListener("load", function () {
     });
 
     get("sundaySetLink").addEventListener("click", function () {
-        fetch(dbUrl + "/setListById/ICCM").then(response => response.json()).then(result => {
+        fetch(dbUrl + "/setListById/1JzxYz").then(response => response.json()).then(result => {
             result.songs.forEach(song => {
                 saveNewTabData(song);
             });

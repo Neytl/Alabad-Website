@@ -1,7 +1,6 @@
 var prefix = window.location.origin.includes("local") ? "" : "https://thecabinet20230725181154.azurewebsites.net";
 var mainUrl = prefix + "/api/ChordChart";
 var dbUrl = prefix + "/api/Songs";
-var PowerPointUrl = prefix + "/api/PowerPoint";
 
 var pageName = getPageName();
 function getPageName() {

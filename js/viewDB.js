@@ -1,6 +1,7 @@
 var prefix = window.location.origin.includes("local") ? "" : "https://thecabinet20230725181154.azurewebsites.net";
 var updateCabinetURL = prefix + "/api/UpdateCabinet";
 var loginURL = prefix + "/api/Login";
+var PowerPointUrl = prefix + "/api/PowerPoint";
 
 //*****************************
 // Load Events

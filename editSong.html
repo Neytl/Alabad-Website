@@ -281,17 +281,6 @@
                         <textarea class="songText hidden" id="songTextEdit" rows="20" spellcheck="false"></textarea>
                         <div id="songText" class="songText noTranslation"></div>
                     </div>
-
-                    <!--Show When no playlist songs-->
-                    <div id="noPlaylistSongs" class="hidden">
-                        <div id="noSongsPromptContainer" title="Open Playlist in YouTube">
-                            <p>No songs to show for this playlist yet...</p>
-                            <p>To listen to the songs, open the playlist in YouTube:</p>
-                            <span id="noSongsPlaylistButton" class="smallIconButton">
-                                <img src="imgs/icons/YouTube.png">
-                            </span>
-                        </div>
-                    </div>
                 </div>
 
                 <!--Side Menu-->
@@ -520,48 +509,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-                            </div>
-
-                            <!--Playlist Content-->
-                            <div id="playlistContainer" class="sideMenuContent hidden">
-                                <div id="playlist" class="translateTitles">
-                                    <div id="playlistHeader">
-                                        <input type="text" id="playlistName" class="hoverInput">
-                                        <div id="playlistLinks">
-                                            <div title="Open in YouTube" class="songLink">
-                                                <img src="imgs/icons/YouTube.png" alt="YouTube">
-                                                <a id="playlistLink" target="_blank" href="www.youtube.com">YouTube</a>
-                                            </div>
-                                            <span title="Share Playlist" id="sharePlaylist" class="smallIconButton foreground">
-                                                <img src="imgs/icons/share.png" alt="Share">
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div id="playlistSongs">
-
-                                    </div>
-                                    <div title="Add Song" id="addToPlaylistContainer" class="hidden centerItems">
-                                        <span id="addToPlaylistButton" class="smallIconButton foreground">
-                                            <img src="imgs/icons/add.png" alt="Add Song">
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <!--Update Playlist-->
-                                <div id="playlistUpdateContainer" class="hidden">
-                                    <hr>
-
-                                    <div class="iconButton" id="addCabinetPlaylistButton">
-                                        <img src="imgs/icons/add.png" alt="Add">
-                                        <span>Add Playlist</span>
-                                    </div>
-
-                                    <div class="iconButton" id="updateCabinetPlaylistButton">
-                                        <img src="imgs/icons/update.png" alt="Add">
-                                        <span>Update Playlist</span>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -571,7 +518,7 @@
                         <!--Options Buttons-->
                         <div>
                             <div id="sideMenuOptions">
-                                <!--Transpose Options Button-->
+                                <!--Chords Menu Button-->
                                 <div id="chordOptionsButton" data-tab-name="chordOptions" class="sideMenuOption" title="Transpose Options">
                                     <img src="imgs/icons/note.png" alt="Chords">
                                     <div class="infoPromptContainer">
@@ -580,17 +527,9 @@
                                     </div>
                                 </div>
 
-                                <!--DB Sticky Button-->
+                                <!--Database Menu Button-->
                                 <div id="dbOptionsButton" data-tab-name="dbOptions" class="sideMenuOption inactive" title="Update The Cabinet">
                                     <img src="imgs/icons/cabinet.png" alt="Cabinet">
-                                </div>
-
-                                <!--Playlist Button-->
-                                <div class="hidden">
-                                    <div id="playlistButton" data-tab-name="playlist" class="sideMenuOption inactive" title="Playlist">
-                                        <img src="imgs/icons/playlist.png" alt="Playlist">
-                                        <img src="imgs/icons/add.png" id="addToPlaylistIcon" alt="Add">
-                                    </div>
                                 </div>
                             </div>
                         </div>

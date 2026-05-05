@@ -31,7 +31,6 @@ var translationsData = [
             // Playlsit Links
             ["Share With a Friend", "Comparte con un Amigo"],
             ["Top Songs of 2023", "Canciones Más Populares de 2023"],
-            ["More Playlists ➔", "Más Playlists ➔"],
             // About
             ["Every week, someone has to dig up the week's set out of a large file cabinet. The songs aren't always there, and finding the right chord chart for a new song can be difficult. Having trouble with your church's cabinet? This is the place to be!"
                 , "Cada semana, alguien tiene que desenterrar el juego de la semana de un gran archivador. Las canciones no siempre están ahí, y encontrar la tabla de acordes correcta para una nueva canción puede ser difícil. ¿Tiene problemas con el gabinete de su iglesia? Este es el lugar para estar!"],
@@ -70,7 +69,6 @@ var translationsData = [
             ["Type", "Tipo"],
             ["Artists", "Artistas"],
             ["View Song", "Ver Canción"],
-            ["Playlists", "Playlists"],
             ["No results found", "No Resultados"],
             ["results", "resultados"],
             ["Style", "Estilo"],
@@ -81,8 +79,6 @@ var translationsData = [
             ["Or find translations in here", "O encuentra traducciones aquí"],
             ["Search for a song name or artist", "Buscar por nombre de canción o artista"],
             ["Click here to refine search results", "Refinar los resultados de búsqueda"],
-            // Playlist Titles
-            ["Open Playlist", "Abre el Playlist"],
         ]
     },
     {
@@ -114,8 +110,6 @@ var translationsData = [
             // Prompts
             ["Click to change the key", "Haga click para cambiar la clave"],
             ["Click to download the song", "Descargar la canción"],
-            // Playlists
-            ["Remove Song", "Eliminar Canción"],
         ]
     },
     {
@@ -138,9 +132,6 @@ var translationsData = [
             ["English", "Inglés"],
             ["Spanish", "Español"],
             ["Find Translations", "Busca Traducciones"],
-            // Playlist Titles
-            ["Open in YouTube", "Abre en YouTube"],
-            ["Share Playlist", "Comparte el Playlist"],
             ["Options", "Opciones"],
             ["Share", "Compartir"],
         ]

@@ -52,7 +52,7 @@ function forEachClassElement(className, callback) {
 
 // Applies a function to all elements of a certain class
 function forEachElement(selector, callback) {
-    Array.from(document.querySelectorAll(selector)).forEach(function (element) {
+    Array.from(document.querySelectorAll(selector)).forEach(function(element) {
         callback(element);
     });
 }
@@ -73,9 +73,9 @@ function clickedOnClass(event, className) {
 function setUpChoiceGroup(selector, callback) {
     let elements = Array.from(document.querySelectorAll(selector));
 
-    elements.forEach(function (element) {
-        element.addEventListener("click", function () {
-            elements.forEach(function (item) {
+    elements.forEach(function(element) {
+        element.addEventListener("click", function() {
+            elements.forEach(function(item) {
                 item.classList.remove("chosen");
             });
 
@@ -107,6 +107,13 @@ function openInNewTab(url) {
 // Scrolls smoothly to the top of the screen
 function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Cancel default action for event
+function cancelDefault(e) {
+    e.preventDefault()
+    e.stopPropagation()
+    return false
 }
 
 //*****************************
@@ -230,7 +237,7 @@ function buildDropdown(event, optionElements, floatRight) {
     });
 
     // Destroying the dropdown
-    let selfDestruct = function () {
+    let selfDestruct = function() {
         if (document.body.contains(dropdown)) {
             document.body.removeChild(dropdown);
         }
@@ -309,7 +316,7 @@ function clearRefineSearchData() {
 
 // Searching events
 function loadSearchEvents(getFullSongResults) {
-    get("searchButton").addEventListener("click", function () {
+    get("searchButton").addEventListener("click", function() {
         if (onHomePage() && numResults == 0) {
             get("searchInput").focus();
             return;
@@ -325,13 +332,13 @@ function loadSearchEvents(getFullSongResults) {
         get("searchResults").classList.remove("hidden");
     });
 
-    searchInput.addEventListener("blur", function () {
+    searchInput.addEventListener("blur", function() {
         get("searchBar").classList.remove("focused");
         get("searchContainer").classList.remove("hasResults");
         get("searchResults").classList.add("hidden");
     });
 
-    searchInput.addEventListener("keydown", function (event) {
+    searchInput.addEventListener("keydown", function(event) {
         let hoverDirection = 1;
 
         switch (event.key) {
@@ -493,7 +500,7 @@ function updateSearchResults(event) {
             let resultNumber = 0;
 
             // Display results
-            responseJson.forEach(function (songEntity) {
+            responseJson.forEach(function(songEntity) {
                 // Song Title
                 let songTitle = songEntity.songName;
 
@@ -538,7 +545,7 @@ function updateSearchResults(event) {
                 });
 
                 // Search on click
-                result.addEventListener("mousedown", function () {
+                result.addEventListener("mousedown", function() {
                     window.location.href = (usingSpanish() ? "imprimiendo" : "printing") + "?song_id=" + songEntity.id;
                 });
 
@@ -552,7 +559,7 @@ function updateSearchResults(event) {
     });
 }
 
-// Updates search dropdown with songs name, artists, and playlist results using the search input
+// Updates search dropdown with songs name and artists results using the search input
 function updateSearchResultsForDBPage(event) {
     let searchText = get("searchInput").value;
     let resultsDiv = get("searchResults");
@@ -632,7 +639,7 @@ function updateSearchResultsForDBPage(event) {
         let resultNumber = 0;
 
         // Display results
-        responseJson.forEach(function (resultEntity) {
+        responseJson.forEach(function(resultEntity) {
             let resultValue = resultEntity.resultValue;
 
             let result = make("div");
@@ -650,9 +657,6 @@ function updateSearchResultsForDBPage(event) {
                     break;
                 case "artist":
                     icon.src = "imgs/icons/artist.png";
-                    break;
-                case "playlist":
-                    icon.src = "imgs/icons/playlist.png";
                     break;
             };
 
@@ -687,7 +691,7 @@ function updateSearchResultsForDBPage(event) {
             nameDiv.innerHTML = songTitle;
 
             // Search on click
-            result.addEventListener("mousedown", function () {
+            result.addEventListener("mousedown", function() {
                 currentHovering = this.dataset.resultNumber;
                 get("searchInput").value = resultValue;
                 search();

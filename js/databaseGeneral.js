@@ -19,9 +19,9 @@ function loadGeneralUserEvents() {
     adjustTabsOverflow();
 
     // Color Theme
-    document.getElementsByClassName("onoffswitch")[0].onclick = function () { get("colorThemeSwitch").click(); }
+    document.getElementsByClassName("onoffswitch")[0].onclick = function() { get("colorThemeSwitch").click(); }
 
-    get("colorThemeSwitch").addEventListener("change", function () {
+    get("colorThemeSwitch").addEventListener("change", function() {
         if (get("colorThemeSwitch").checked) {
             localStorage.removeItem("darkMode");
             document.documentElement.classList.remove("dark");
@@ -54,7 +54,7 @@ function loadGeneralUserEvents() {
         }
     });
 
-    get("menuButton").addEventListener("click", function () {
+    get("menuButton").addEventListener("click", function() {
         if (get("menuDiv").classList.toggle("hidden")) {
             get("languageSettingSelect").classList.remove("open");
         }
@@ -91,13 +91,13 @@ function loadGeneralUserEvents() {
     get("file").addEventListener("change", newFiles);
 
     // Dropping a file onto the page
-    document.addEventListener('dragover', function (e) {
+    document.addEventListener('dragover', function(e) {
         e.stopPropagation();
         e.preventDefault();
         e.dataTransfer.dropEffect = 'copy';
     });
 
-    document.addEventListener("drop", function (event) {
+    document.addEventListener("drop", function(event) {
         event.preventDefault();
 
         if (event.dataTransfer.files.length === 0) {
@@ -153,20 +153,10 @@ function buildTab(tabData) {
     // Load tab data
     let isCurrentPage = isCurrentTab(tabData);
 
-    // Sav tab data
+    // Save tab data
     if (isCurrentPage) {
         currentTab = tabData;
-
-        if (!!tabData.isPlaylist) {
-            usingPlaylist = true;
-            playlistData = tabData;
-            songData = getSongFromPlaylist(playlistData.currentSongId);
-        } else {
-            usingPlaylist = false;
-            0
-            playlistData = null;
-            songData = tabData;
-        }
+        songData = tabData;
     }
 
     // Tab div - click event
@@ -176,7 +166,7 @@ function buildTab(tabData) {
     if (isCurrentPage) {
         tabDiv.classList.add("currentPage");
     } else {
-        tabDiv.addEventListener("click", function (event) {
+        tabDiv.addEventListener("click", function(event) {
             if (clickedOnClass(event, "tabCloseButton")) {
                 return;
             }
@@ -188,15 +178,8 @@ function buildTab(tabData) {
 
     // Tab icon
     let img = make("img");
-
-    if (!!tabData.isPlaylist) {
-        img.src = "./imgs/icons/playlist.png";
-        img.alt = "Playlist";
-    } else {
-        img.src = "./imgs/icons/note.png";
-        img.alt = "Note";
-    }
-
+    img.src = "./imgs/icons/note.png";
+    img.alt = "Note";
     tabDiv.appendChild(img);
 
     // Tab name
@@ -223,7 +206,7 @@ function buildTab(tabData) {
 
     tabDiv.appendChild(closeButton);
 
-    closeButton.addEventListener("click", function () {
+    closeButton.addEventListener("click", function() {
         if (isInOverflow(tabDiv)) {
             removeFromOverflow(tabDiv.previousSibling);
             removeFromOverflow(tabDiv);
@@ -243,10 +226,6 @@ function buildTab(tabData) {
                 loadFirstTab();
             } else {
                 window.location.href = "registerSong";
-            }
-        } else if (pageName === "editSong" && usingPlaylist && !tabData.isPlaylist) {
-            if (getOpenSongs().length === 0) {
-                get("addToPlaylistContainer").classList.add("hidden");
             }
         }
     });
@@ -314,7 +293,6 @@ function loadTab(tabId) {
 // Loads the first 
 function loadFirstTab() {
     selectTab(tabsData[0].tabId);
-    usingPlaylist = !!tabsData[0].isPlaylist;
     handleNewSong();
 }
 
@@ -331,7 +309,7 @@ function setUpTabOverlow() {
         }
     });
     window.addEventListener("resize", adjustTabsOverflow);
-    get("moreTabsButton").addEventListener("click", function () {
+    get("moreTabsButton").addEventListener("click", function() {
         get("moreTabs").classList.toggle("hidden");
     });
 }
@@ -465,7 +443,7 @@ function newFiles() {
     files = [];
     var validFileUploaded = false;
 
-    filesData.forEach(function (fileData) {
+    filesData.forEach(function(fileData) {
         fetch(mainUrl + "/upload",
             {
                 method: "POST",
@@ -504,7 +482,7 @@ function newFiles() {
 
 // Sets up an info prompt which closes when the page is clicked on
 function setUpInfoPrompt(id) {
-    document.addEventListener("click", function (event) {
+    document.addEventListener("click", function(event) {
         if (loadingPage || clickedOnClass(event, "promptLink")) {
             return;
         }

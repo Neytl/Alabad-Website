@@ -130,10 +130,6 @@ window.addEventListener("load", function () {
         }
     });
 
-    // Playlists
-    get("addCabinetPlaylistButton").addEventListener("click", requsetAddPlaylistToCabinet);
-    get("updateCabinetPlaylistButton").addEventListener("click", requsetUpdateCabinetPlaylist);
-
     // Prev/Next Song
     get("previousSongButton").addEventListener("click", function () {
         prevSong();
@@ -914,28 +910,4 @@ function downloadFileFromResponse(response) {
         a.click();
         window.URL.revokeObjectURL(url);
     });
-}
-
-
-//*****************************
-// Playlists
-//*****************************
-
-// Adds the current Playlist to the Cabinet
-function requsetAddPlaylistToCabinet() {
-    console.log("Adding playlist to The Cabinet...");
-    console.log("Name: " + playlistData.tabName);
-    console.log("Song Ids: " + getPlaylistIds());
-}
-
-// Returns all song IDs in the current playlist
-function getPlaylistIds() {
-    return playlistData.songs.map(song => song.id);
-}
-
-// Updates a playlist with the current name on the Cabinet
-function requsetUpdateCabinetPlaylist() {
-    console.log("Updating a playlist in The Cabinet...")
-    console.log("Name: '" + playlistData.tabName + "'");
-    console.log("Song Ids: " + getPlaylistIds());
 }

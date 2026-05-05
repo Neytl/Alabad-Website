@@ -4,10 +4,6 @@
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
-    :root #playlistSongs .result {
-        grid-template-columns: 1.5em 1fr 3em;
-    }
-
     /*Hide YT and info in search results*/
     :root .youTubeLink, :root #resultsContainer #resultsDiv .resultInfoContainer {
         display: none;
@@ -496,55 +492,3 @@ body.locked {
         white-space: nowrap;
     }
 
-
-/*******************************************************************************
- **** Playlists
- ******************************************************************************/
-
-#playlistInfo {
-    position: fixed;
-    bottom: 1em;
-    left: 1em;
-    box-shadow: var(--hover-shadow) .5em;
-    border-radius: 1em;
-    padding: .5em;
-    padding-bottom: 1em;
-    width: 18em;
-    z-index: 1;
-    background-color: var(--foreground-color);
-}
-
-#playlistName {
-    font-size: 1.5em;
-    font-weight: bold;
-    margin: .2em .3em;
-    text-overflow: ellipsis;
-    cursor: pointer;
-}
-
-    #playlistName:hover {
-        text-decoration: underline;
-        color: var(--passive-color);
-    }
-
-#playlistInfo #playlistLinks {
-    padding: 0 0 .2em .3em;
-}
-
-#playlistSongs .resultInfoContainer {
-    justify-content: right;
-}
-
-#playlist > #playlistSongs > .result:not(.currentSong):hover {
-    background-color: var(--background-color);
-}
-
-#closePlaylistInfoButton {
-    position: absolute;
-    top: .3em;
-    right: .3em;
-}
-
-    #closePlaylistInfoButton:hover {
-        background-color: var(--background-color);
-    }

@@ -95,9 +95,6 @@ window.addEventListener("load", function () {
 
     backToTopButton.addEventListener("click", scrollToTop);
 
-    // Close playlist info button
-    get("closePlaylistInfoButton").addEventListener("click", () => get("playlistInfo").classList.add("hidden"));
-
     // Load Refine Search Events
     loadRefineSearch();
 
@@ -178,11 +175,8 @@ function loadSavedSearchOptions() {
             checkCheckbox("songTypeRefine");
         } else if (resultType === "Artists") {
             checkCheckbox("artistTypeRefine");
-        } else {
-            checkCheckbox("playlistTypeRefine");
         }
     }
-
 
     let language = sessionStorage.getItem("languageSearch");
     if (!!language) {
@@ -329,7 +323,6 @@ function loadRefineSearch() {
     addResultTypeCheckboxEvents("anyTypeRefine", false);
     addResultTypeCheckboxEvents("songTypeRefine", "Songs");
     addResultTypeCheckboxEvents("artistTypeRefine", "Artists");
-    addResultTypeCheckboxEvents("playlistTypeRefine", "Playlists");
 
     // Refine Language 
     addLanguageCheckboxEvents("anyLanguageRefine", false);
@@ -424,7 +417,6 @@ function addResultTypeCheckboxEvents(cbName, newType) {
             get("anyTypeRefine").checked = false;
             get("songTypeRefine").checked = false;
             get("artistTypeRefine").checked = false;
-            get("playlistTypeRefine").checked = false;
             checkbox.checked = true;
 
             // Remove the current language tag if exists

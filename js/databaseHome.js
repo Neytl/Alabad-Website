@@ -40,26 +40,6 @@ window.addEventListener("load", function () {
     loadingPage = false;
 });
 
-// Returns a playlist prompt link
-function buildPlaylistLink(playlistName) {
-    return build({
-        type: "div",
-        classes: ["promptLink", "noTranlation"],
-        onclick: function () {
-            window.location.href = "editSong?playlistName=" + playlistName;
-        },
-        children: [
-            buildImage({
-                src: "playlist.png"
-            }),
-            build({
-                type: "span",
-                innerHTML: playlistName
-            })
-        ]
-    });
-}
-
 // Selects all text in the container
 function selectText(containerid) {
     if (document.selection) { // IE

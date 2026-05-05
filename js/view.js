@@ -6,7 +6,7 @@
 //*****************************
 
 // Before the page is loaded
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
     // Load in song request from URL string
     let songQueryParam = new URLSearchParams(window.location.search).get("song_id");
     if (!!songQueryParam) {
@@ -53,21 +53,6 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
-    // - Playlist link
-    let playlistName = searchParams.get("playlistName");
-    if (!!playlistName) {
-        window.history.replaceState(null, "", "editSong");
-        let playlistIds = searchParams.getAll("[]");
-
-        if (!!playlistIds && playlistIds.length > 0) {
-            loadNewPlaylist(playlistName, playlistIds);
-        } else {
-            loadDatabasePlaylist(playlistName);
-        }
-
-        return;
-    }
-
     // Info Prompts
     let prompt = sessionStorage.getItem("prompt");
 
@@ -83,37 +68,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Load and show song
-    if (!!playlistData) {
-        loadPlaylist();
-    } else if (!!songData) {
+    if (!!songData) {
         showNewSong();
-    } else if ("playlistData" in localStorage) {
-        playlistData = JSON.parse(localStorage.getItem("playlistData"));
-
-        // Get Songs metadata for playlist
-        fetch(dbUrl + "/playlistSongsMetadata", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(playlistData.songIds)
-        }).then(response => response.json()).then(responseJson => {
-            if (noDBConnection(responseJson) || responseJson.title === "Not Found") {
-                promptNewSong();
-                return;
-            }
-
-            playlistData.songs = responseJson;
-            playlistData.songs.forEach(song => {
-                song.newSong = false;
-                song.requestUpdate = true;
-            })
-
-            openNewTab(playlistData); // saves the playlist and sets songData to the current playlist song
-            loadPlaylist();
-        });
-
-        localStorage.removeItem("playlistData");
     } else if ("requestId" in localStorage) {
         loadSongRequest(localStorage.getItem("requestId"));
     } else {
@@ -142,7 +98,7 @@ function loadSongRequest(songId) {
 // User Load Events
 //*****************************
 
-window.addEventListener("load", function () {
+window.addEventListener("load", function() {
     loadGeneralUserEvents();
     loadUserEvents();
     loadingPage = false;
@@ -155,7 +111,7 @@ function loadUserEvents() {
     loadSideMenuEvents();
 
     // Prompt new song popup
-    get("searchPrompt").addEventListener("click", function () {
+    get("searchPrompt").addEventListener("click", function() {
         promptToSongs("noSearch");
     });
 
@@ -163,7 +119,7 @@ function loadUserEvents() {
 
     get("pastePrompt").addEventListener("click", newSongFromClipbaord);
 
-    get("darkOut").addEventListener("click", function () {
+    get("darkOut").addEventListener("click", function() {
         if (get("loginPopup").classList.contains("hidden")) {
             // Close the prompt new song and go to Home
             window.location.href = "registerSong";
@@ -177,7 +133,7 @@ function loadUserEvents() {
     setupLoginEvents();
 
     // Editing song text
-    get("songTextEdit").addEventListener("change", function () {
+    get("songTextEdit").addEventListener("change", function() {
         saveCurrentText();
 
         postNewText(this.value).then(responseJson => {
@@ -186,12 +142,12 @@ function loadUserEvents() {
         });
     });
 
-    get("songTextEdit").addEventListener("input", function () {
+    get("songTextEdit").addEventListener("input", function() {
         resizeTextArea();
     });
 
     // View Song button
-    get("viewSong").addEventListener("click", function () {
+    get("viewSong").addEventListener("click", function() {
         // Check for empty song
         var songText = get("songTextEdit").value;
         if (!songText) {
@@ -204,7 +160,7 @@ function loadUserEvents() {
     });
 
     // Edit Song Button
-    get("editSong").addEventListener("click", function () {
+    get("editSong").addEventListener("click", function() {
         setUpEdit();
     });
 
@@ -308,14 +264,14 @@ function loadUserEvents() {
 // Loads events related to the song header
 function loadSongHeaderEvents() {
     // Song Name
-    get("songNameEdit").addEventListener("blur", function () {
+    get("songNameEdit").addEventListener("blur", function() {
         // Revert if empty song name
         if (!this.value) {
             this.value = songData.songName;
         }
     });
 
-    get("songNameEdit").addEventListener("keydown", function (event) {
+    get("songNameEdit").addEventListener("keydown", function(event) {
         switch (event.key) {
             case "Escape":
                 this.value = "";
@@ -326,7 +282,7 @@ function loadSongHeaderEvents() {
         }
     });
 
-    get("songNameEdit").addEventListener("change", function () {
+    get("songNameEdit").addEventListener("change", function() {
         // Revert if empty song name
         if (!this.value) {
             this.value = songData.tabName;
@@ -344,12 +300,12 @@ function loadSongHeaderEvents() {
 
 
     // Song Info
-    get("songInfo").addEventListener("click", function (event) {
+    get("songInfo").addEventListener("click", function(event) {
         showSongInfo(songData, event, false);
     });
 
     // Share song
-    get("shareSongButton").addEventListener("click", function () {
+    get("shareSongButton").addEventListener("click", function() {
         shareSong(songData);
     });
 }
@@ -366,7 +322,7 @@ function loadEdittingBarEvents() {
     });
     new ResizeObserver(adjustEditingOverflow).observe(get("sideMenuContentContainer"));
     window.addEventListener("resize", adjustEditingOverflow);
-    get("overflowButton").addEventListener("click", function () {
+    get("overflowButton").addEventListener("click", function() {
         get("overflowElements").classList.toggle("hidden");
     });
 
@@ -379,23 +335,23 @@ function loadEdittingBarEvents() {
     get("printButton").addEventListener("click", printSong);
 
     // Font Size
-    get("fontSize").addEventListener("keydown", function (event) {
+    get("fontSize").addEventListener("keydown", function(event) {
         switch (event.key) {
             case "Enter":
                 this.blur();
                 break;
         }
     });
-    get("fontSize").addEventListener("input", function () {
+    get("fontSize").addEventListener("input", function() {
         setFontSize(parseInt(this.value));
     });
-    get("fontSize").addEventListener("blur", function () {
+    get("fontSize").addEventListener("blur", function() {
         setFontSize(parseInt(lastFontSize));
     });
-    get("growFontSize").addEventListener("click", function () {
+    get("growFontSize").addEventListener("click", function() {
         setFontSize(parseInt(get("fontSize").value) + 1);
     });
-    get("shrinkFontSize").addEventListener("click", function () {
+    get("shrinkFontSize").addEventListener("click", function() {
         setFontSize(parseInt(get("fontSize").value) - 1);
     });
 
@@ -405,20 +361,20 @@ function loadEdittingBarEvents() {
             get("chordColorsContainer").classList.add("hidden");
         }
     });
-    getAllClass("chordColor").forEach(function (element) {
-        element.addEventListener("click", function () {
+    getAllClass("chordColor").forEach(function(element) {
+        element.addEventListener("click", function() {
             setChordColor(element.id);
             get("chordColorsContainer").classList.add("hidden");
         });
     });
-    get("chordColorSelect").addEventListener("click", function (event) {
+    get("chordColorSelect").addEventListener("click", function(event) {
         if (!clickedOn(event, "chordColorsContainer")) {
             get("chordColorsContainer").classList.toggle("hidden");
         }
     });
 
     // Chords/Lyrics
-    get("displayType").addEventListener("change", function () {
+    get("displayType").addEventListener("change", function() {
         saveDisplayTypeChange(songData.displayType);
 
         if (this.value === "Complete") {
@@ -448,22 +404,6 @@ function loadSideMenuEvents() {
     // Chord Mods
     get("toggleFlatsButton").addEventListener("click", toggleFlats);
     get("toggleSolfegeButton").addEventListener("click", toggleSolfege);
-
-    // Playlist Events
-    let playlistNameInput = get("playlistName");
-    playlistNameInput.addEventListener("keydown", event => {
-        switch (event.key) {
-            case "Escape":
-                playlistNameInput.value = playlistData.tabName;
-                playlistNameInput.blur();
-                return;
-            case "Enter":
-                setTabName(playlistNameInput.value);
-                playlistNameInput.blur();
-                return;
-        }
-    });
-    get("addToPlaylistContainer").addEventListener("click", buildAddToPlaylistDropown);
 }
 
 //*****************************
@@ -587,260 +527,6 @@ function saveSongMetadata(newData) {
 }
 
 
-//*****************************
-// Playlists
-//*****************************
-var playlistData;
-var usingPlaylist = false;
-
-// Builds a new playlist with the specified ids
-function loadNewPlaylist(playlistName, playlistIds) {
-    usingPlaylist = true;
-
-    // Get song data for playlist
-    fetch(dbUrl + "/playlistSongsMetadata", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(playlistIds)
-    }).then(response => response.json()).then(responseJson => {
-        if (noDBConnection(responseJson) || responseJson.title === "Not Found") {
-            promptNewSong();
-            return;
-        }
-
-        playlistData = {
-            isPlaylist: true,
-            newPlaylist: true,
-            tabName: playlistName,
-            currentSongId: playlistIds[0],
-            songs: responseJson
-        };
-
-        playlistData.songs.forEach(song => {
-            song.newSong = false;
-            song.requestUpdate = true;
-        });
-
-        openNewTab(playlistData); // saves the playlist and sets songData to the current playlist song
-        loadPlaylist();
-    });
-}
-
-// Loads playlist with the specified name from the database
-function loadDatabasePlaylist(playlistName) {
-    usingPlaylist = true;
-
-    // Get metadata for playlist
-    fetch(dbUrl + "/playlist", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(playlistName)
-    }).then(response => response.json()).then(responseJson => {
-        if (noDBConnection(responseJson) || responseJson.title === "Not Found") {
-            promptNewSong();
-            return;
-        }
-
-        playlistData = {
-            isPlaylist: true,
-            tabName: playlistName,
-            playlistLink: responseJson.playlistLink,
-            songs: responseJson.songs.map(song => {
-                song.newSong = false;
-                song.requestUpdate = true;
-                return song;
-            })
-        };
-
-        if (!!responseJson.songs && responseJson.songs.length > 0) {
-            playlistData.currentSongId = responseJson.songs[0].id;
-        }
-
-        openNewTab(playlistData); // saves the playlist and sets songData to the current playlist song
-        loadPlaylist();
-    });
-}
-
-// Loads and opens the playlist tab for the playlist currently stored in playlistData
-function loadPlaylist() {
-    usingPlaylist = true;
-
-    // Update the playlist tab button
-    get("playlistButton").classList.remove("hidden");
-    get("addToPlaylistIcon").classList.add("hidden");
-    get("playlistButton").classList.remove("inactive");
-
-    // Display the selected song
-    if (!!songData) {
-        showNewSong();
-    } else {
-        noSavePlaylistSongs();
-    }
-
-    // Build the playlist tab content
-    buildPlaylistItems()
-
-    // Open the playlist tab
-    let playlistButton = get("playlistButton");
-
-    if (!playlistButton.classList.contains("chosen")) {
-        setUpSideMenuTabs();
-        playlistButton.click();
-    }
-
-    // Setup update playlist in db options tab
-    if (!!playlistData.isDatabasePlaylist) {
-        get("addCabinetPlaylistButton").classList.add("hidden");
-        get("updateCabinetPlaylistButton").classList.remove("hidden");
-    } else {
-        get("addCabinetPlaylistButton").classList.remove("hidden");
-        get("updateCabinetPlaylistButton").classList.add("hidden");
-    }
-
-    get("playlistUpdateContainer").classList.remove("hidden");
-}
-
-// Builds and sets the playlist tab content
-function buildPlaylistItems() {
-    showPlaylist(playlistData);
-}
-
-// Returns the songdata with the specified id from the current playlist
-function getSongFromPlaylist(id) {
-    let songs = playlistData.songs;
-    for (let i = 0; i < songs.length; i++) {
-        if (songs[i].id === id) {
-            return songs[i];
-        }
-    }
-}
-
-// Closes the playlist and replaces it depending on the current song type
-function deactivatePlaylist() {
-    let playlistButton = get("playlistButton");
-
-    // Close the previous playlist if open
-    if (playlistButton.classList.contains("chosen")) {
-        if (activeChords) {
-            get("chordOptionsButton").click();
-        } else {
-            usingPlaylist = true;
-            playlistButton.click();
-            usingPlaylist = false;
-        }
-    }
-
-    // Playlist tab button
-    if (songData.newSong) { // Disable the button for new songs
-        playlistButton.classList.add("hidden");
-    } else { // Switch to "add playlist" for saved songs
-        playlistButton.classList.remove("hidden");
-        get("addToPlaylistIcon").classList.remove("hidden");
-        get("playlistButton").classList.add("inactive");
-    }
-
-    // Hide update playlist in db options tab
-    get("playlistUpdateContainer").classList.add("hidden");
-}
-
-// Event for "Add To Playlist" button onclick - creates the dropdown options
-function requestAddToPlaylist(event) {
-    let availablePlaylists = [];
-    tabsData.forEach(tab => {
-        if (!!tab.isPlaylist) {
-            availablePlaylists.push(tab);
-        }
-    });
-
-    if (availablePlaylists.length === 0) {
-        createNewPlaylist();
-    } else {
-        // Build add to playlist dropdown
-        let options = availablePlaylists.map(playlist => buildDropdownOption("add.png", "Add to '" + playlist.tabName + "'", function () {
-            if (playlist.songs.some(song => song.id === songData.id)) {
-                alert("Song is already in the playlist");
-                return;
-            }
-
-            playlist.songs.push(songData);
-            playlist.currentSongId = songData.id;
-            removeTabData(songData);
-            loadTab(playlist.tabId);
-            loadPlaylist();
-        }));
-
-        options.push(buildDropdownOption("playlist.png", "Create New Playlist", function () {
-            createNewPlaylist();
-        }));
-
-        buildDropdown(event, options);
-    }
-}
-
-// Builds and adds a single option for the add to playlist dropdown
-function buildAddToPlaylistOption(playlistName, icon, callback) {
-    let option = make("div");
-    let addIcon = make("img");
-    addIcon.src = "imgs/icons/" + icon + ".png";
-    option.appendChild(addIcon);
-    let name = make("span");
-    name.innerHTML = playlistName;
-    option.appendChild(name);
-    option.addEventListener("click", callback);
-    get("addToPlaylistDropdown").appendChild(option);
-}
-
-// Create a new playlist with the current song, replacing the tab 
-function createNewPlaylist() {
-    usingPlaylist = true;
-    playlistData = {};
-    playlistData.songs = [songData];
-    playlistData.isPlaylist = true;
-    playlistData.tabName = "New Playlist";
-    playlistData.currentSongId = songData.id;
-    removeTabData(songData);
-    openNewTab(playlistData); // saves the playlist and open a new tab
-    loadPlaylist();
-}
-
-// Runs if a loaded playlist has no saved songs
-function noSavePlaylistSongs() {
-    deactivateSong();
-    get("noSongsPromptContainer").onclick = function () {
-        openInNewTab(buildPlaylistLinkUrl(playlistData));
-    }
-}
-
-// Returns a list of open database songs
-function getOpenSongs() {
-    return tabsData.filter(tabData => (!tabData.isPlaylist && !tabData.newSong));
-}
-
-// No song to display
-function deactivateSong() {
-    hideChordOptions();
-    get("songHeader").classList.add("hidden");
-    get("editingRow").classList.add("hidden");
-    get("songsCabinetUpdate").classList.add("hidden");
-    get("songTextContainer").classList.add("hidden");
-    get("songTextContainer").classList.add("hidden");
-    get("noPlaylistSongs").classList.remove("hidden");
-}
-
-// Call when there is a song to display
-function activateSong() {
-    get("songHeader").classList.remove("hidden");
-    get("editingRow").classList.remove("hidden");
-    get("songsCabinetUpdate").classList.remove("hidden");
-    get("songTextContainer").classList.remove("hidden");
-    get("noPlaylistSongs").classList.add("hidden");
-}
-
-
 //*****************************************************************************************************************
 // Display Song
 
@@ -850,12 +536,6 @@ function activateSong() {
 
 // Sets ups the page for a new song and displays all song info (does not update tabs)
 function showNewSong() {
-    activateSong();
-
-    if (!usingPlaylist) {
-        deactivatePlaylist();
-    }
-
     if (!!songData.requestUpdate) {
         fetch(dbUrl + "/song/" + songData.id).then(response => response.json()).then(responseJson => {
             if (noDBConnection(responseJson) || responseJson.title === "Not Found") {
@@ -954,26 +634,20 @@ function setTabName(newName) {
     currentTab.childNodes[1].innerHTML = newName;
     currentTab.title = newName;
 
-    if (!usingPlaylist) { // A Song
-        // Change title
-        get("songNameEdit").value = newName;
+    // Change title
+    get("songNameEdit").value = newName;
 
-        // Only for new songs
-        if (songData.newSong) {
-            // Change cabinet update title
-            get("songNameData").innerHTML = newName;
+    // Only for new songs
+    if (songData.newSong) {
+        // Change cabinet update title
+        get("songNameData").innerHTML = newName;
 
-            // Save as new song name as well
-            songData.songName = newName;
-        }
-
-        // Save tab name
-        songData.tabName = newName;
-    } else { // A Playlist
-        // Save tab name
-        playlistData.tabName = newName;
+        // Save as new song name as well
+        songData.songName = newName;
     }
 
+    // Save tab name
+    songData.tabName = newName;
     saveTabs();
 }
 
@@ -1083,7 +757,7 @@ function buildKeyButtons(useFlats, solfege, minorKey, selectedKey) {
     removeChildren(keyButtons);
     let index = -1;
 
-    keys.forEach(function (key) {
+    keys.forEach(function(key) {
         index++;
         let keyButton = make("div");
 
@@ -1093,7 +767,7 @@ function buildKeyButtons(useFlats, solfege, minorKey, selectedKey) {
             keyButton.classList.add("selectedKey");
         } else {
             // Not the current key - transpose on click
-            keyButton.addEventListener("click", function () {
+            keyButton.addEventListener("click", function() {
                 transposeTo(key);
             });
         }
@@ -1186,7 +860,7 @@ function setUpSideMenuTabs() {
     let optionElements = getAllClass("sideMenuOption");
 
     optionElements.forEach(element => {
-        element.addEventListener("click", function (event) {
+        element.addEventListener("click", function(event) {
             let tabName = element.dataset.tabName;
 
             // Chords option tab
@@ -1197,12 +871,6 @@ function setUpSideMenuTabs() {
             // Cabinet Database Editor tab 
             if (tabName === "dbOptions" && this.classList.contains("inactive")) {
                 openLoginPopup();
-                return;
-            }
-
-            // Playlist tab
-            if (tabName === "playlist" && !usingPlaylist) {
-                requestAddToPlaylist(event);
                 return;
             }
 
@@ -1539,8 +1207,8 @@ function printSong() {
 function cleanSong(event) {
     buildDropdown(event, [
         buildDropdownOption("clean.png", "Format Sections", requestFormat),
-        buildDropdownOption("clean.png", "Decapitalize", function () {
-            postCleanedText(songData.text.replace(/([^\nA-ZÑÁÉÍÓÚ]([A-ZÑÁÉÍÓÚ]{2,}))|((?<=[A-ZÑÁÉÍÓÚ])[A-ZÑÁÉÍÓÚ])/g, function (group) { return group.toLowerCase(); }));
+        buildDropdownOption("clean.png", "Decapitalize", function() {
+            postCleanedText(songData.text.replace(/([^\nA-ZÑÁÉÍÓÚ]([A-ZÑÁÉÍÓÚ]{2,}))|((?<=[A-ZÑÁÉÍÓÚ])[A-ZÑÁÉÍÓÚ])/g, function(group) { return group.toLowerCase(); }));
         }),
         buildDropdownOption("clean.png", "Courier > Arial", convertCourierToArial),
         buildDropdownOption("clean.png", "Scale Chords", scaleChords),
@@ -1674,7 +1342,7 @@ function scaleChords(event) {
     });
 
     // Destroying the dropdown
-    let selfDestruct = function () {
+    let selfDestruct = function() {
         if (document.body.contains(dropdown)) {
             document.body.removeChild(dropdown);
 
@@ -1831,7 +1499,7 @@ function buildEditDropdown(event, optionElements, floatRight) {
     });
 
     // Destroying the dropdown
-    let selfDestruct = function () {
+    let selfDestruct = function() {
         if (container.contains(dropdown)) {
             container.removeChild(dropdown);
         }
@@ -1873,26 +1541,26 @@ function setupHTMLEditing() {
         let chordNumber = currentChordNumber;
 
         // Edit Chord
-        addRightClickEvent(chordElement, function (event) {
+        addRightClickEvent(chordElement, function(event) {
             buildEditDropdown(event, [
-                buildDropdownOption("pencil.png", "Edit", function () {
+                buildDropdownOption("pencil.png", "Edit", function() {
                     editChord(chordNumber, chordElement.innerHTML, event);
                 }),
-                buildDropdownOption("trash.png", "Remove", function () {
+                buildDropdownOption("trash.png", "Remove", function() {
                     removeChord(chordNumber);
                 })
             ], true);
         });
 
         // Move Chord
-        let dragStart = function (chordNumber, chordElement) {
+        let dragStart = function(chordNumber, chordElement) {
             draggedChordNumber = chordNumber;
-            setTimeout(function () {
+            setTimeout(function() {
                 chordElement.classList.add("dragging");
             }, 10);
         }
 
-        let dragEnd = function (chordElement) {
+        let dragEnd = function(chordElement) {
             chordElement.classList.remove("dragging");
         }
 
@@ -1904,7 +1572,7 @@ function setupHTMLEditing() {
         chordElement.addEventListener('dragend', () => { dragEnd(chordElement) });
 
         // Select Chord
-        chordElement.addEventListener("click", function () {
+        chordElement.addEventListener("click", function() {
             selectChord(chordElement, chordNumber);
         });
     });
@@ -1923,7 +1591,7 @@ function setupHTMLEditing() {
         let lineNumber = currentLineNumber;
 
         // Drop Chord
-        let onDrop = function (event, droppedLineNumber) {
+        let onDrop = function(event, droppedLineNumber) {
             if (draggedChordNumber < 0) return;
             cancelDefault(event);
 
@@ -1944,12 +1612,12 @@ function setupHTMLEditing() {
 
         if (false /*lineGroupElement.classList.contains("fullLine")*/) {
             // Right Click event for section title
-            addRightClickEvent(lineElement, function (event) {
+            addRightClickEvent(lineElement, function(event) {
                 // Build dropdown options
                 let dropdownOptions = [];
 
                 // Move the section up
-                dropdownOptions.push(buildDropdownOption("up.png", "Move Up", function () {
+                dropdownOptions.push(buildDropdownOption("up.png", "Move Up", function() {
                     combineLine(lineNumber);
                 }));
 
@@ -1958,7 +1626,7 @@ function setupHTMLEditing() {
             });
         } else {
             // Right Click event for lyrics line group
-            addRightClickEvent(lineElement, function (event) {
+            addRightClickEvent(lineElement, function(event) {
                 let splitPoint = getXPositionPortion(event, lineElement);
 
                 // Build dropdown options
@@ -1966,26 +1634,26 @@ function setupHTMLEditing() {
 
                 // Add Chord
                 if (get("displayType").value != "Lyrics") {
-                    dropdownOptions.push(buildDropdownOption("add.png", "Add a chord", function (clickEvent) {
+                    dropdownOptions.push(buildDropdownOption("add.png", "Add a chord", function(clickEvent) {
                         addChord(lineNumber, splitPoint, clickEvent);
                     }));
                 }
 
                 // Split Line
-                dropdownOptions.push(buildDropdownOption("splitLine.png", "Split line here", function () {
+                dropdownOptions.push(buildDropdownOption("splitLine.png", "Split line here", function() {
                     splitLine(lineNumber, splitPoint);
                 }));
 
                 // Combine Line
-                let combineLinesOption = buildDropdownOption("combine.png", "Combine with previous", function () {
+                let combineLinesOption = buildDropdownOption("combine.png", "Combine with previous", function() {
                     combineLine(lineNumber);
                 });
                 addRightClickEvent(combineLinesOption, newEvent => {
                     buildEditDropdown(event, [
-                        buildDropdownOption("combine.png", "1 Space", function () { combineLine(lineNumber, 1); }),
-                        buildDropdownOption("combine.png", "2 Spaces", function () { combineLine(lineNumber, 2); }),
-                        buildDropdownOption("combine.png", "3 Spaces", function () { combineLine(lineNumber, 3); }),
-                        buildDropdownOption("combine.png", "4 Spaces", function () { combineLine(lineNumber, 4); }),
+                        buildDropdownOption("combine.png", "1 Space", function() { combineLine(lineNumber, 1); }),
+                        buildDropdownOption("combine.png", "2 Spaces", function() { combineLine(lineNumber, 2); }),
+                        buildDropdownOption("combine.png", "3 Spaces", function() { combineLine(lineNumber, 3); }),
+                        buildDropdownOption("combine.png", "4 Spaces", function() { combineLine(lineNumber, 4); }),
                     ], true);
                 });
 
@@ -2009,7 +1677,7 @@ function getLyricLine(element) {
 }
 
 function addRightClickEvent(element, callback) {
-    element.addEventListener('contextmenu', function (event) {
+    element.addEventListener('contextmenu', function(event) {
         event.preventDefault();
         callback(event);
     }, false);
@@ -2066,7 +1734,7 @@ function editChord(chordNumber, chordText, event) {
     });
 
     // Destroying the dropdown
-    let selfDestruct = function () {
+    let selfDestruct = function() {
         if (document.body.contains(dropdown)) {
             document.body.removeChild(dropdown);
 
@@ -2126,7 +1794,7 @@ function addChord(lineNumber, splitPoint, event) {
     });
 
     // Destroying the dropdown
-    let selfDestruct = function () {
+    let selfDestruct = function() {
         if (document.body.contains(dropdown)) {
             document.body.removeChild(dropdown);
 
@@ -2512,13 +2180,7 @@ function resizeTextArea() {
 // Reload the tabs and display the song
 function handleNewSong() {
     loadTabs();
-
-    if (usingPlaylist) {
-        loadPlaylist();
-    } else {
-        deactivatePlaylist();
-        showNewSong();
-    }
+    showNewSong();
 }
 
 // What to do after a search is stored and requested

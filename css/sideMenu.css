@@ -63,18 +63,6 @@
         box-shadow: inset -.3em 0 0 0 var(--prominent-color);
     }
 
-/*******************************
- **** Add to playlist tab button
- *******************************/
-
-#playlistButton #addToPlaylistIcon {
-    position: absolute;
-    bottom: .5em;
-    right: .5em;
-    height: 1em;
-    width: 1em;
-}
-
 
 /*****************************************************
  **** Side Menu Content - General
@@ -94,10 +82,6 @@
 
     #sideMenuContentContainer.dbOptions {
         width: 13em;
-    }
-
-    #sideMenuContentContainer.playlist {
-        width: 20em;
     }
 
     #sideMenuContentContainer.closed {

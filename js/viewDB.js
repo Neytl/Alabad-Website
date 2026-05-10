@@ -1,3 +1,4 @@
+
 var prefix = window.location.origin.includes("local") ? "" : "https://thecabinet20230725181154.azurewebsites.net";
 var updateCabinetURL = prefix + "/api/UpdateCabinet";
 var loginURL = prefix + "/api/Login";
@@ -158,13 +159,12 @@ function setUpDBInputs() {
     // Title
     if (songData.newSong) {
         get("addSongButton").classList.remove("hidden");
-        get("savedSongInfoContainer").classList.add("hidden");
         get("savedSongEditContainer").classList.add("hidden");
+        get("updateTextButton").classList.add("hidden");
     } else {
         get("addSongButton").classList.add("hidden");
-        get("songIdData").innerHTML = songData.id;
-        get("savedSongInfoContainer").classList.remove("hidden");
         get("savedSongEditContainer").classList.remove("hidden");
+        get("updateTextButton").classList.remove("hidden");
     }
 
     // Metadata
@@ -186,10 +186,16 @@ function setUpDBInputs() {
         get("songLinkData").classList.add("italics");
     }
 
-    if (!!songData.hasPowerPoint) {
-        get("PowerPointSection").classList.remove("missingPowerPoint");
+    if (!!songData.songLink) {
+        get("YouTubeSection").classList.remove("missing");
     } else {
-        get("PowerPointSection").classList.add("missingPowerPoint");
+        get("YouTubeSection").classList.add("missing");
+    }
+
+    if (!!songData.hasPowerPoint) {
+        get("PowerPointSection").classList.remove("missing");
+    } else {
+        get("PowerPointSection").classList.add("missing");
     }
 
     // Language
@@ -205,7 +211,6 @@ function setUpDBInputs() {
 
     // Check boxes
     get("isPublicDomain").checked = !!songData.isPublicDomain;
-    get("isPrimaryVersion").checked = (songData.newSong || !!songData.isPrimaryVersion);
     get("isChartCompleted").checked = !!songData.isChartCompleted;
 
     // Song Styles
@@ -374,7 +379,6 @@ function addCurrentSong() {
     }
 
     newSongData.language = get("languageData").value;
-    newSongData.isPrimaryVersion = get("isPrimaryVersion").checked;
     newSongData.isPublicDomain = get("isPublicDomain").checked;
 
     // Text
@@ -407,7 +411,6 @@ function addCurrentSong() {
             }
 
             songData.language = responseJson.language;
-            songData.isPrimaryVersion = responseJson.isPrimaryVersion;
             newSongData.isPublicDomain = responseJson.isPublicDomain;
             newSongData.isChartCompleted = responseJson.isChartCompleted;
             songData.styles = responseJson.styles;
@@ -471,10 +474,6 @@ function requestUpdate(updateEndpoint, newVaule) {
                 break;
             case "IsChartCompleted":
                 songData.isChartCompleted = newVaule;
-                saveTabs();
-                break;
-            case "IsPrimaryVersion":
-                songData.isPrimaryVersion = newVaule;
                 saveTabs();
                 break;
             case "Notes":
@@ -858,7 +857,7 @@ function uploadPowerPointFormData(formData, attemptNumber) {
         if (!logSuccess(response, () => { uploadPowerPointFormData(formData, attemptNumber + 1) })) return;
 
         // Success!
-        get("PowerPointSection").classList.remove("missingPowerPoint");
+        get("PowerPointSection").classList.remove("missing");
     });
 }
 

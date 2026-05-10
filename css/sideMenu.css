@@ -219,11 +219,16 @@
     font-style: italic;
 }
 
+#addSongContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 9em;
+}
 
 /*****************************************************
  **** Side Menu - Database Options
  *****************************************************/
-
 #dbOptionsContainer {
     min-width: 10em;
     padding: 2em 0 1em 1em;
@@ -353,13 +358,6 @@
     cursor: pointer;
 }
 
-/*****************************************************
- **** Database Options - Text
- *****************************************************/
-#updateTextButton {
-    padding-right: 2em;
-}
-
 
 /*****************************************************
  **** Database Options - Song styles
@@ -450,39 +448,48 @@
  **** PowerPoint
  ******************************************************************************/
 
-#PowerPointSection {
+.databaseMediaSection {
     display: flex;
     flex-direction: column;
     gap: .5em;
 }
 
-#PowerPointHeader {
+.databaseMediaHeader {
     width: 100%;
     font-weight: bold;
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: .2em;
 }
 
-    #PowerPointHeader img:first-child {
+    .databaseMediaHeader img:first-child {
         width: 1.5em;
         height: 1.5em;
     }
-    #PowerPointHeader img {
+    .databaseMediaHeader img {
         width: 1em;
         height: 1em;
         margin-left: 1em;
     }
 
-#PowerPointSection .iconButton img {
+.databaseMediaSection .iconButton img {
     width: 1em;
     height: 1em;
 }
 
-.missingPowerPoint #updatePowerPointSlidesButton, .missingPowerPoint #downloadPowerPointSlidesButton, .missingPowerPoint #hasPowerPointIndicator {
+.missing #updatePowerPointSlidesButton, .missing #downloadPowerPointSlidesButton, .missing .hasMediaIndicator {
     display: none;
 }
-#PowerPointSection:not(.missingPowerPoint) #uploadPowerPointSlidesButton, #PowerPointSection:not(.missingPowerPoint) #downloadPowerPointTemplateButton, #PowerPointSection:not(.missingPowerPoint) #missingPowerPointIndicator {
+.databaseMediaSection:not(.missing) #uploadPowerPointSlidesButton, .databaseMediaSection:not(.missing) #downloadPowerPointTemplateButton, .databaseMediaSection:not(.missing) .missingMediaIndicator {
     display: none;
+}
+
+.hasMediaIndicator {
+    filter: invert(30%);
+}
+
+.missingMediaIndicator {
+    filter: invert(30%);
 }

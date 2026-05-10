@@ -177,10 +177,6 @@
                             <div id="artist"></div>
                             <div class="row">
                                 <div id="linkDiv"></div>
-                                <span id="songInfo" title="Song Details" class="smallIconButton inactive"><img alt="Info" src="imgs/icons/info.png" alt="Info"></span>
-                                <div class="hidden">
-                                    <span id="shareSongButton" title="Share Song" class="smallIconButton"><img alt="Share" src="imgs/icons/share.png"></span>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -277,6 +273,11 @@
                             <img src="imgs/icons/eye.png" alt="View">
                         </div>
 
+                        <!--Save Song Text-->
+                        <div class="passiveButton hidden" title="Save Song (ctrl+s)" id="updateTextButton">
+                            <img src="imgs/icons/save.png" alt="Save">
+                        </div>
+
                         <!--Song Text-->
                         <textarea class="songText hidden" id="songTextEdit" rows="20" spellcheck="false"></textarea>
                         <div id="songText" class="songText noTranslation"></div>
@@ -321,97 +322,84 @@
                             <!--The Cabinet Content-->
                             <div id="dbOptionsContainer" class="sideMenuContent hidden noTranslation">
                                 <div id="songsCabinetUpdate">
-                                    <!--Add Song-->
-                                    <div id="addSongButton" title="Add Song" class="dbButton addDBInput">
-                                        <div>Add Song</div>
-                                        <div class="imageButton">
+                                    <!--Add New Song-->
+                                    <div id="addSongContainer">
+                                        <div class="iconButton" id="addSongButton" title="Add Song">
                                             <img src="imgs/icons/add.png" alt="Add">
+                                            <span>Add Song</span>
                                         </div>
-                                    </div>
-
-                                    <!--Saved Song-->
-                                    <div id="savedSongInfoContainer">
-                                        <div><span>#</span><span id="songIdData">21</span></div>
-                                        <div class="imageButton" title="Delete Song" id="deleteSongButton">
-                                            <img src="imgs/icons/trash.png" alt="Delete">
-                                        </div>
-                                    </div>
-
-                                    <hr>
-
-                                    <!--Metadata-->
-                                    <div id="metadataContainer">
-                                        <!--Song Name-->
-                                        <div class="toggleEditDBInput">
-                                            <div title="Song Name" class="dbButton editDBInput">
-                                                <div title="Song Name" id="songNameData">Nueva Canción</div>
-                                                <div class="imageButton">
-                                                    <img src="imgs/icons/note.png" alt="Edit">
-                                                </div>
-                                            </div>
-                                            <div class="dbInput hidden">
-                                                <input type="text" id="updateSongName">
-                                                <div class="approveButtons">
-                                                    <div class="imageButton">
-                                                        <img src="imgs/icons/check.png" alt="Confirm">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!--Artist-->
-                                        <div class="toggleEditDBInput">
-                                            <div title="Artist" class="dbButton editDBInput">
-                                                <div title="Artist" id="artistData" class="italics">Add Artist</div>
-                                                <div id="artistDataButton" class="imageButton">
-                                                    <img src="imgs/icons/artist.png" alt="Add">
-                                                </div>
-                                            </div>
-
-                                            <div class="dbInput hidden">
-                                                <input type="text" id="updateArtist">
-                                                <div class="approveButtons">
-                                                    <div class="imageButton">
-                                                        <img src="imgs/icons/check.png" alt="Confirm">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!--Song Link-->
-                                        <div class="toggleEditDBInput">
-                                            <div title="Song Link" class="dbButton editDBInput">
-                                                <div title="Song Link" id="songLinkData" class="italics">Add YouTube</div>
-                                                <div id="songLinkDataButton" class="imageButton">
-                                                    <img src="imgs/icons/YouTube.png" alt="Add" class="noInvert">
-                                                </div>
-                                            </div>
-                                            <div class="dbInput hidden">
-                                                <input type="text" id="updateSongLink">
-                                                <div class="approveButtons">
-                                                    <div class="imageButton">
-                                                        <img src="imgs/icons/check.png" alt="Confirm">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!--Language-->
-                                        <div id="languageUpdateContainer" class="hidden">
-                                            <div>Language:</div>
-                                            <select id="languageData">
-                                                <option id="spanishOption">Spanish</option>
-                                                <option id="englishOption" class="hidden">English</option>
-                                            </select>
-                                        </div>
-
-                                    </div>
-
-                                    <div>
                                     </div>
 
                                     <div id="savedSongEditContainer">
-                                        <hr>
+                                        <!--Metadata-->
+                                        <div id="metadataContainer">
+                                            <!--Song Name-->
+                                            <div class="toggleEditDBInput">
+                                                <div title="Song Name" class="dbButton editDBInput">
+                                                    <div title="Song Name" id="songNameData">Nueva Canción</div>
+                                                    <div class="imageButton">
+                                                        <img src="imgs/icons/note.png" alt="Edit">
+                                                    </div>
+                                                </div>
+                                                <div class="dbInput hidden">
+                                                    <input type="text" id="updateSongName">
+                                                    <div class="approveButtons">
+                                                        <div class="imageButton">
+                                                            <img src="imgs/icons/check.png" alt="Confirm">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!--Artist-->
+                                            <div class="toggleEditDBInput">
+                                                <div title="Artist" class="dbButton editDBInput">
+                                                    <div title="Artist" id="artistData" class="italics">Add Artist</div>
+                                                    <div id="artistDataButton" class="imageButton">
+                                                        <img src="imgs/icons/artist.png" alt="Add">
+                                                    </div>
+                                                </div>
+
+                                                <div class="dbInput hidden">
+                                                    <input type="text" id="updateArtist">
+                                                    <div class="approveButtons">
+                                                        <div class="imageButton">
+                                                            <img src="imgs/icons/check.png" alt="Confirm">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!--YouTube-->
+                                            <div class="toggleEditDBInput">
+                                                <div title="Song Link" class="dbButton editDBInput">
+                                                    <div title="Song Link" id="songLinkData" class="italics">Add YouTube</div>
+                                                    <div id="songLinkDataButton" class="imageButton">
+                                                        <img src="imgs/icons/YouTube.png" alt="Add" class="noInvert">
+                                                    </div>
+                                                </div>
+                                                <div class="dbInput hidden">
+                                                    <input type="text" id="updateSongLink">
+                                                    <div class="approveButtons">
+                                                        <div class="imageButton">
+                                                            <img src="imgs/icons/check.png" alt="Confirm">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!--Language-->
+                                            <div id="languageUpdateContainer" class="hidden">
+                                                <div>Language:</div>
+                                                <select id="languageData">
+                                                    <option id="spanishOption">Spanish</option>
+                                                    <option id="englishOption" class="hidden">English</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+
+                                        <hr class="hidden">
 
                                         <!--Song Styles-->
                                         <div class="hidden">
@@ -428,23 +416,41 @@
 
                                         <hr class="hidden">
 
-                                        <!--Update Text-->
-                                        <div id="updateTextContainer">
-                                            <div class="iconButton" id="updateTextButton" title="Save Song Text (ctrl+s)">
-                                                <img src="imgs/icons/save.png" alt="Save">
-                                                <span>Save Song</span>
+                                        <!--YouTube-->
+                                        <div id="YouTubeSection" class="databaseMediaSection missing">
+                                            <!--    <div class="databaseMediaHeader">
+                                                <img src="imgs/icons/YouTube.png" alt="YouTube">
+                                                <span>YouTube</span>
+                                                <img class="hasMediaIndicator" src="imgs/icons/check.png" alt="Found">
+                                                <img class="missingMediaIndicator" src="imgs/icons/cancel.png" alt="Missing">
                                             </div>
-
-                                            <hr>
+                                            <div class="iconButton" id="addYouTubeLink">
+                                                <img src="imgs/icons/YouTube.png" alt="Upload">
+                                                <span>Add Link</span>
+                                            </div>
+                                            <div class="iconButton" id="updateYouTubeLink">
+                                                <img src="imgs/icons/YouTube.png" alt="Upload">
+                                                <span>Update Link</span>
+                                            </div>
+                                            <div class="dbInput hidden">
+                                                <input type="text" id="updateSongLink">
+                                                <div class="approveButtons">
+                                                    <div class="imageButton">
+                                                        <img src="imgs/icons/check.png" alt="Confirm">
+                                                    </div>
+                                                </div>
+                                            </div>-->
                                         </div>
 
+                                        <hr>
+
                                         <!--PowerPoint-->
-                                        <div id="PowerPointSection" class="missingPowerPoint">
-                                            <div id="PowerPointHeader">
-                                                <img src="imgs/icons/PowerPoint.png" alt="Upload">
+                                        <div id="PowerPointSection" class="databaseMediaSection missing">
+                                            <div class="databaseMediaHeader">
+                                                <img src="imgs/icons/PowerPoint.png" alt="PowerPoint">
                                                 <span>PowerPoint</span>
-                                                <img id="hasPowerPointIndicator" src="imgs/icons/check.png" alt="Check">
-                                                <img id="missingPowerPointIndicator" src="imgs/icons/cancel.png" alt="Check">
+                                                <img class="hasMediaIndicator" src="imgs/icons/check.png" alt="Found">
+                                                <img class="missingMediaIndicator" src="imgs/icons/cancel.png" alt="Missing">
                                             </div>
                                             <div class="iconButton" id="updatePowerPointSlidesButton">
                                                 <img src="imgs/icons/upload.png" alt="Upload">
@@ -466,30 +472,34 @@
 
                                         <hr>
 
-                                        <!--Chords Checked?-->
-                                        <div class="dbUpdateCheckboxContainer">
-                                            <div>Verified Chords?</div>
-                                            <input type="checkbox" id="isChartCompleted" class="dbUpdateCheckbox">
-                                        </div>
+                                        <div class="hidden">
+                                            <!--Chords Checked?-->
+                                            <div class="dbUpdateCheckboxContainer">
+                                                <div>Verified Chords?</div>
+                                                <input type="checkbox" id="isChartCompleted" class="dbUpdateCheckbox">
+                                            </div>
 
-                                        <!--Public Domain?-->
-                                        <div class="dbUpdateCheckboxContainer">
-                                            <div>Public Domain?</div>
-                                            <input type="checkbox" id="isPublicDomain" class="dbUpdateCheckbox">
-                                        </div>
+                                            <!--Public Domain?-->
+                                            <div class="dbUpdateCheckboxContainer">
+                                                <div>Public Domain?</div>
+                                                <input type="checkbox" id="isPublicDomain" class="dbUpdateCheckbox">
+                                            </div>
 
-                                        <!--Primary Version?-->
-                                        <div class="dbUpdateCheckboxContainer hidden">
-                                            <div>Primary Version?</div>
-                                            <input type="checkbox" checked id="isPrimaryVersion" class="dbUpdateCheckbox">
-                                        </div>
+                                            <hr>
 
-                                        <hr>
+                                            <!--Notes-->
+                                            <div>
+                                                <div class="cabinetUpdateTitle">Notes</div>
+                                                <textarea id="cabinetNotes" spellcheck="false"></textarea>
+                                            </div>
 
-                                        <!--Notes-->
-                                        <div>
-                                            <div class="cabinetUpdateTitle">Notes</div>
-                                            <textarea id="cabinetNotes" spellcheck="false"></textarea>
+                                            <hr>
+
+                                            <!--Delete Song-->
+                                            <div class="iconButton" id="deleteSongButton" title="Delete Song">
+                                                <img src="imgs/icons/trash.png" alt="Delete">
+                                                <span>Delete Song</span>
+                                            </div>
                                         </div>
 
                                         <!--Bottom Stick-->
@@ -550,11 +560,8 @@
     <input type="file" multiple id="file" class="hidden" accept=".doc, .docx, .rtf, .pdf, .txt">
 
     <!--Scripts-->
-    <script src="js/translations.js"></script>
     <script src="js/utility.js"></script>
     <script src="js/databaseGeneral.js"></script>
-    <script src="js/infoPopup.js"></script>
-    <script src="js/buildResults.js"></script>
     <script src="js/viewDB.js"></script>
     <script src="js/view.js"></script>
 </body>

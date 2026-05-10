@@ -279,6 +279,24 @@ function buildSongLink(src, alt, data, title) {
     return songLink;
 }
 
+//------------------
+// YouTube Link
+//------------------
+
+function buildYTLink(songData) {
+    let youTubeLink = make("a");
+
+    if (songData.newSong) {
+        youTubeLink.innerHTML = "YouTube Hit";
+    } else {
+        youTubeLink.innerHTML = "YouTube";
+    }
+
+    youTubeLink.href = songData.songLink;
+    youTubeLink.target = "_blank";
+    return buildSongLink("YouTube.png", "YouTube", youTubeLink, "View Song");
+}
+
 //*****************************
 // Searching
 //*****************************

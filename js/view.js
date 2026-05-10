@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Adjust the editing options overflow
     adjustEditingOverflow();
 
-    // Chec for a url from a link
+    // Check for a url from a link
     let searchParams = new URLSearchParams(window.location.search);
 
     // - Song link
@@ -50,20 +50,6 @@ document.addEventListener("DOMContentLoaded", function() {
     if (!!songId) {
         window.history.replaceState(null, "", "editSong");
         loadSongRequest(songId);
-        return;
-    }
-
-    // Info Prompts
-    let prompt = sessionStorage.getItem("prompt");
-
-    if (!!prompt) { // Prompt Requested
-        if (tabsData.length > 0 && tabsData[0].hasChords) {
-            loadFirstTab();
-            loadPrompt(prompt);
-        } else {
-            loadDefaultSong(prompt);
-        }
-
         return;
     }
 
@@ -109,25 +95,6 @@ function loadUserEvents() {
     loadSongHeaderEvents();
     loadEdittingBarEvents();
     loadSideMenuEvents();
-
-    // Prompt new song popup
-    get("searchPrompt").addEventListener("click", function() {
-        promptToSongs("noSearch");
-    });
-
-    get("uploadPrompt").addEventListener("click", chooseFile);
-
-    get("pastePrompt").addEventListener("click", newSongFromClipbaord);
-
-    get("darkOut").addEventListener("click", function() {
-        if (get("loginPopup").classList.contains("hidden")) {
-            // Close the prompt new song and go to Home
-            window.location.href = "registerSong";
-        } else {
-            // Close the login popup and stay on page
-            closeLoginPopup();
-        }
-    });
 
     // Login
     setupLoginEvents();
@@ -296,17 +263,6 @@ function loadSongHeaderEvents() {
 
         // Save new tab name
         setTabName(this.value);
-    });
-
-
-    // Song Info
-    get("songInfo").addEventListener("click", function(event) {
-        showSongInfo(songData, event, false);
-    });
-
-    // Share song
-    get("shareSongButton").addEventListener("click", function() {
-        shareSong(songData);
     });
 }
 
@@ -520,7 +476,6 @@ function saveSongMetadata(newData) {
     songData.language = newData.language;
     songData.styles = newData.styles;
     songData.isPublicDomain = newData.isPublicDomain;
-    songData.isPrimaryVersion = newData.isPrimaryVersion;
     songData.isChartCompleted = newData.isChartCompleted;
     songData.newSong = false;
     saveTabs();
@@ -594,13 +549,6 @@ function showOriginalSongInfo() {
         } else {
             setDisplayType("Lyrics");
         }
-    }
-
-    // Share button for database songs
-    if (!!songData.id) {
-        get("shareSongButton").classList.remove("hidden");
-    } else {
-        get("shareSongButton").classList.add("hidden");
     }
 
     // Save the starting song
@@ -725,7 +673,6 @@ function displayArtist() {
 
     if (!!songData.artist) {
         artistElement.innerHTML = "<span>By</span> " + songData.artist;
-        translateNodeToCurrentLanguage(get("artist"));
         artistElement.classList.remove("hidden");
     } else {
         artistElement.innerHTML = "";
@@ -814,6 +761,7 @@ function switchToView() {
     editing = false;
     get("editSong").classList.remove("hidden");
     get("viewSong").classList.add("hidden");
+    get("updateTextButton").classList.remove("hidden");
     get("songText").classList.remove("hidden");
     get("songTextEdit").classList.add("hidden");
     get("chordsEditing").classList.remove("hidden");
@@ -835,6 +783,7 @@ function switchToEdit() {
     selectedChord = null;
     get("editSong").classList.add("hidden");
     get("viewSong").classList.remove("hidden");
+    get("updateTextButton").classList.add("hidden");
     get("songText").classList.add("hidden");
     get("songTextEdit").classList.remove("hidden");
     get("chordsEditing").classList.add("hidden");
@@ -905,8 +854,6 @@ function hideChordOptions() {
 
     get("chordOptionsButton").classList.add("unavailable");
     get("chordOptionsButton").title = "No Chords";
-
-    translateNodeToCurrentLanguage(get("chordOptionsButton"));
     activeChords = false;
 }
 
@@ -914,7 +861,6 @@ function hideChordOptions() {
 function activateChordOptions() {
     get("chordOptionsButton").classList.remove("unavailable");
     get("chordOptionsButton").title = "Transpose Options";
-    translateNodeToCurrentLanguage(get("chordOptionsButton"));
 
     // Add Chords display options
     getAll(".chordDisplayType").forEach(element => element.classList.remove("hidden"));
@@ -1409,60 +1355,6 @@ function removeNoSongPrompt() {
 }
 
 
-//********************
-//* Home Prompts
-//********************
-
-// Diplays prompt and removes it from LS
-function loadPrompt(prompt) {
-    switch (prompt) {
-        case "transpose":
-            setUpInfoPrompt("chordOptionsButton");
-            break;
-        case "download":
-            setUpInfoPrompt("downloadPrintContainer");
-            break;
-    }
-
-    sessionStorage.removeItem("prompt");
-}
-
-// Loads a default song for a prompt
-function loadDefaultSong(prompt) {
-    // Mighty to Save
-    let defaultSongId = usingSpanish() ? 35 : 34;
-
-    fetch(dbUrl + "/song/" + defaultSongId).then(response => response.json()).then(responseJson => {
-        if (noDBConnection(responseJson) || responseJson.title === "Not Found") {
-            postNewText("Chord Progression\r\nC Am F G").then(responseJson => {
-                songData = {
-                    songName: "Chord Progression",
-                    newSong: true,
-                    displayType: "Complete"
-                };
-                saveSongData(responseJson);
-                openNewTab(songData);
-
-                // Display the song and prompt
-                showNewSong();
-                loadPrompt(prompt);
-            });
-            return;
-        }
-
-        // Save the data and select the tab
-        songData = responseJson;
-        songData.newSong = false;
-        songData.displayType = "Complete";
-        openNewTab(songData);
-
-        // Display the song and prompt
-        showNewSong();
-        loadPrompt(prompt);
-    });
-}
-
-
 //*****************************************************************************************************************
 // Editing
 
@@ -1521,9 +1413,6 @@ function buildEditDropdown(event, optionElements, floatRight) {
     }
 
     dropdown.style.top = (event.clientY + window.pageYOffset - getOffsetTop(container) - 10) + "px";
-
-    // Translate
-    translateNodeToCurrentLanguage(dropdown);
 
     container.appendChild(dropdown);
 }

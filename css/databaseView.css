@@ -222,6 +222,12 @@
     font-size: 1.5em;
 }
 
+#updateTextButton {
+    position: absolute;
+    right: .5em;
+    top: 3.5em;
+}
+
 
 /*****************************************************
  **** Prompt new song
@@ -687,3 +693,4 @@ input[type=number]::-webkit-outer-spin-button {
         text-decoration: none;
     }
 }
+

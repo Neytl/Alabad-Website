@@ -761,7 +761,7 @@ function switchToView() {
     editing = false;
     get("editSong").classList.remove("hidden");
     get("viewSong").classList.add("hidden");
-    get("updateTextButton").classList.remove("hidden");
+    if (!!songData.id) get("updateTextButton").classList.remove("hidden");
     get("songText").classList.remove("hidden");
     get("songTextEdit").classList.add("hidden");
     get("chordsEditing").classList.remove("hidden");
@@ -783,7 +783,7 @@ function switchToEdit() {
     selectedChord = null;
     get("editSong").classList.add("hidden");
     get("viewSong").classList.remove("hidden");
-    get("updateTextButton").classList.add("hidden");
+    if (!!songData.id) get("updateTextButton").classList.add("hidden");
     get("songText").classList.add("hidden");
     get("songTextEdit").classList.remove("hidden");
     get("chordsEditing").classList.add("hidden");

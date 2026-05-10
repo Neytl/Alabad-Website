@@ -163,7 +163,7 @@ window.addEventListener("load", function () {
 // When loading in a new song, load data into the Cabinet Update tab
 function setUpDBInputs() {
     // Title
-    if (songData.newSong) {
+    if (!songData.id) {
         get("addSongButton").classList.remove("hidden");
         get("savedSongEditContainer").classList.add("hidden");
         get("updateTextButton").classList.add("hidden");

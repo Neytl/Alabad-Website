@@ -103,6 +103,12 @@ window.addEventListener("load", function () {
     get("downloadPowerPointTemplateButton").addEventListener("click", downloadPowerPointTemplate);
 
 
+    // More options
+    get("moreDatabaseOptionsButton").addEventListener("click", () => {
+        get("moreDatabaseOptionsButtonContainer").classList.add("hidden");
+        get("moreDatabaseOptionsContainer").classList.remove("hidden");
+    });
+
     // Song Styles
     forEachClassElement("songStyleButton", function (element) {
         element.addEventListener("click", function () {

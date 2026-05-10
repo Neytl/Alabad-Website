@@ -271,11 +271,26 @@
         height: 1.1em;
     }
 
+#moreDatabaseOptionsButtonContainer {
+    display: flex;
+    justify-content: center;
+}
+
+#moreDatabaseOptionsButton {
+    padding: .3em .5em;
+    border-radius: .6em;
+    box-shadow: var(--hover-shadow) .2em;
+    background-color: var(--foreground-color);
+    cursor: pointer;
+    opacity: .5;
+}
+#moreDatabaseOptionsButton:hover {
+    opacity: 1;
+}
 
 /*****************************************************
  **** Database Options - Input buttons
  *****************************************************/
-
 .imageButton {
     width: 1.1em;
     height: 1.1em;

@@ -131,7 +131,7 @@ window.addEventListener("load", function () {
     // Song Notes
     get("cabinetNotes").addEventListener("change", function () {
         if (!songData.newSong) {
-            requestUpdate("updateNotes", get("cabinetNotes").value);
+            requestUpdate("updateNote", get("cabinetNotes").value);
         } else {
             get("cabinetNotes").value = "";
         }
@@ -686,7 +686,6 @@ function runLogin() {
     ).then(response => {
         if (response.ok) {
             // Success! Valid Login
-            localStorage.setItem("loggedInUser", get("loginUsername").value);
             onValidLogin(response);
         } else if (response.status === 401) {
             // Unauthorized - Bad username/password
@@ -715,6 +714,7 @@ function runLogin() {
 async function onValidLogin(response) {
     let responseJson = await response.json();
     token = responseJson.accessToken;
+    localStorage.setItem("loggedInUser", responseJson.username);
     localStorage.setItem("refreshToken", responseJson.refreshToken); // TODO: Remove once problem with mobile fixed
     onConnectionEstablished();
 }

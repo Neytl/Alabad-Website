@@ -43,23 +43,6 @@ function loadBrowseCount(style) {
     });
 }
 
-function refreshTheDatabase() {
-    localStorage.removeItem("browseCounts");
-    loadBrowseCounts();
-
-    fetch(dbUrl + "/refreshDropdownService",
-        {
-            method: "PATCH"
-        }
-    ).then(response => {
-        if (noDBConnection(response)) {
-            alert("Could not connect");
-            return;
-        }
-
-        get("refreshDatabaseButton").classList.add("hidden");
-    });
-}
 
 // ***************
 
@@ -115,9 +98,6 @@ window.addEventListener("load", function () {
         get("spanishRefine").click();
         get("WorshipStyleCB").click();
     });
-
-    // Refresh DB button
-    get("refreshDatabaseButton").addEventListener("click", refreshTheDatabase);
 
     // Search for incomplete songs
     if (!!sessionStorage.getItem("incompleteSongs")) {

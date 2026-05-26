@@ -714,7 +714,7 @@ function runLogin() {
 async function onValidLogin(response) {
     let responseJson = await response.json();
     token = responseJson.accessToken;
-    localStorage.setItem("loggedInUser", responseJson.username);
+    if (!!responseJson.username) localStorage.setItem("loggedInUser", responseJson.username);
     localStorage.setItem("refreshToken", responseJson.refreshToken); // TODO: Remove once problem with mobile fixed
     onConnectionEstablished();
 }

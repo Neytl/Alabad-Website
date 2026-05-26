@@ -260,9 +260,6 @@ function buildDropdown(event, optionElements, floatRight) {
 
     dropdown.style.top = (event.clientY + window.pageYOffset - 10) + "px";
 
-    // Translate
-    translateNodeToCurrentLanguage(dropdown);
-
     document.body.appendChild(dropdown);
 }
 

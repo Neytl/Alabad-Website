@@ -117,8 +117,8 @@ window.addEventListener("load", function () {
             setUpInfoPrompt("refineSearchButton");
             break;
         default: // Through search button or back button or refresh
-            loadSavedSearchOptions();
-            loadResults();
+            //loadSavedSearchOptions();
+            //loadResults();
             break;
     }
 

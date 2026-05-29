@@ -10,8 +10,9 @@ document.addEventListener("DOMContentLoaded", function() {
     // Load in song request from URL string
     let songQueryParam = new URLSearchParams(window.location.search).get("song_id");
     if (!!songQueryParam) {
-        viewSong(songQueryParam);
-        return;
+        sessionStorage.removeItem("tabIdRequest");
+        localStorage.setItem("requestId", songQueryParam);
+        history.replaceState(null, '', window.location.href.split("?")[0]);
     }
 
     // Shared between database pages

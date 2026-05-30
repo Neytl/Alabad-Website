@@ -48,16 +48,6 @@ function loadGeneralUserEvents() {
         this.classList.toggle("open");
     });
 
-    // Nav Links
-    // Search Nav Button - clear the current search
-    navigation.addEventListener("navigate", (event) => {
-        if (event.navigationType === "traverse") return;
-        const url = new URL(event.destination.url);
-        if (url.pathname.startsWith("/search")) {
-            clearSearchData();
-        }
-    });
-
     // New Song
     get("newSongButton").addEventListener("click", event => {
         buildDropdown(event, [

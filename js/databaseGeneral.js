@@ -31,20 +31,6 @@ function loadGeneralUserEvents() {
         }
     });
 
-    // Language
-    get("languageMenuDiv").addEventListener("click", event => {
-        if (!clickedOn(event, "languageOptions")) {
-            get("languageSettingSelect").classList.add("open");
-        }
-    });
-
-    forEachElement("#languageOptions > div", element => {
-        element.addEventListener("click", () => {
-            get("languageSettingSelect").classList.remove("open");
-            translatePage(element.children[0].innerHTML);
-        });
-    });
-
     // Open/Close Menu
     document.addEventListener("click", (event) => {
         if (get("menuButton").classList.contains("open") && !clickedOn(event, "menuDiv") && !clickedOn(event, "menuButton")) {

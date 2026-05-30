@@ -56,7 +56,7 @@ function showSongInfo(songData, event, faceInwards) {
 
             }
 
-            translateNodeToCurrentLanguage(stylesSpan);
+            // translateNodeToCurrentLanguage(stylesSpan);
         });
 
         // - Artist
@@ -89,7 +89,7 @@ function showSongInfo(songData, event, faceInwards) {
     currentInfoPopup = infoPopup;
 
     // Translate Popup
-    translateNodeToCurrentLanguage(infoPopup);
+    // translateNodeToCurrentLanguage(infoPopup);
 
     // Place info popup
     if (faceInwards) {

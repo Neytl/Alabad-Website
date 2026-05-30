@@ -56,12 +56,17 @@ var alphSortedResults;
 
 // Before the page is loaded
 document.addEventListener("DOMContentLoaded", function () {
-    loadBrowseCounts();
-    loadGeneralPageStuff();
+    try {
+        loadBrowseCounts();
+        loadGeneralPageStuff();
+    } catch (error) {
+        get("errorMessageDiv").innerHTML = "An error occurred while loading the page: " + error.message;
+    }
 });
 
 // After first paint
 window.addEventListener("load", function () {
+    try {
     loadGeneralUserEvents();
     setUpSortingEvents(); // Relevance/Alphabetical sort
 
@@ -122,7 +127,10 @@ window.addEventListener("load", function () {
             break;
     }
 
-    loadingPage = false;
+        loadingPage = false;
+    } catch (error) {
+        get("errorMessageDiv").innerHTML = "An error occurred while loading the page events: " + error.message;
+    }
 });
 
 
@@ -521,7 +529,7 @@ function addRefineTag(type, value, command) {
     textDiv.innerHTML = text;
     button.appendChild(textDiv);
 
-    translateNodeToCurrentLanguage(textDiv);
+    // translateNodeToCurrentLanguage(textDiv);
 
     // Close button
     let closeDiv = make("div");
@@ -631,7 +639,7 @@ function displayResultsResponse(resultsResponse) {
         displayResults(resultsResponse);
     }
 
-    translateNodeToCurrentLanguage(get("resultsContainer"));
+    // translateNodeToCurrentLanguage(get("resultsContainer"));
     sessionStorage.removeItem("prompt");
 }
 
@@ -738,7 +746,7 @@ function setUpNewInfoPrompt(promptContainer, text) {
     promptContainer.appendChild(container);
 
     // Translate
-    translateNodeToCurrentLanguage(prompt);
+    // translateNodeToCurrentLanguage(prompt);
 
     // Activate Prompt
     document.addEventListener("click", function (event) {

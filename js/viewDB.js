@@ -131,7 +131,7 @@ window.addEventListener("load", function () {
     // Song Notes
     get("cabinetNotes").addEventListener("change", function () {
         if (!songData.newSong) {
-            requestUpdate("updateNote", get("cabinetNotes").value);
+            requestUpdate("updateNotes", get("cabinetNotes").value);
         } else {
             get("cabinetNotes").value = "";
         }
@@ -567,6 +567,9 @@ function logSuccess(response, retryMethod) {
                 break;
             case 400: // Bad request - invalid update
                 alert("Update failed: Invalid update");
+                break;
+            case 413: // Bad request - file too large
+                alert("Update failed: File size is too large (>100MB)");
                 break;
             default: // Dunno
                 alert("Update failed");

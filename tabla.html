@@ -124,7 +124,7 @@
                     <img class="settingsIconButtonImage" id="darkModeIcon" src="imgs/icons/dark-mode.png" alt="Dark Mode">
                 </div>
 
-                <!--Account Popup-->
+                <!--Account-->
                 <div id="accountMenuContainer" class="popupMenuContainer hidden">
                     <div id="accountMenuButton" class="iconTitle">
                         <img alt="User" src="imgs/icons/account.png">
@@ -142,10 +142,19 @@
                             </div>
                         </div>
 
-                        <!--Log Out-->
+                        <!--Account popup-->
                         <div class="menuSection" id="logOutSection">
+                            <!--Link to add new songs-->
+                            <a class="menuSectionTitle noToggle" href="registerSong">
+                                <div class="iconTitle"><img alt="File Cabinet" src="imgs/icons/cabinet.png"><span>Nueva Canción</span></div>
+                            </a>
+                            <!--Set Lists-->
+                            <a class="menuSectionTitle noToggle" href="sets">
+                                <div class="iconTitle"><img alt="Set List" src="imgs/icons/setList.webp"><span>Mis Sets</span></div>
+                            </a>
+                            <!--Log Out-->
                             <div class="menuSectionTitle noToggle" id="logOutButton">
-                                <div class="iconTitle"><img alt="User" src="imgs/icons/account.png"><span>Cerrar Sesión</span></div>
+                                <div class="iconTitle"><img alt="User" src="imgs/icons/logout.png"><span>Cerrar Sesión</span></div>
                             </div>
                         </div>
                     </div>
@@ -155,11 +164,6 @@
                 <div id="openLoginPopupButton">
                     <div class="iconTitle"><img alt="User" src="imgs/icons/account.png"><span>Iniciar Sesión</span></div>
                 </div>
-
-                <!--Link to add new songs-->
-                <a href="registerSong" class="settingsIconButton hidden" id="addSongLink" title="Registra Una Canción">
-                    <img class="settingsIconButtonImage" alt="Songs" src="imgs/icons/cabinet.png">
-                </a>
             </div>
         </div>
 

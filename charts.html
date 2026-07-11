@@ -56,7 +56,7 @@
                     <img class="settingsIconButtonImage" id="darkModeIcon" src="imgs/icons/dark-mode.png" alt="Dark Mode">
                 </div>
 
-                <!--Account Popup-->
+                <!--Account-->
                 <div id="accountMenuContainer" class="popupMenuContainer hidden">
                     <div id="accountMenuButton" class="iconTitle">
                         <img alt="User" src="imgs/icons/account.png">
@@ -74,10 +74,19 @@
                             </div>
                         </div>
 
-                        <!--Log Out-->
+                        <!--Account popup-->
                         <div class="menuSection" id="logOutSection">
+                            <!--Link to add new songs-->
+                            <a class="menuSectionTitle noToggle" href="registerSong">
+                                <div class="iconTitle"><img alt="File Cabinet" src="imgs/icons/cabinet.png"><span>Add Songs</span></div>
+                            </a>
+                            <!--Set Lists-->
+                            <a class="menuSectionTitle noToggle" href="mySets">
+                                <div class="iconTitle"><img alt="Set List" src="imgs/icons/setList.webp"><span>My Sets</span></div>
+                            </a>
+                            <!--Log Out-->
                             <div class="menuSectionTitle noToggle" id="logOutButton">
-                                <div class="iconTitle"><img alt="User" src="imgs/icons/account.png"><span>Log Out</span></div>
+                                <div class="iconTitle"><img alt="Logout" src="imgs/icons/logout.png"><span>Log Out</span></div>
                             </div>
                         </div>
                     </div>
@@ -87,11 +96,6 @@
                 <div id="openLoginPopupButton">
                     <div class="iconTitle"><img alt="User" src="imgs/icons/account.png"><span>Log In</span></div>
                 </div>
-
-                <!--Link to add new songs-->
-                <a href="registerSong" class="settingsIconButton hidden" id="addSongLink" title="Register A Song">
-                    <img class="settingsIconButtonImage" alt="Songs" src="imgs/icons/cabinet.png">
-                </a>
             </div>
         </div>
 
@@ -204,7 +208,14 @@
     <script src="js/viewerHome.min.js"></script>
     <!--<script src="js/scrollIntoView.js"></script>
     <script src="js/viewerCommon.js"></script>
+    <script src="js/viewerHomeAndSets.js"></script>
     <script src="js/viewerHome.js"></script>
     <script src="js/login.js"></script>-->
+
+    <!--NOTE:
+        = viewerCommon.js => charts.html, chart.html, mySets.html
+        = viewerHomeAndSets.js => charts.html, mySets.html
+        = viewerHome.js => charts.html
+    -->
 </body>
 </html>

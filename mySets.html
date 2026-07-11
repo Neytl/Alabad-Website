@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-    <title>Alabad</title>
-    <meta name="description" content="Tablas de acordes hecho fácil para dispositivos móviles. Música cristiana.">
+    <title>Sets</title>
+    <meta name="description" content="Chord charts made easy for mobile devices. Christian music in English/Spanish.">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" type="image/png" href="imgs/Favicon.png">
-    <link href='css/viewerHome.min.css' rel='stylesheet' type='text/css'>
+    <link href='css/sets.min.css' rel='stylesheet' type='text/css'>
+    <!--<link href='css/viewerCommon.css' rel='stylesheet' type='text/css'>
+    <link href='css/sets.css' rel='stylesheet' type='text/css'>-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400&display=swap" rel="stylesheet">
@@ -20,7 +22,7 @@
             <div class="menuSection hidden" id="setListSongsSection">
                 <!--Set List Name-->
                 <div id="setListNameContainer" class="setListNameContainer">
-                    <a id="setListName" href="tabla?set_list=local">Set List</a>
+                    <a id="setListName" href="chart?set_list=local">Set List</a>
                 </div>
 
                 <!--Set List Songs-->
@@ -38,11 +40,11 @@
                     </div>
 
                     <div id="languageOptions" class="popupMenu">
-                        <a href="charts">
+                        <a href="mySets">
                             <img src="imgs/icons/USFlag.png" alt="Language">
                             <span>English</span>
                         </a>
-                        <a href="/">
+                        <a href="sets">
                             <img src="imgs/icons/MexicoFlag.png" alt="Langauge">
                             <span>Español</span>
                         </a>
@@ -67,24 +69,25 @@
                             <div class="menuSectionTitle noToggle" id="showUnfinishedSongsToggle">
                                 <div class="iconTitle">
                                     <input type="checkbox" id="showUnfinishedSongsCheckBox">
-                                    <span>Incluye TODAS las canciones en búsquedas</span>
+                                    <span>Show ALL songs in searches</span>
                                 </div>
                             </div>
                         </div>
+
 
                         <!--Account popup-->
                         <div class="menuSection" id="logOutSection">
                             <!--Link to add new songs-->
                             <a class="menuSectionTitle noToggle" href="registerSong">
-                                <div class="iconTitle"><img alt="File Cabinet" src="imgs/icons/cabinet.png"><span>Nueva Canción</span></div>
+                                <div class="iconTitle"><img alt="File Cabinet" src="imgs/icons/cabinet.png"><span>Add Songs</span></div>
                             </a>
                             <!--Set Lists-->
-                            <a class="menuSectionTitle noToggle" href="sets">
-                                <div class="iconTitle"><img alt="Set List" src="imgs/icons/setList.webp"><span>Mis Sets</span></div>
+                            <a class="menuSectionTitle noToggle" href="mySets">
+                                <div class="iconTitle"><img alt="Set List" src="imgs/icons/setList.webp"><span>My Sets</span></div>
                             </a>
                             <!--Log Out-->
                             <div class="menuSectionTitle noToggle" id="logOutButton">
-                                <div class="iconTitle"><img alt="User" src="imgs/icons/logout.png"><span>Cerrar Sesión</span></div>
+                                <div class="iconTitle"><img alt="Logout" src="imgs/icons/logout.png"><span>Log Out</span></div>
                             </div>
                         </div>
                     </div>
@@ -92,7 +95,7 @@
 
                 <!--Log In-->
                 <div id="openLoginPopupButton">
-                    <div class="iconTitle"><img alt="User" src="imgs/icons/account.png"><span>Iniciar Sesión</span></div>
+                    <div class="iconTitle"><img alt="User" src="imgs/icons/account.png"><span>Log In</span></div>
                 </div>
             </div>
         </div>
@@ -107,10 +110,11 @@
                     <div id="settingsMenuButton" class="navButton">
                         <img src="imgs/icons/menu.png" alt="Menu">
                     </div>
+                </div>
 
-                    <!--Church Button-->
-                    <a id="churchButton" class="navButton" href="tabla?set_list=1JzxYz">
-                        <img src="imgs/icons/church.png" alt="Church">
+                <div>
+                    <a id="homeButton" href="charts">
+                        <img src="imgs/Logo.png" alt="Logo">
                     </a>
                 </div>
 
@@ -121,19 +125,32 @@
                     </div>
                 </div>
             </div>
+
             <div id="mainContent">
-                <div>
-                    <!--Logo-->
-                    <a id="logoContainer" href="/">
-                        <img src="imgs/LargeLogo.png" alt="Logo">
-                        <span>Alabad</span>
-                    </a>
+                <div id="loginPromptContainer" class="hidden">
+                    <div>Your set lists are only viewable while logged in.</div>
                 </div>
-                <div>
-                    <div id="fakeSearchBar">
-                        <span>Busca Música Cristiana</span>
+                <div id="setListsSection" class="setListSection hidden">
+                    <div id="setListsTitleContainer">
+                        <span class="setListSectionTitle">Set Lists</span>
+                        <div id="setListOptionsContainer" class="popupMenuContainer">
+                            <div id="setListOptionsButton">
+                                <img src="imgs/icons/more.png">
+                            </div>
+                            <div id="setsOptionsPopup" class="popupMenu">
+                                <div id="newSetButton">
+                                    <img src="imgs/icons/add.png">
+                                    <span>New Set</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <div id="setLists" class="setListsContainer"></div>
                 </div>
+                <!--<div id="hiddenSetsSection" class="setListSection hidden">
+                    <span>= Hidden =</span>
+                    <div id="hiddenSetLists" class="setListsContainer"></div>
+                </div>-->
             </div>
 
             <!--Search Popup-->
@@ -144,25 +161,25 @@
                         <div id="searchInputButton">
                             <img src="imgs/icons/search.png" alt="Search">
                         </div>
-                        <input type="text" placeholder="Buscar" autocomplete="off" id="searchInput">
+                        <input type="text" placeholder="Search" autocomplete="off" id="searchInput">
                         <div id="clearSearchButton" class="hidden">
                             <img src="imgs/icons/close.png" alt="Close">
                         </div>
                     </div>
                     <!--Cancel Search-->
                     <div id="cancelSearchButton">
-                        <span>Cancelar</span>
+                        <span>Cancel</span>
                     </div>
                 </div>
 
                 <!--No Results-->
                 <div id="noResults" class="hidden">
-                    <span>No Resultados</span>
+                    <span>No Results Found</span>
                 </div>
 
                 <!--Searching-->
                 <div id="popupLoadingResults" class="hidden">
-                    <span>Buscando...</span>
+                    <span>Searching...</span>
                 </div>
 
                 <!--Search Results-->
@@ -182,24 +199,28 @@
             <form id="loginFields">
                 <div class="loginFieldLabel">
                     <img src="imgs/icons/account.png">
-                    <label for="loginUsername">Usuario</label>
+                    <label for="loginUsername">Username</label>
                 </div>
                 <input autocomplete="username" type="text" id="loginUsername">
                 <div class="loginFieldLabel">
                     <img src="imgs/icons/lock.png">
-                    <label for="loginPassword">Contraseña</label>
+                    <label for="loginPassword">Password</label>
                 </div>
                 <input type="password" id="loginPassword" autocomplete="current-password">
             </form>
 
             <span id="loginMessage"></span>
 
-            <div id="loginButton">Iniciar Sesión</div>
+            <div id="loginButton">Log In</div>
         </div>
     </div>
 
-
     <!--Scripts-->
-    <script src="js/viewerHome.min.js"></script>
+    <script src="js/sets.min.js"></script>
+    <!--<script src="js/scrollIntoView.js"></script>
+    <script src="js/viewerCommon.js"></script>
+    <script src="js/viewerHomeAndSets.js"></script>
+    <script src="js/sets.js"></script>
+    <script src="js/login.js"></script>-->
 </body>
 </html>

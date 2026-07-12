@@ -171,7 +171,7 @@
                 <!--Main Section-->
                 <div id="leftSplit" class="foregroundColor rightBorder">
                     <!--Song Metadata-->
-                    <div id="songHeader">
+                    <div id="songHeader" class="hidden">
                         <input type="text" id="songNameEdit" class="hoverInput" autocomplete="off">
                         <div id="songMetadata">
                             <div id="artist"></div>
@@ -323,13 +323,10 @@
                             <div id="dbOptionsContainer" class="sideMenuContent hidden noTranslation">
                                 <div id="songsCabinetUpdate">
                                     <!--Add New Song-->
-                                    <div id="addSongContainer">
-                                        <div class="iconButton" id="addSongButton" title="Add Song">
-                                            <img src="imgs/icons/add.png" alt="Add">
-                                            <span>Add Song</span>
-                                        </div>
+                                    <div class="iconButton" id="addSongButton" title="Add Song">
+                                        <img src="imgs/icons/add.png" alt="Add">
+                                        <span>Add Song</span>
                                     </div>
-
                                     <div id="savedSongEditContainer">
                                         <!--Metadata-->
                                         <div id="metadataContainer">
@@ -419,27 +416,27 @@
                                         <!--YouTube-->
                                         <div id="YouTubeSection" class="databaseMediaSection missing">
                                             <!--    <div class="databaseMediaHeader">
-                                                <img src="imgs/icons/YouTube.png" alt="YouTube">
-                                                <span>YouTube</span>
-                                                <img class="hasMediaIndicator" src="imgs/icons/check.png" alt="Found">
-                                                <img class="missingMediaIndicator" src="imgs/icons/cancel.png" alt="Missing">
-                                            </div>
-                                            <div class="iconButton" id="addYouTubeLink">
-                                                <img src="imgs/icons/YouTube.png" alt="Upload">
-                                                <span>Add Link</span>
-                                            </div>
-                                            <div class="iconButton" id="updateYouTubeLink">
-                                                <img src="imgs/icons/YouTube.png" alt="Upload">
-                                                <span>Update Link</span>
-                                            </div>
-                                            <div class="dbInput hidden">
-                                                <input type="text" id="updateSongLink">
-                                                <div class="approveButtons">
-                                                    <div class="imageButton">
-                                                        <img src="imgs/icons/check.png" alt="Confirm">
-                                                    </div>
-                                                </div>
-                                            </div>-->
+                <img src="imgs/icons/YouTube.png" alt="YouTube">
+                <span>YouTube</span>
+                <img class="hasMediaIndicator" src="imgs/icons/check.png" alt="Found">
+                <img class="missingMediaIndicator" src="imgs/icons/cancel.png" alt="Missing">
+            </div>
+            <div class="iconButton" id="addYouTubeLink">
+                <img src="imgs/icons/YouTube.png" alt="Upload">
+                <span>Add Link</span>
+            </div>
+            <div class="iconButton" id="updateYouTubeLink">
+                <img src="imgs/icons/YouTube.png" alt="Upload">
+                <span>Update Link</span>
+            </div>
+            <div class="dbInput hidden">
+                <input type="text" id="updateSongLink">
+                <div class="approveButtons">
+                    <div class="imageButton">
+                        <img src="imgs/icons/check.png" alt="Confirm">
+                    </div>
+                </div>
+            </div>-->
                                         </div>
 
                                         <hr class="hidden">
@@ -477,19 +474,21 @@
                                         </div>
 
                                         <div id="moreDatabaseOptionsContainer" class="hidden">
-                                            <!--Chords Checked?-->
-                                            <div class="dbUpdateCheckboxContainer">
-                                                <div>Verified Chords?</div>
-                                                <input type="checkbox" id="isChartCompleted" class="dbUpdateCheckbox">
-                                            </div>
+                                            <div id="metadataCheckboxes" class="hidden">
+                                                <!--Chords Checked?-->
+                                                <div class="dbUpdateCheckboxContainer">
+                                                    <div>Verified Chords?</div>
+                                                    <input type="checkbox" id="isChartCompleted" class="dbUpdateCheckbox">
+                                                </div>
 
-                                            <!--Public Domain?-->
-                                            <div class="dbUpdateCheckboxContainer">
-                                                <div>Public Domain?</div>
-                                                <input type="checkbox" id="isPublicDomain" class="dbUpdateCheckbox">
-                                            </div>
+                                                <!--Public Domain?-->
+                                                <div class="dbUpdateCheckboxContainer">
+                                                    <div>Public Domain?</div>
+                                                    <input type="checkbox" id="isPublicDomain" class="dbUpdateCheckbox">
+                                                </div>
 
-                                            <hr>
+                                                <hr>
+                                            </div>
 
                                             <!--Notes-->
                                             <div>

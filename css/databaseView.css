@@ -352,6 +352,7 @@ body.locked {
     justify-content: space-between;
     user-select: none;
     width: 100%;
+    padding-top: 2em;
 }
 
     #editingRow > div {

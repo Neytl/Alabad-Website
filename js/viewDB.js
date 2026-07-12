@@ -137,6 +137,9 @@ window.addEventListener("load", function () {
         }
     });
 
+    // Metadata Checkboxes
+    if (localStorage.getItem("loggedInUser") == "BoxAdmin") get("metadataCheckboxes").classList.remove("hidden");
+
     // Prev/Next Song
     get("previousSongButton").addEventListener("click", function () {
         prevSong();

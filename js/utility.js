@@ -402,7 +402,14 @@ function loadSearchEvents(getFullSongResults) {
     if (!!getFullSongResults) {
         searchInput.addEventListener("input", updateSearchResults);
     } else {
-        searchInput.addEventListener("input", updateSearchResultsForDBPage);
+        // Debounce the search input - wait 300ms before fetching a search
+        let debouncedSearch;
+        searchInput.addEventListener("input", () => {
+            clearTimeout(debouncedSearch);
+            debouncedSearch = setTimeout(updateSearchResultsForDBPage, 300);
+        });
+
+        // searchInput.addEventListener("input", updateSearchResultsForDBPage);
     }
 }
 

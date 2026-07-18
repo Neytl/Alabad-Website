@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-    <title>Alabad</title>
-    <meta name="description" content="Tablas de acordes hecho fácil para dispositivos móviles. Música cristiana.">
+    <title>Sets</title>
+    <meta name="description" content="Chord charts made easy for mobile devices. Christian music in English/Spanish.">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" type="image/png" href="imgs/Favicon.png">
-    <link href='css/viewerHome.min.css' rel='stylesheet' type='text/css'>
+    <link href='css/legal.min.css' rel='stylesheet' type='text/css'>
+    <!--<link href='css/viewerCommon.css' rel='stylesheet' type='text/css'>
+    <link href='css/legal.css' rel='stylesheet' type='text/css'>-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400&display=swap" rel="stylesheet">
@@ -20,7 +22,7 @@
             <div class="menuSection hidden" id="setListSongsSection">
                 <!--Set List Name-->
                 <div id="setListNameContainer" class="setListNameContainer">
-                    <a id="setListName" href="tabla?set_list=local">Set List</a>
+                    <a id="setListName" href="chart?set_list=local">Set List</a>
                 </div>
 
                 <!--Set List Songs-->
@@ -38,11 +40,11 @@
                     </div>
 
                     <div id="languageOptions" class="popupMenu">
-                        <a href="charts">
+                        <a href="mySets">
                             <img src="imgs/icons/USFlag.png" alt="Language">
                             <span>English</span>
                         </a>
-                        <a href="/">
+                        <a href="sets">
                             <img src="imgs/icons/MexicoFlag.png" alt="Langauge">
                             <span>Español</span>
                         </a>
@@ -67,24 +69,25 @@
                             <div class="menuSectionTitle noToggle" id="showUnfinishedSongsToggle">
                                 <div class="iconTitle">
                                     <input type="checkbox" id="showUnfinishedSongsCheckBox">
-                                    <span>Incluye TODAS las canciones en búsquedas</span>
+                                    <span>Show ALL songs in searches</span>
                                 </div>
                             </div>
                         </div>
+
 
                         <!--Account popup-->
                         <div class="menuSection" id="logOutSection">
                             <!--Link to add new songs-->
                             <a class="menuSectionTitle noToggle" href="registerSong">
-                                <div class="iconTitle"><img alt="File Cabinet" src="imgs/icons/cabinet.png"><span>Nueva Canción</span></div>
+                                <div class="iconTitle"><img alt="File Cabinet" src="imgs/icons/cabinet.png"><span>Add Songs</span></div>
                             </a>
                             <!--Set Lists-->
-                            <a class="menuSectionTitle noToggle" href="sets">
-                                <div class="iconTitle"><img alt="Set List" src="imgs/icons/setList.webp"><span>Mis Sets</span></div>
+                            <a class="menuSectionTitle noToggle" href="mySets">
+                                <div class="iconTitle"><img alt="Set List" src="imgs/icons/setList.webp"><span>My Sets</span></div>
                             </a>
                             <!--Log Out-->
                             <div class="menuSectionTitle noToggle" id="logOutButton">
-                                <div class="iconTitle"><img alt="User" src="imgs/icons/logout.png"><span>Cerrar Sesión</span></div>
+                                <div class="iconTitle"><img alt="Logout" src="imgs/icons/logout.png"><span>Log Out</span></div>
                             </div>
                         </div>
                     </div>
@@ -92,7 +95,7 @@
 
                 <!--Log In-->
                 <div id="openLoginPopupButton">
-                    <div class="iconTitle"><img alt="User" src="imgs/icons/account.png"><span>Iniciar Sesión</span></div>
+                    <div class="iconTitle"><img alt="User" src="imgs/icons/account.png"><span>Log In</span></div>
                 </div>
             </div>
         </div>
@@ -107,10 +110,11 @@
                     <div id="settingsMenuButton" class="navButton">
                         <img src="imgs/icons/menu.png" alt="Menu">
                     </div>
+                </div>
 
-                    <!--Church Button-->
-                    <a id="churchButton" class="navButton" href="tabla?set_list=1JzxYz">
-                        <img src="imgs/icons/church.png" alt="Church">
+                <div>
+                    <a id="homeButton" href="/">
+                        <img src="imgs/Logo.png" alt="Logo">
                     </a>
                 </div>
 
@@ -123,26 +127,42 @@
             </div>
 
             <div id="mainContent">
-                <div>
-                    <a id="logoContainer" href="/">
-                        <img src="imgs/LargeLogo.png" alt="Logo">
-                        <span>Alabad</span>
-                    </a>
-                </div>
-                <div>
-                    <div id="fakeSearchBar">
-                        <span>Busca Música Cristiana</span>
-                    </div>
-                </div>
+                <h1>Términos de Servicio, Derechos de Autor y Aviso de Privacidad</h1>
+                <p><strong>Última actualización:</strong> 18 de julio de 2026</p>
+                <p>Al crear una cuenta en Alabad.org, aceptas cumplir con los siguientes términos legalmente vinculantes.</p>
 
-                <div id="footer">
-                    <div>
-                        <a href="/legal">Legal</a>
-                        <span> · © </span>
-                        <span id="copyrightYear">2026</span>
-                        <span> alabad.org</span>
-                    </div>
-                </div>
+                <h2>1. Términos de Servicio y Cuentas</h2>
+                <ul>
+                    <li><strong>Requisito de Edad:</strong> Debes tener al menos 13 años para usar este servicio. Si eres menor de 18 años, declaras que cuentas con el permiso de tus padres o tutores.</li>
+                    <li><strong>Seguridad de la Cuenta:</strong> Eres el único responsable de mantener la confidencialidad de tu contraseña.</li>
+                    <li><strong>Acceso de Administrador:</strong> Los administradores de la plataforma conservan acceso técnico al sistema exclusivamente para el mantenimiento del servidor, seguridad y gestión de la base de datos.</li>
+                    <li><strong>Cancelación de Cuenta:</strong> Nos reservamos el derecho de suspender o cancelar cuentas a nuestra entera discreción por violaciones a estas políticas. Al cancelarse la cuenta, todos los datos almacenados se eliminarán de forma permanente.</li>
+                    <li><strong>Servicio "Tal Cual":</strong> Alabad.org se proporciona sin garantías. No nos hacemos responsables por la caída del servidor o la pérdida de archivos. Debes mantener tus propios respaldos externos.</li>
+                </ul>
+
+                <h2>2. Almacenamiento Privado en la Nube y Política de Derechos de Autor</h2>
+                <ul>
+                    <li><strong>Solo Uso Personal:</strong> Esta plataforma está diseñada estrictamente para el almacenamiento privado e individual en la nube y la práctica musical personal. Está estrictamente prohibido compartir de forma pública, descargar o vender los archivos alojados.</li>
+                    <li><strong>Responsabilidad del Usuario:</strong> Debes ser el propietario, poseer la licencia legal o utilizar material de Dominio Público para cualquier cifrado, letra o partitura que subas. Aceptas indemnizar a Alabad.org contra cualquier demanda o multa por infracción de derechos de autor.</li>
+                    <li><strong>Retiro de Contenido:</strong> Respetamos la propiedad intelectual. Si consideras que tu obra protegida está almacenada aquí sin autorización, envía una solicitud de eliminación a través de nuestra <a href="/reclamaciones">Página de Reclamaciones</a>. Los infractores reincidentes serán suspendidos.</li>
+                </ul>
+
+                <h2>3. Aviso de Privacidad</h2>
+                <p>En cumplimiento con la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP) de México, Alabad.org te informa sobre nuestras prácticas de datos:</p>
+                <ul>
+                    <li><strong>Datos que Recopilamos:</strong> Solo recopilamos tu dirección de correo electrónico y nombre de usuario durante el registro para crear tu cuenta.</li>
+                    <li><strong>Finalidad del Tratamiento:</strong> Tus datos se utilizan exclusivamente para darte acceso a tu cuenta de almacenamiento privado, proteger tu perfil y enviarte actualizaciones técnicas. No vendemos ni compartimos tus datos con terceros.</li>
+                    <li><strong>Derechos ARCO:</strong> Tienes derecho al Acceso, Rectificación, Cancelación u Oposición (Derechos ARCO) de tus datos. Puedes ejercer estos derechos o eliminar tu cuenta en cualquier momento desde la configuración de tu cuenta o a través de nuestro canal de soporte.</li>
+                </ul>
+
+                <h2>4. Ley Aplicable y Propiedad del Sitio</h2>
+                <ul>
+                    <li><strong>Jurisdicción Legal:</strong> Estos términos se rigen por las leyes federales de los Estados Unidos Mexicanos (México). Cualquier disputa legal se resolverá exclusivamente en los tribunales competentes de México.</li>
+                    <li><strong>Propiedad del Sitio:</strong> Todo el texto original del sitio, logotipos, marcas y código fuente subyacente pertenecen exclusivamente a Alabad.org.</li>
+                </ul>
+
+                <br />
+                <p><strong>Aviso:</strong> &copy; <span id="copyrightYear">2026</span> Alabad.org. Todos los derechos reservados.</p>
             </div>
 
             <!--Search Popup-->
@@ -153,25 +173,25 @@
                         <div id="searchInputButton">
                             <img src="imgs/icons/search.png" alt="Search">
                         </div>
-                        <input type="text" placeholder="Buscar" autocomplete="off" id="searchInput">
+                        <input type="text" placeholder="Search" autocomplete="off" id="searchInput">
                         <div id="clearSearchButton" class="hidden">
                             <img src="imgs/icons/close.png" alt="Close">
                         </div>
                     </div>
                     <!--Cancel Search-->
                     <div id="cancelSearchButton">
-                        <span>Cancelar</span>
+                        <span>Cancel</span>
                     </div>
                 </div>
 
                 <!--No Results-->
                 <div id="noResults" class="hidden">
-                    <span>No Resultados</span>
+                    <span>No Results Found</span>
                 </div>
 
                 <!--Searching-->
                 <div id="popupLoadingResults" class="hidden">
-                    <span>Buscando...</span>
+                    <span>Searching...</span>
                 </div>
 
                 <!--Search Results-->
@@ -191,24 +211,28 @@
             <form id="loginFields">
                 <div class="loginFieldLabel">
                     <img src="imgs/icons/account.png">
-                    <label for="loginUsername">Usuario</label>
+                    <label for="loginUsername">Username</label>
                 </div>
                 <input autocomplete="username" type="text" id="loginUsername">
                 <div class="loginFieldLabel">
                     <img src="imgs/icons/lock.png">
-                    <label for="loginPassword">Contraseña</label>
+                    <label for="loginPassword">Password</label>
                 </div>
                 <input type="password" id="loginPassword" autocomplete="current-password">
             </form>
 
             <span id="loginMessage"></span>
 
-            <div id="loginButton">Iniciar Sesión</div>
+            <div id="loginButton">Log In</div>
         </div>
     </div>
 
-
     <!--Scripts-->
-    <script src="js/viewerHome.min.js"></script>
+    <script src="js/legal.min.js"></script>
+    <!--<script src="js/scrollIntoView.js"></script>
+    <script src="js/viewerCommon.js"></script>
+    <script src="js/viewerHomeAndSets.js"></script>
+    <script src="js/legal.js"></script>
+    <script src="js/login.js"></script>-->
 </body>
 </html>

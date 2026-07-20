@@ -201,7 +201,7 @@ function setUpDBInputs() {
         get("YouTubeSection").classList.add("missing");
     }
 
-    if (!!songData.hasPowerPoint) {
+    if (!!songData.hasSlides) {
         get("PowerPointSection").classList.remove("missing");
     } else {
         get("PowerPointSection").classList.add("missing");
@@ -572,7 +572,7 @@ function logSuccess(response, retryMethod) {
                 alert("Update failed: Invalid update");
                 break;
             case 413: // Bad request - file too large
-                alert("Update failed: File size is too large (>100MB)");
+                alert("Update failed: Slides file is too large");
                 break;
             default: // Dunno
                 alert("Update failed");
@@ -841,19 +841,15 @@ function uploadPowerPoint() {
     fileInput.onchange = async (e) => {
         const file = e.target.files[0];
         if (!file) return;
-
-        // Prepare and send the Fetch request
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('songID', songData.id);
-        uploadPowerPointFormData(formData);
+        const slidesText = await extractTextFromPPTX(file);
+        uploadPowerPointFormData(slidesText);
     };
 
     fileInput.click();
 }
 
 // Helper method to upload the form data
-function uploadPowerPointFormData(formData, attemptNumber) {
+function uploadPowerPointFormData(slidesText, attemptNumber) {
     if (!attemptNumber) attemptNumber = 1;
     else if (attemptNumber > 2) return;
 
@@ -861,9 +857,13 @@ function uploadPowerPointFormData(formData, attemptNumber) {
         {
             method: 'POST',
             headers: {
-                "Authorization": "Bearer " + token
+                "Authorization": "Bearer " + token,
+                "Content-Type": "application/json"
             },
-            body: formData
+            body: JSON.stringify({
+                songID: songData.id,
+                slidesText: slidesText
+            })
         }
     ).then(response => {
         if (!logSuccess(response, () => { uploadPowerPointFormData(formData, attemptNumber + 1) })) return;
@@ -874,51 +874,22 @@ function uploadPowerPointFormData(formData, attemptNumber) {
 }
 
 function downloadCurrentPowerPoint() {
-    downloadFromEndpoint(PowerPointUrl + "/slides/" + songData.id + "/" + songData.songName);
-}
-
-function downloadPowerPointTemplate() {
-    downloadFromEndpoint(PowerPointUrl + "/template/" + songData.songName);
-}
-
-function downloadFromEndpoint(endpoint) {
-    fetch(endpoint,
+    fetch(PowerPointUrl + "/slides/" + songData.id,
         {
             headers: {
                 "Authorization": "Bearer " + token
             }
         }
-    ).then(response => {
-        downloadFileFromResponse(response);
+    ).then(response => response.json()).then(responseJson => {
+        generateAndDownloadPowerPoint(responseJson, songData.songName);
     });
 }
 
-function downloadFileFromResponse(response) {
-    if (!response.ok) {
-        alert("Dowload failed.");
-        return;
-    }
+function downloadPowerPointTemplate() {
+    // TODO...
 
-    // Get the filename
-    const contentDisposition = response.headers.get('Content-Disposition');
-    let fileName = 'slides.pptx'; // Default fallback
-
-    if (contentDisposition && contentDisposition.includes('filename=')) {
-        fileName = contentDisposition
-            .split(';')
-            .find(n => n.trim().startsWith('filename='))
-            .split('=')[1]
-            .replace(/"/g, ''); // Remove quotes
-    }
-
-    // Download the file
-    response.blob().then(blob => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = fileName; // Use the parsed filename
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-    });
+    generateAndDownloadPowerPoint([
+        "[TITLE] " + songData.songName,
+        "Song text..."
+    ], songData.songName);
 }

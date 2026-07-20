@@ -276,6 +276,19 @@ function buildSongLink(src, alt, data, title) {
     return songLink;
 }
 
+// Turns html string into an element
+function createElement(elementString) {
+    var frag = document.createDocumentFragment();
+
+    var elem = document.createElement('div');
+    elem.innerHTML = elementString;
+
+    while (elem.childNodes[0]) {
+        frag.appendChild(elem.childNodes[0]);
+    }
+    return frag;
+}
+
 //------------------
 // YouTube Link
 //------------------

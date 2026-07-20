@@ -887,10 +887,5 @@ function downloadCurrentPowerPoint() {
 }
 
 function downloadPowerPointTemplate() {
-    // TODO...
-
-    generateAndDownloadPowerPoint([
-        "[TITLE] " + songData.songName,
-        "Song text..."
-    ], songData.songName);
+    generateAndDownloadPowerPoint(parseSlides(songData.shortenedChart), songData.songName);
 }

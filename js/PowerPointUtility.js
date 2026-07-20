@@ -2,32 +2,20 @@
 //Reads a PPTX file object or blob and returns an array of strings containing the text from each slide.
 async function extractTextFromPPTX(pptxFile) {
     try {
-        // 1. Initialize JSZip and unpack the raw PowerPoint binary blob
         const zip = new JSZip();
         const loadedZip = await zip.loadAsync(pptxFile);
 
-        // 2. Read the master presentation map to determine the correct slide order
+        // 1. Trace master presentation mapping to determine correct slide chronological order
         const presentationXml = await loadedZip.file("ppt/presentation.xml").async("text");
-
-        // Locate the structural slide identity container list
         const sldIdLstRegex = /<p:sldIdLst>([\s\S]*?)<\/p:sldIdLst>/;
-        if (!sldIdLstRegex.test(presentationXml)) {
-            return []; // Return empty array if the presentation contains no slides
-        }
+        if (!sldIdLstRegex.test(presentationXml)) return [];
 
         const rawListContent = presentationXml.match(sldIdLstRegex)[0];
-
-        // Locate all separate slide indices inside the list mapping configuration
-        // This regex dynamically captures the relationship target ID attributes (e.g., rId=X)
         const relIdMatches = rawListContent.match(/r:id="([^"]+)"/g) || [];
 
-        // 3. Map the order of the relationship IDs to their real slide file paths
-        // PowerPoint tracks these specific target mappings inside ppt/_rels/presentation.xml.rels
         const presentationRelsXml = await loadedZip.file("ppt/_rels/presentation.xml.rels").async("text");
-
         const orderedSlideFiles = relIdMatches.map(relIdTag => {
             const relId = relIdTag.match(/"([^"]+)"/)[1];
-            // Find the relationship node that matches our sequential ID to capture its file target path
             const relRegex = new RegExp(`<Relationship[^>]*Id="${relId}"[^>]*Target="([^"]+)"`);
             const match = presentationRelsXml.match(relRegex);
             return match ? `ppt/${match[1]}` : null;
@@ -35,34 +23,55 @@ async function extractTextFromPPTX(pptxFile) {
 
         const slideTextArray = [];
 
-        // 4. Loop through the verified ordered slide paths to scrape inner text node tokens
+        // 2. Loop through each slide path to precisely parse text formatting
         for (const filePath of orderedSlideFiles) {
             const slideFileInstance = loadedZip.file(filePath);
             if (!slideFileInstance) {
-                slideTextArray.push(""); // Push empty placeholder string if file is missing
+                slideTextArray.push("");
                 continue;
             }
 
             const slideXmlText = await slideFileInstance.async("text");
 
-            // Regex to target all matching open/close text block tag pairs (<a:t>Content Here</a:t>)
-            const textNodeRegex = /<a:t>([\s\S]*?)<\/a:t>/g;
-            let match;
-            let slideAccumulatedText = [];
+            // This parser loops through individual paragraph container element chunks (<a:p>...</a:p>)
+            const paragraphRegex = /<a:p>([\s\S]*?)<\/a:p>/g;
+            let paragraphMatch;
+            let slideParagraphs = [];
 
-            // Extract the strings inside every text node loop encounter on this specific slide layout sheet
-            while ((match = textNodeRegex.exec(slideXmlText)) !== null) {
-                slideAccumulatedText.push(match[1]);
+            while ((paragraphMatch = paragraphRegex.exec(slideXmlText)) !== null) {
+                const paragraphXml = paragraphMatch[1];
+
+                // Track characters inside the current paragraph container block
+                let currentParagraphText = "";
+
+                // Find text pieces (<a:t>text</a:t>) and break elements (<a:br/>) in chronological order
+                const elementRegex = /<a:t>([\s\S]*?)<\/a:t>|<a:br\/>/g;
+                let elementMatch;
+
+                while ((elementMatch = elementRegex.exec(paragraphXml)) !== null) {
+                    if (elementMatch[0] === '<a:br/>') {
+                        // If it matches a break element tag, append a native JavaScript newline character
+                        currentParagraphText += "\n";
+                    } else if (elementMatch[1]) {
+                        // If it matches a standard text container tag, append the literal text value string
+                        currentParagraphText += elementMatch[1];
+                    }
+                }
+
+                // If the paragraph node contains text, save it into our working array index loop
+                if (currentParagraphText.trim() !== "") {
+                    slideParagraphs.push(currentParagraphText);
+                }
             }
 
-            // Combine all the slide's distinct text box fragments with a space and save it to our final array index
-            slideTextArray.push(slideAccumulatedText.join(" ").trim());
+            // Combine separate text paragraph clusters with a newline spacing wrapper
+            slideTextArray.push(slideParagraphs.join("\n").trim());
         }
 
         return slideTextArray;
 
     } catch (error) {
-        console.error("Failed to parse and extract text data from PPTX archive layout:", error);
+        console.error("Failed to parse and extract structured text data from PPTX archive layout:", error);
         throw error;
     }
 }
@@ -71,11 +80,13 @@ async function extractTextFromPPTX(pptxFile) {
 // Any slide with the "[TITLE]" prefix gets 60pt font size instead of 40pt
 async function generateAndDownloadPowerPoint(textArray, fileName) {
     try {
-        const baseAssetUrl = 'https://localhost:44397/imgs/videos/';
         const targetSlideCount = textArray.length;
 
-        // 1. Fetch your verified 50-slide template PPTX
-        const templateResponse = await fetch(`${baseAssetUrl}template_50_slides.pptx`);
+        // 1. Fetch your verified template PPTX
+        let templateFile = "template_100_slides.pptx";
+        if (targetSlideCount <= 20) templateFile = "template_20_slides.pptx";
+        else if (targetSlideCount <= 50) templateFile = "template_50_slides.pptx";
+        const templateResponse = await fetch("templates/" + templateFile);
         if (!templateResponse.ok) throw new Error("Failed to load 50-slide presentation template.");
         const templateBlob = await templateResponse.blob();
 
@@ -107,15 +118,15 @@ async function generateAndDownloadPowerPoint(textArray, fileName) {
                 slideXmlText = slideXmlText.replace(/<a:t>[^<]*<\/a:t>/, `<a:t>${rawTextValue}</a:t>`);
             }
 
-            // B. If it's a Title Slide, bump the font size from 40pt (4000) to 60pt (6000)
+            // B. If it's a Title Slide, bump the font size from 32pt (3200) to 40pt (4000)
             if (isTitleSlide) {
-                // PowerPoint tracks text size in hundredths of a point (sz="4000" is 40pt)
-                if (slideXmlText.includes('sz="4000"')) {
-                    slideXmlText = slideXmlText.replace(/sz="4000"/g, 'sz="6000"');
+                // PowerPoint tracks text size in hundredths of a point (sz="3200" is 32pt)
+                if (slideXmlText.includes('sz="3200"')) {
+                    slideXmlText = slideXmlText.replace(/sz="3200"/g, 'sz="4000"');
                 } else {
                     // FALLBACK: If the template uses variations like single quotes or lacks explicit size,
                     // this targets any existing size tag inside the text run properties block
-                    slideXmlText = slideXmlText.replace(/sz="\d+"/g, 'sz="6000"');
+                    slideXmlText = slideXmlText.replace(/sz="\d+"/g, 'sz="4000"');
                 }
             }
 

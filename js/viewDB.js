@@ -881,6 +881,7 @@ function downloadCurrentPowerPoint() {
             }
         }
     ).then(response => response.json()).then(responseJson => {
+        responseJson[0] = "[TITLE]" + responseJson[0];
         generateAndDownloadPowerPoint(responseJson, songData.songName);
     });
 }

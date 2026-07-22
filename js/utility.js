@@ -581,7 +581,7 @@ function updateSearchResults(event) {
 
                 // Search on click
                 result.addEventListener("mousedown", function() {
-                    window.location.href = (usingSpanish() ? "imprimiendo" : "printing") + "?song_id=" + songEntity.id;
+                    window.location.href = (usingSpanish() ? "imprimir" : "print") + "?song_id=" + songEntity.id;
                 });
 
                 result.name = songEntity.songName;

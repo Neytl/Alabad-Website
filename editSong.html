@@ -568,5 +568,47 @@
     <script src="js/viewDB.js"></script>
     <script src="js/view.js"></script>
     <script src="js/PowerPointUtility.js"></script>
+
+
+    <script>
+        (function () {
+            var consoleDiv = document.getElementById('songText');
+
+            // Helper function to print messages using ES5 syntax
+            function logToScreen(message, type) {
+                if (consoleDiv) {
+                    var timestamp = new Date().toLocaleTimeString();
+                    var prefix = '[' + timestamp + '] ' + (type ? type + ': ' : '');
+                    consoleDiv.innerHTML += '<div>' + prefix + message + '</div>';
+                }
+            }
+
+            // 1. Catch standard runtime code crashes (Syntax, Reference, etc.)
+            window.onerror = function (message, source, lineno, colno, error) {
+                var msg = message + '\nLine: ' + lineno + ' in ' + source;
+                logToScreen(msg, 'CRASH');
+                return false; // Allows the browser to still handle it normally too
+            };
+
+            // 2. Catch unhandled Promise rejections (Async/Fetch errors)
+            window.addEventListener('unhandledrejection', function (event) {
+                var reason = event.reason;
+                var msg = reason && reason.message ? reason.message : JSON.stringify(reason);
+                logToScreen(msg, 'PROMISE REJECTION');
+            });
+
+            // 3. Intercept explicit code logs like console.error()
+            var originalConsoleError = console.error;
+            console.error = function () {
+                var args = Array.prototype.slice.call(arguments);
+                var message = args.map(function (arg) {
+                    return (typeof arg === 'object') ? JSON.stringify(arg) : arg;
+                }).join(' ');
+
+                logToScreen(message, 'ERROR');
+                originalConsoleError.apply(console, arguments);
+            };
+        })();
+    </script>
 </body>
 </html>

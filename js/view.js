@@ -6,62 +6,69 @@
 //*****************************
 
 // Before the page is loaded
-document.addEventListener("DOMContentLoaded", function() {
-    // Load in song request from URL string
-    let songQueryParam = new URLSearchParams(window.location.search).get("song_id");
-    if (!!songQueryParam) {
-        sessionStorage.removeItem("tabIdRequest");
-        localStorage.setItem("requestId", songQueryParam);
-        history.replaceState(null, '', window.location.href.split("?")[0]);
-    }
+document.addEventListener("DOMContentLoaded", function () {
+    try {
 
-    // Shared between database pages
-    loadGeneralPageStuff();
+        // Load in song request from URL string
+        let songQueryParam = new URLSearchParams(window.location.search).get("song_id");
+        if (!!songQueryParam) {
+            sessionStorage.removeItem("tabIdRequest");
+            localStorage.setItem("requestId", songQueryParam);
+            history.replaceState(null, '', window.location.href.split("?")[0]);
+        }
 
-    // Check if already logged in
-    testDatabaseEditorConnection();
+        // Shared between database pages
+        loadGeneralPageStuff();
 
-    if (localStorage.getItem("connection") == "loggedIn") {
-        get("dbOptionsButton").classList.remove("inactive");
-    }
+        // Check if already logged in
+        testDatabaseEditorConnection();
 
-    // Keys
-    buildKeyButtons(false, false, false, "none");
+        if (localStorage.getItem("connection") == "loggedIn") {
+            get("dbOptionsButton").classList.remove("inactive");
+        }
 
-    // Load Font Size
-    let savedFontSize = localStorage.getItem("fontSize");
-    if (!!savedFontSize) {
-        setFontSize(parseInt(savedFontSize));
-    }
+        // Keys
+        buildKeyButtons(false, false, false, "none");
 
-    // Load Chord Colors
-    let storedColor = localStorage.getItem("chordColor");
-    if (!!storedColor) {
-        setChordColor(storedColor);
-    }
+        // Load Font Size
+        let savedFontSize = localStorage.getItem("fontSize");
+        if (!!savedFontSize) {
+            setFontSize(parseInt(savedFontSize));
+        }
 
-    // Adjust the editing options overflow
-    adjustEditingOverflow();
+        // Load Chord Colors
+        let storedColor = localStorage.getItem("chordColor");
+        if (!!storedColor) {
+            setChordColor(storedColor);
+        }
 
-    // Check for a url from a link
-    let searchParams = new URLSearchParams(window.location.search);
+        // Adjust the editing options overflow
+        adjustEditingOverflow();
 
-    // - Song link
-    let songId = searchParams.get("song");
-    if (!!songId) {
-        window.history.replaceState(null, "", "editSong");
-        loadSongRequest(songId);
-        return;
-    }
+        // Check for a url from a link
+        let searchParams = new URLSearchParams(window.location.search);
 
-    // Load and show song
-    if (!!songData) {
-        showNewSong();
-    } else if ("requestId" in localStorage) {
-        loadSongRequest(localStorage.getItem("requestId"));
-    } else {
-        // Problem Loading Song
-        promptNewSong();
+        // - Song link
+        let songId = searchParams.get("song");
+        if (!!songId) {
+            window.history.replaceState(null, "", "editSong");
+            loadSongRequest(songId);
+            return;
+        }
+
+        // Load and show song
+        if (!!songData) {
+            showNewSong();
+        } else if ("requestId" in localStorage) {
+            loadSongRequest(localStorage.getItem("requestId"));
+        } else {
+            // Problem Loading Song
+            promptNewSong();
+        }
+
+    } catch (error) {
+        get("editingRow").innerHTML = "Error: " + error;
+        console.log(error);
     }
 });
 
@@ -85,10 +92,17 @@ function loadSongRequest(songId) {
 // User Load Events
 //*****************************
 
-window.addEventListener("load", function() {
-    loadGeneralUserEvents();
-    loadUserEvents();
-    loadingPage = false;
+window.addEventListener("load", function () {
+    try {
+
+        loadGeneralUserEvents();
+        loadUserEvents();
+        loadingPage = false;
+
+    } catch (error) {
+        get("editingRow").innerHTML = "Error: " + error;
+        console.log(error);
+    }
 });
 
 // Set up all user interaction events
@@ -101,7 +115,7 @@ function loadUserEvents() {
     setupLoginEvents();
 
     // Editing song text
-    get("songTextEdit").addEventListener("change", function() {
+    get("songTextEdit").addEventListener("change", function () {
         saveCurrentText();
 
         postNewText(this.value).then(responseJson => {
@@ -110,12 +124,12 @@ function loadUserEvents() {
         });
     });
 
-    get("songTextEdit").addEventListener("input", function() {
+    get("songTextEdit").addEventListener("input", function () {
         resizeTextArea();
     });
 
     // View Song button
-    get("viewSong").addEventListener("click", function() {
+    get("viewSong").addEventListener("click", function () {
         // Check for empty song
         var songText = get("songTextEdit").value;
         if (!songText) {
@@ -128,7 +142,7 @@ function loadUserEvents() {
     });
 
     // Edit Song Button
-    get("editSong").addEventListener("click", function() {
+    get("editSong").addEventListener("click", function () {
         setUpEdit();
     });
 
@@ -232,14 +246,14 @@ function loadUserEvents() {
 // Loads events related to the song header
 function loadSongHeaderEvents() {
     // Song Name
-    get("songNameEdit").addEventListener("blur", function() {
+    get("songNameEdit").addEventListener("blur", function () {
         // Revert if empty song name
         if (!this.value) {
             this.value = songData.songName;
         }
     });
 
-    get("songNameEdit").addEventListener("keydown", function(event) {
+    get("songNameEdit").addEventListener("keydown", function (event) {
         switch (event.key) {
             case "Escape":
                 this.value = "";
@@ -250,7 +264,7 @@ function loadSongHeaderEvents() {
         }
     });
 
-    get("songNameEdit").addEventListener("change", function() {
+    get("songNameEdit").addEventListener("change", function () {
         // Revert if empty song name
         if (!this.value) {
             this.value = songData.tabName;
@@ -279,7 +293,7 @@ function loadEdittingBarEvents() {
     });
     new ResizeObserver(adjustEditingOverflow).observe(get("sideMenuContentContainer"));
     window.addEventListener("resize", adjustEditingOverflow);
-    get("overflowButton").addEventListener("click", function() {
+    get("overflowButton").addEventListener("click", function () {
         get("overflowElements").classList.toggle("hidden");
     });
 
@@ -292,23 +306,23 @@ function loadEdittingBarEvents() {
     get("printButton").addEventListener("click", printSong);
 
     // Font Size
-    get("fontSize").addEventListener("keydown", function(event) {
+    get("fontSize").addEventListener("keydown", function (event) {
         switch (event.key) {
             case "Enter":
                 this.blur();
                 break;
         }
     });
-    get("fontSize").addEventListener("input", function() {
+    get("fontSize").addEventListener("input", function () {
         setFontSize(parseInt(this.value));
     });
-    get("fontSize").addEventListener("blur", function() {
+    get("fontSize").addEventListener("blur", function () {
         setFontSize(parseInt(lastFontSize));
     });
-    get("growFontSize").addEventListener("click", function() {
+    get("growFontSize").addEventListener("click", function () {
         setFontSize(parseInt(get("fontSize").value) + 1);
     });
-    get("shrinkFontSize").addEventListener("click", function() {
+    get("shrinkFontSize").addEventListener("click", function () {
         setFontSize(parseInt(get("fontSize").value) - 1);
     });
 
@@ -318,20 +332,20 @@ function loadEdittingBarEvents() {
             get("chordColorsContainer").classList.add("hidden");
         }
     });
-    getAllClass("chordColor").forEach(function(element) {
-        element.addEventListener("click", function() {
+    getAllClass("chordColor").forEach(function (element) {
+        element.addEventListener("click", function () {
             setChordColor(element.id);
             get("chordColorsContainer").classList.add("hidden");
         });
     });
-    get("chordColorSelect").addEventListener("click", function(event) {
+    get("chordColorSelect").addEventListener("click", function (event) {
         if (!clickedOn(event, "chordColorsContainer")) {
             get("chordColorsContainer").classList.toggle("hidden");
         }
     });
 
     // Chords/Lyrics
-    get("displayType").addEventListener("change", function() {
+    get("displayType").addEventListener("change", function () {
         saveDisplayTypeChange(songData.displayType);
 
         if (this.value === "Complete") {
@@ -705,7 +719,7 @@ function buildKeyButtons(useFlats, solfege, minorKey, selectedKey) {
     removeChildren(keyButtons);
     let index = -1;
 
-    keys.forEach(function(key) {
+    keys.forEach(function (key) {
         index++;
         let keyButton = make("div");
 
@@ -715,7 +729,7 @@ function buildKeyButtons(useFlats, solfege, minorKey, selectedKey) {
             keyButton.classList.add("selectedKey");
         } else {
             // Not the current key - transpose on click
-            keyButton.addEventListener("click", function() {
+            keyButton.addEventListener("click", function () {
                 transposeTo(key);
             });
         }
@@ -810,7 +824,7 @@ function setUpSideMenuTabs() {
     let optionElements = getAllClass("sideMenuOption");
 
     optionElements.forEach(element => {
-        element.addEventListener("click", function(event) {
+        element.addEventListener("click", function (event) {
             let tabName = element.dataset.tabName;
 
             // Chords option tab
@@ -1154,8 +1168,8 @@ function printSong() {
 function cleanSong(event) {
     buildDropdown(event, [
         buildDropdownOption("clean.png", "Format Sections", requestFormat),
-        buildDropdownOption("clean.png", "Decapitalize", function() {
-            postCleanedText(songData.text.replace(/([^\nA-ZÑÁÉÍÓÚ]([A-ZÑÁÉÍÓÚ]{2,}))|((?<=[A-ZÑÁÉÍÓÚ])[A-ZÑÁÉÍÓÚ])/g, function(group) { return group.toLowerCase(); }));
+        buildDropdownOption("clean.png", "Decapitalize", function () {
+            postCleanedText(songData.text.replace(/([^\nA-ZÑÁÉÍÓÚ]([A-ZÑÁÉÍÓÚ]{2,}))|((?<=[A-ZÑÁÉÍÓÚ])[A-ZÑÁÉÍÓÚ])/g, function (group) { return group.toLowerCase(); }));
         }),
         buildDropdownOption("clean.png", "Courier > Arial", convertCourierToArial),
         buildDropdownOption("clean.png", "Scale Chords", scaleChords),
@@ -1289,7 +1303,7 @@ function scaleChords(event) {
     });
 
     // Destroying the dropdown
-    let selfDestruct = function() {
+    let selfDestruct = function () {
         if (document.body.contains(dropdown)) {
             document.body.removeChild(dropdown);
 
@@ -1392,7 +1406,7 @@ function buildEditDropdown(event, optionElements, floatRight) {
     });
 
     // Destroying the dropdown
-    let selfDestruct = function() {
+    let selfDestruct = function () {
         if (container.contains(dropdown)) {
             container.removeChild(dropdown);
         }
@@ -1431,26 +1445,26 @@ function setupHTMLEditing() {
         let chordNumber = currentChordNumber;
 
         // Edit Chord
-        addRightClickEvent(chordElement, function(event) {
+        addRightClickEvent(chordElement, function (event) {
             buildEditDropdown(event, [
-                buildDropdownOption("pencil.png", "Edit", function() {
+                buildDropdownOption("pencil.png", "Edit", function () {
                     editChord(chordNumber, chordElement.innerHTML, event);
                 }),
-                buildDropdownOption("trash.png", "Remove", function() {
+                buildDropdownOption("trash.png", "Remove", function () {
                     removeChord(chordNumber);
                 })
             ], true);
         });
 
         // Move Chord
-        let dragStart = function(chordNumber, chordElement) {
+        let dragStart = function (chordNumber, chordElement) {
             draggedChordNumber = chordNumber;
-            setTimeout(function() {
+            setTimeout(function () {
                 chordElement.classList.add("dragging");
             }, 10);
         }
 
-        let dragEnd = function(chordElement) {
+        let dragEnd = function (chordElement) {
             chordElement.classList.remove("dragging");
         }
 
@@ -1462,7 +1476,7 @@ function setupHTMLEditing() {
         chordElement.addEventListener('dragend', () => { dragEnd(chordElement) });
 
         // Select Chord
-        chordElement.addEventListener("click", function() {
+        chordElement.addEventListener("click", function () {
             selectChord(chordElement, chordNumber);
         });
     });
@@ -1481,7 +1495,7 @@ function setupHTMLEditing() {
         let lineNumber = currentLineNumber;
 
         // Drop Chord
-        let onDrop = function(event, droppedLineNumber) {
+        let onDrop = function (event, droppedLineNumber) {
             if (draggedChordNumber < 0) return;
             cancelDefault(event);
 
@@ -1502,12 +1516,12 @@ function setupHTMLEditing() {
 
         if (false /*lineGroupElement.classList.contains("fullLine")*/) {
             // Right Click event for section title
-            addRightClickEvent(lineElement, function(event) {
+            addRightClickEvent(lineElement, function (event) {
                 // Build dropdown options
                 let dropdownOptions = [];
 
                 // Move the section up
-                dropdownOptions.push(buildDropdownOption("up.png", "Move Up", function() {
+                dropdownOptions.push(buildDropdownOption("up.png", "Move Up", function () {
                     combineLine(lineNumber);
                 }));
 
@@ -1516,7 +1530,7 @@ function setupHTMLEditing() {
             });
         } else {
             // Right Click event for lyrics line group
-            addRightClickEvent(lineElement, function(event) {
+            addRightClickEvent(lineElement, function (event) {
                 let splitPoint = getXPositionPortion(event, lineElement);
 
                 // Build dropdown options
@@ -1524,26 +1538,26 @@ function setupHTMLEditing() {
 
                 // Add Chord
                 if (get("displayType").value != "Lyrics") {
-                    dropdownOptions.push(buildDropdownOption("add.png", "Add a chord", function(clickEvent) {
+                    dropdownOptions.push(buildDropdownOption("add.png", "Add a chord", function (clickEvent) {
                         addChord(lineNumber, splitPoint, clickEvent);
                     }));
                 }
 
                 // Split Line
-                dropdownOptions.push(buildDropdownOption("splitLine.png", "Split line here", function() {
+                dropdownOptions.push(buildDropdownOption("splitLine.png", "Split line here", function () {
                     splitLine(lineNumber, splitPoint);
                 }));
 
                 // Combine Line
-                let combineLinesOption = buildDropdownOption("combine.png", "Combine with previous", function() {
+                let combineLinesOption = buildDropdownOption("combine.png", "Combine with previous", function () {
                     combineLine(lineNumber);
                 });
                 addRightClickEvent(combineLinesOption, newEvent => {
                     buildEditDropdown(event, [
-                        buildDropdownOption("combine.png", "1 Space", function() { combineLine(lineNumber, 1); }),
-                        buildDropdownOption("combine.png", "2 Spaces", function() { combineLine(lineNumber, 2); }),
-                        buildDropdownOption("combine.png", "3 Spaces", function() { combineLine(lineNumber, 3); }),
-                        buildDropdownOption("combine.png", "4 Spaces", function() { combineLine(lineNumber, 4); }),
+                        buildDropdownOption("combine.png", "1 Space", function () { combineLine(lineNumber, 1); }),
+                        buildDropdownOption("combine.png", "2 Spaces", function () { combineLine(lineNumber, 2); }),
+                        buildDropdownOption("combine.png", "3 Spaces", function () { combineLine(lineNumber, 3); }),
+                        buildDropdownOption("combine.png", "4 Spaces", function () { combineLine(lineNumber, 4); }),
                     ], true);
                 });
 
@@ -1567,7 +1581,7 @@ function getLyricLine(element) {
 }
 
 function addRightClickEvent(element, callback) {
-    element.addEventListener('contextmenu', function(event) {
+    element.addEventListener('contextmenu', function (event) {
         event.preventDefault();
         callback(event);
     }, false);
@@ -1624,7 +1638,7 @@ function editChord(chordNumber, chordText, event) {
     });
 
     // Destroying the dropdown
-    let selfDestruct = function() {
+    let selfDestruct = function () {
         if (document.body.contains(dropdown)) {
             document.body.removeChild(dropdown);
 
@@ -1684,7 +1698,7 @@ function addChord(lineNumber, splitPoint, event) {
     });
 
     // Destroying the dropdown
-    let selfDestruct = function() {
+    let selfDestruct = function () {
         if (document.body.contains(dropdown)) {
             document.body.removeChild(dropdown);
 

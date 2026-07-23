@@ -7,68 +7,61 @@
 
 // Before the page is loaded
 document.addEventListener("DOMContentLoaded", function () {
-    try {
+    // Load in song request from URL string
+    let songQueryParam = new URLSearchParams(window.location.search).get("song_id");
+    if (!!songQueryParam) {
+        sessionStorage.removeItem("tabIdRequest");
+        localStorage.setItem("requestId", songQueryParam);
+        history.replaceState(null, '', window.location.href.split("?")[0]);
+    }
 
-        // Load in song request from URL string
-        let songQueryParam = new URLSearchParams(window.location.search).get("song_id");
-        if (!!songQueryParam) {
-            sessionStorage.removeItem("tabIdRequest");
-            localStorage.setItem("requestId", songQueryParam);
-            history.replaceState(null, '', window.location.href.split("?")[0]);
-        }
+    // Shared between database pages
+    loadGeneralPageStuff();
 
-        // Shared between database pages
-        loadGeneralPageStuff();
+    // Check if already logged in
+    testDatabaseEditorConnection();
 
-        // Check if already logged in
-        testDatabaseEditorConnection();
+    if (localStorage.getItem("connection") == "loggedIn") {
+        get("dbOptionsButton").classList.remove("inactive");
+    }
 
-        if (localStorage.getItem("connection") == "loggedIn") {
-            get("dbOptionsButton").classList.remove("inactive");
-        }
+    // Keys
+    buildKeyButtons(false, false, false, "none");
 
-        // Keys
-        buildKeyButtons(false, false, false, "none");
+    // Load Font Size
+    let savedFontSize = localStorage.getItem("fontSize");
+    if (!!savedFontSize) {
+        setFontSize(parseInt(savedFontSize));
+    }
 
-        // Load Font Size
-        let savedFontSize = localStorage.getItem("fontSize");
-        if (!!savedFontSize) {
-            setFontSize(parseInt(savedFontSize));
-        }
+    // Load Chord Colors
+    let storedColor = localStorage.getItem("chordColor");
+    if (!!storedColor) {
+        setChordColor(storedColor);
+    }
 
-        // Load Chord Colors
-        let storedColor = localStorage.getItem("chordColor");
-        if (!!storedColor) {
-            setChordColor(storedColor);
-        }
+    // Adjust the editing options overflow
+    adjustEditingOverflow();
 
-        // Adjust the editing options overflow
-        adjustEditingOverflow();
+    // Check for a url from a link
+    let searchParams = new URLSearchParams(window.location.search);
 
-        // Check for a url from a link
-        let searchParams = new URLSearchParams(window.location.search);
+    // - Song link
+    let songId = searchParams.get("song");
+    if (!!songId) {
+        window.history.replaceState(null, "", "editSong");
+        loadSongRequest(songId);
+        return;
+    }
 
-        // - Song link
-        let songId = searchParams.get("song");
-        if (!!songId) {
-            window.history.replaceState(null, "", "editSong");
-            loadSongRequest(songId);
-            return;
-        }
-
-        // Load and show song
-        if (!!songData) {
-            showNewSong();
-        } else if ("requestId" in localStorage) {
-            loadSongRequest(localStorage.getItem("requestId"));
-        } else {
-            // Problem Loading Song
-            promptNewSong();
-        }
-
-    } catch (error) {
-        get("editingRow").innerHTML = "Error: " + error;
-        console.log(error);
+    // Load and show song
+    if (!!songData) {
+        showNewSong();
+    } else if ("requestId" in localStorage) {
+        loadSongRequest(localStorage.getItem("requestId"));
+    } else {
+        // Problem Loading Song
+        promptNewSong();
     }
 });
 
@@ -93,16 +86,9 @@ function loadSongRequest(songId) {
 //*****************************
 
 window.addEventListener("load", function () {
-    try {
-
-        loadGeneralUserEvents();
-        loadUserEvents();
-        loadingPage = false;
-
-    } catch (error) {
-        get("editingRow").innerHTML = "Error: " + error;
-        console.log(error);
-    }
+    loadGeneralUserEvents();
+    loadUserEvents();
+    loadingPage = false;
 });
 
 // Set up all user interaction events
@@ -1169,7 +1155,19 @@ function cleanSong(event) {
     buildDropdown(event, [
         buildDropdownOption("clean.png", "Format Sections", requestFormat),
         buildDropdownOption("clean.png", "Decapitalize", function () {
-            postCleanedText(songData.text.replace(/([^\nA-ZÑÁÉÍÓÚ]([A-ZÑÁÉÍÓÚ]{2,}))|((?<=[A-ZÑÁÉÍÓÚ])[A-ZÑÁÉÍÓÚ])/g, function (group) { return group.toLowerCase(); }));
+            postCleanedText(songData.text.replace(/([^\nA-ZÑÁÉÍÓÚ]([A-ZÑÁÉÍÓÚ]{2,}))|([A-ZÑÁÉÍÓÚ])([A-ZÑÁÉÍÓÚ])/g, function (match, p1, p2, p3, p4) {
+                if (p2) {
+                    // Group 2 matched (e.g., lowercase letter followed by two or more uppercase letters)
+                    // We only want to lowercase the uppercase portion (p2)
+                    return match.replace(p2, p2.toLowerCase());
+                }
+                // Group 3 and 4 matched (two consecutive uppercase letters)
+                // Lowercase both
+                return (p3 + p4).toLowerCase();
+            }));
+
+            // This breaks old versions of Safari :(
+            // postCleanedText(songData.text.replace(/([^\nA-ZÑÁÉÍÓÚ]([A-ZÑÁÉÍÓÚ]{2,}))|((?<=[A-ZÑÁÉÍÓÚ])[A-ZÑÁÉÍÓÚ])/g, function (group) { return group.toLowerCase(); }));
         }),
         buildDropdownOption("clean.png", "Courier > Arial", convertCourierToArial),
         buildDropdownOption("clean.png", "Scale Chords", scaleChords),

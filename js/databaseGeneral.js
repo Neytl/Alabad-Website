@@ -48,18 +48,6 @@ function loadGeneralUserEvents() {
         this.classList.toggle("open");
     });
 
-    // New Song
-    get("newSongButton").addEventListener("click", event => {
-        buildDropdown(event, [
-            buildDropdownOption("upload.png", "Upload Song", chooseFile),
-            buildDropdownOption("paste.png", "Use Copied Text", newSongFromClipbaord),
-            buildDropdownOption("search.png", "Search For Song", () => {
-                clearSearchData();
-                window.location.href = "search";
-            })
-        ]);
-    });
-
     // Tabs Overflow
     setUpTabOverlow();
 

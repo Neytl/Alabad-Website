@@ -454,7 +454,6 @@ body.locked {
  **** Song Editing Row - Font
  *******************************/
 
-
 #fontStyleSelect {
     width: 5em;
 }
@@ -462,7 +461,6 @@ body.locked {
 .Arial {
     font-family: Arial;
 }
-
 
 #fontSizeContainer {
     display: flex;

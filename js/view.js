@@ -989,7 +989,6 @@ function postTextAndDisplay() {
     let requestPayload = {
         text: (editing ? lastEditedText : originalSongText),
         key: songData.key,
-        chordChartIsFlat: chordChartIsFlat,
         usingSolfege: usingSolfege
     };
 
@@ -1782,7 +1781,6 @@ function requestSpecialEdit(requestData) {
     let requestPayload = {
         text: originalSongText,
         key: songData.key,
-        chordChartIsFlat: chordChartIsFlat,
         usingSolfege: usingSolfege,
         request: requestData
     };

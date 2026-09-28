@@ -181,7 +181,10 @@ async function generateAndDownloadPowerPoint(textArray, fileName) {
         loadedZip.file("ppt/presentation.xml", presentationXml);
 
         // 5. Compile the modified zip archive back into a finalized presentation download blob
-        const finalizedBlob = await loadedZip.generateAsync({ type: 'blob' });
+        const finalizedBlob = await loadedZip.generateAsync({
+            type: 'blob',
+            mimeType: 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+        });
 
         // 6. Fire browser download link
         const downloadLink = document.createElement('a');

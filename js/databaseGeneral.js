@@ -88,8 +88,9 @@ function saveTabs() {
 }
 
 // Refreshes tab elements on screen and sets the songData
+const tabsContainer = get("tabs");
 function loadTabs() {
-    removeChildren(get("tabs"));
+    removeChildren(tabsContainer);
     removeChildren(get("moreTabs"));
     tabOverflowStack = [];
     tabsData = JSON.parse(sessionStorage.getItem("tabs"));
@@ -101,6 +102,7 @@ function loadTabs() {
 
     // Build tabs
     tabsData.forEach(tabData => buildTab(tabData));
+    tabsContainer.removeChild(tabsContainer.lastChild);
 
     // Tab Overflow
     adjustTabsOverflow();
@@ -112,8 +114,6 @@ function isCurrentTab(tabData) {
 
 // Builds a tab and appends it to the nav - sets the songData for the current page
 function buildTab(tabData) {
-    let tabsContainer = get("tabs");
-
     // Load tab data
     let isCurrentPage = isCurrentTab(tabData);
 
@@ -282,7 +282,7 @@ function setUpTabOverlow() {
 var tabOverflowStack = [];
 function adjustTabsOverflow() {
     const MAX_HEIGHT = 55;
-    const underflow = get("tabs");
+    const underflow = tabsContainer;
     const overflow = get("moreTabs");
     const overflowButton = get("moreTabsButtonContainer");
 
@@ -308,6 +308,8 @@ function adjustTabsOverflow() {
 
     // Overflow items as needed
     while (underflow.offsetHeight > MAX_HEIGHT) {
+        if (underflow.children.length <= 1) return;
+
         for (let i = 0; i < 2; i++) {
             let overflowedChild = underflow.children[underflow.children.length - 1];
             tabOverflowStack.push(overflowedChild);
@@ -465,6 +467,14 @@ function goToView() {
 
 // Uploads text from clipboard as a new song
 function newSongFromClipbaord() {
+    if (!navigator.clipboard) return false;
+    newSongFromClipbaordAsync();
+}
+
+async function newSongFromClipbaordAsync() {
+    let monosapceDetected = await monospaceDetected();
+    let font = (monosapceDetected ? "Courier New" : "");
+
     navigator.clipboard.readText().then(songText => {
         fetch(mainUrl + "/formatSongText",
             {
@@ -473,7 +483,8 @@ function newSongFromClipbaord() {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    "text": songText
+                    text: songText,
+                    fontFamily: font
                 })
             }
         ).then(response => response.json()).then(responseJson => {
@@ -487,6 +498,59 @@ function newSongFromClipbaord() {
         });
     });
 }
+
+async function monospaceDetected() {
+    try {
+        const clipboardItems = await navigator.clipboard.read();
+        let htmlText = "";
+
+        for (const item of clipboardItems) {
+            if (item.types.includes('text/html')) {
+                const blob = await item.getType('text/html');
+                htmlText = await blob.text();
+                break;
+            }
+        }
+
+        if (!htmlText) return false;
+
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlText, 'text/html');
+
+        // 1. Use querySelectorAll to get all matching nodes
+        const elements = doc.querySelectorAll('[style*="font-family"], [style*="font-"], [style*="font:"], font[face]');
+
+        // 2. Loop through every element found
+        for (const element of elements) {
+            let font = element.style.fontFamily || element.getAttribute('face');
+
+            // 3. Skip if font is missing, empty, or set to "inherit"
+            if (!font || font.trim().toLowerCase() === 'inherit') {
+                continue;
+            }
+
+            console.log('Detected Font:', font);
+            font = font.toLowerCase();
+
+            const isMonospace = font.includes("mono") ||
+                font.includes("courier") ||
+                font.includes("consolas") ||
+                font.includes("monaco") ||
+                font.includes("lucida console");
+
+            // 4. Return immediately if we find a match, otherwise loop continues
+            if (isMonospace) return true;
+        }
+
+        // Return false if we checked everything and found no monospace fonts
+        return false;
+
+    } catch (err) {
+        console.error('Failed to read clipboard contents: ', err);
+        return false;
+    }
+}
+
 
 //*****************************
 // Online/Offline

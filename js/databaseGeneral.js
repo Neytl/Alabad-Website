@@ -539,10 +539,14 @@ async function monospaceDetected() {
                 font.includes("lucida console");
 
             // 4. Return immediately if we find a match, otherwise loop continues
-            if (isMonospace) return true;
+            if (isMonospace) {
+                console.log("**Monospace font found**");
+                return true;
+            }
         }
 
         // Return false if we checked everything and found no monospace fonts
+        console.log("**Monospace font not found**");
         return false;
 
     } catch (err) {

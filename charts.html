@@ -22,12 +22,74 @@
             <div class="menuSection hidden" id="setListSongsSection">
                 <!--Set List Name-->
                 <div id="setListNameContainer" class="setListNameContainer">
-                    <a id="setListName" href="chart?set_list=local">Set List</a>
+                    <span id="setListName">Set List</span>
+                    <div id="setListOptionsContainer" class="popupMenuContainer">
+                        <div id="setListOptionsButton">
+                            <img src="imgs/icons/more.png">
+                        </div>
+                        <div id="setListOptions" class="popupMenu">
+                            <!--Add song to saved set-->
+                            <div id="addSetListSongButton">
+                                <img src="imgs/icons/add.png" alt="Edit">
+                                <span>Song</span>
+                            </div>
+                            <!--Edit Set List-->
+                            <div id="editSetListSongButton">
+                                <img src="imgs/icons/pencil.png" alt="Edit">
+                                <span>Edit</span>
+                            </div>
+                            <!--YouTube-->
+                            <a id="setListLink" href="" target="_blank" class="YTContainer hidden">
+                                <img src="imgs/icons/YouTube.png" alt="YT">
+                                <span>YouTube</span>
+                            </a>
+                            <!--Share-->
+                            <div id="shareSetListButton">
+                                <img src="imgs/icons/share.png" alt="Share">
+                                <span>Share</span>
+                            </div>
+                            <!--Download PowerPoint Slides-->
+                            <div id="downloadSlidesButton" class="hidden">
+                                <img src="imgs/icons/PowerPoint.png" alt="Slides" class="default">
+                                <span>Download Slides</span>
+                            </div>
+                            <!--Print-->
+                            <a class="menuButton" id="printSetListButton" href="print">
+                                <img src="imgs/icons/print.png" alt="Print">
+                                <span>Print</span>
+                            </a>
+                            <!--New Weekly Set List-->
+                            <div id="newWeeklySetListButton" class="hidden">
+                                <img src="imgs/icons/church.png" alt="New">
+                                <span>New Set</span>
+                            </div>
+                            <!--Close Set List-->
+                            <div id="closeSetListButton">
+                                <img src="imgs/icons/close.png" alt="Close">
+                                <span>Close Set</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Edit Set List Name-->
+                <div class="setListNameContainer hidden" id="editSetListNameContainer">
+                    <input id="editSetListName" type="text" value="Set List" />
                 </div>
 
                 <!--Set List Songs-->
                 <div class="menuSectionOptions" id="setListSongs">
 
+                </div>
+
+                <!--Confirm/Cancel Changes-->
+                <div id="confirmSetListChangesContainer" class="setListEditing">
+                    <div id="confirmSetListChangesButton" class="iconButton">
+                        <img src="imgs/icons/check.png" alt="Confirm">
+                    </div>
+                    <div id="cancelSetListChangesButton" class="iconButton">
+                        <img src="imgs/icons/cancel.png" alt="Cancel">
+                    </div>
                 </div>
             </div>
 
@@ -207,15 +269,21 @@
     <!--Scripts-->
     <script src="js/viewerHome.min.js"></script>
     <!--<script src="js/scrollIntoView.js"></script>
+    <script src="js/sortable.js"></script>
     <script src="js/viewerCommon.js"></script>
-    <script src="js/viewerHomeAndSets.js"></script>
+    <script src="js/notViewerPage.js"></script>
     <script src="js/viewerHome.js"></script>
     <script src="js/login.js"></script>-->
 
+    <!--PowerPoint script - Loads in last-->
+    <script src="js/PowerPointUtility.js"></script>
+
+
     <!--NOTE:
-        = viewerCommon.js => charts.html, chart.html, mySets.html
-        = viewerHomeAndSets.js => charts.html, mySets.html
-        = viewerHome.js => charts.html
+        // For the home page, viewer page, sets page, and legal page
+        = viewerCommon.js => all pages
+        = notViewerPage.js => every thing but chart.html
+        = viewerHome.js => just charts.html
     -->
 </body>
 </html>

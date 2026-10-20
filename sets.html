@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <title>Sets</title>
-    <meta name="description" content="Chord charts made easy for mobile devices. Christian music in English/Spanish.">
+    <meta name="description" content="Tablas de acordes hecho fácil para dispositivos móviles. Música cristiana.">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" type="image/png" href="imgs/Favicon.png">
@@ -16,16 +16,78 @@
     <div id="pageContainer">
         <!--Settings Menu-->
         <div class="sideMenu hidden" id="settingsMenu">
-            <!--Set List-->
+            <!--Set Lists-->
             <div class="menuSection hidden" id="setListSongsSection">
                 <!--Set List Name-->
                 <div id="setListNameContainer" class="setListNameContainer">
-                    <a id="setListName" href="chart?set_list=local">Set List</a>
+                    <span id="setListName">Set List</span>
+                    <div id="setListOptionsContainer" class="popupMenuContainer">
+                        <div id="setListOptionsButton">
+                            <img src="imgs/icons/more.png">
+                        </div>
+                        <div id="setListOptions" class="popupMenu">
+                            <!--Add song to saved set-->
+                            <div id="addSetListSongButton">
+                                <img src="imgs/icons/add.png" alt="Edit">
+                                <span>Canción</span>
+                            </div>
+                            <!--Edit Set List-->
+                            <div id="editSetListSongButton">
+                                <img src="imgs/icons/pencil.png" alt="Edit">
+                                <span>Editar</span>
+                            </div>
+                            <!--YouTube-->
+                            <a id="setListLink" href="" target="_blank" class="YTContainer hidden">
+                                <img src="imgs/icons/YouTube.png" alt="YT">
+                                <span>YouTube</span>
+                            </a>
+                            <!--Share-->
+                            <div id="shareSetListButton">
+                                <img src="imgs/icons/share.png" alt="Share">
+                                <span>Compartir</span>
+                            </div>
+                            <!--Download PowerPoint Slides-->
+                            <div id="downloadSlidesButton" class="hidden">
+                                <img src="imgs/icons/PowerPoint.png" alt="Slides" class="default">
+                                <span>Descargar Diapositivas</span>
+                            </div>
+                            <!--Print-->
+                            <a class="menuButton" id="printSetListButton" href="imprimir">
+                                <img src="imgs/icons/print.png" alt="Print">
+                                <span>Imprimir</span>
+                            </a>
+                            <!--New Weekly Set List-->
+                            <div id="newWeeklySetListButton" class="hidden">
+                                <img src="imgs/icons/church.png" alt="New">
+                                <span>Nuevo Set</span>
+                            </div>
+                            <!--Close Set List-->
+                            <div id="closeSetListButton">
+                                <img src="imgs/icons/close.png" alt="Close">
+                                <span>Cerrar Set</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Edit Set List Name-->
+                <div class="setListNameContainer hidden" id="editSetListNameContainer">
+                    <input id="editSetListName" type="text" value="Set List" />
                 </div>
 
                 <!--Set List Songs-->
                 <div class="menuSectionOptions" id="setListSongs">
 
+                </div>
+
+                <!--Confirm/Cancel Changes-->
+                <div id="confirmSetListChangesContainer" class="setListEditing">
+                    <div id="confirmSetListChangesButton" class="iconButton">
+                        <img src="imgs/icons/check.png" alt="Confirm">
+                    </div>
+                    <div id="cancelSetListChangesButton" class="iconButton">
+                        <img src="imgs/icons/cancel.png" alt="Cancel">
+                    </div>
                 </div>
             </div>
 
@@ -121,7 +183,7 @@
                     <div id="setListsTitleContainer">
                         <span class="setListSectionTitle">Set Lists</span>
                         <div id="setListOptionsContainer" class="popupMenuContainer">
-                            <div id="setListOptionsButton">
+                            <div id="setListsOptionsButton">
                                 <img src="imgs/icons/more.png">
                             </div>
                             <div id="setsOptionsPopup" class="popupMenu">
@@ -204,5 +266,6 @@
 
     <!--Scripts-->
     <script src="js/sets.min.js"></script>
+    <script src="js/PowerPointUtility.js"></script>
 </body>
 </html>

@@ -13,6 +13,25 @@ window.addEventListener("load", function () {
 
     get("pasteLink").addEventListener("click", newSongFromClipbaord);
 
+    get("newEmptySongLink").addEventListener("click", () => {
+        fetch(mainUrl + "/formatSongText",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    text: "New Song..."
+                })
+            }
+        ).then(response => response.json()).then(responseJson => {
+            let songData = responseJson;
+            songData.newSong = true;
+            saveAndSelectNewTab(songData);
+            handleNewSong();
+        });
+    });
+    
     get("unfinishedSongsLink").addEventListener("click", function () {
         sessionStorage.setItem("incompleteSongs", "true");
         window.location.href = "search";

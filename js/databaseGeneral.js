@@ -175,10 +175,9 @@ function buildTab(tabData) {
             removeFromOverflow(tabDiv.previousSibling);
             removeFromOverflow(tabDiv);
         } else {
-            tabDiv.parentElement.removeChild(tabDiv.nextSibling);
+            if (!!tabDiv.nextSibling) tabDiv.parentElement.removeChild(tabDiv.nextSibling);
             tabDiv.parentElement.removeChild(tabDiv);
         }
-
 
         adjustTabsOverflow();
         removeTabData(tabData);

@@ -402,10 +402,10 @@
 
 
 /*****************************************************
- **** Database Options - Cabinet Notes
+ **** Database Options - Cabinet Notes/Search Terms
  *****************************************************/
 
-#cabinetNotes {
+.largeTextInput {
     width: 100%;
     resize: none;
     height: 4em;

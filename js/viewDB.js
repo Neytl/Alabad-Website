@@ -128,6 +128,17 @@ window.addEventListener("load", function () {
         });
     });
 
+    // Search Terms
+    get("searchTerms").addEventListener("change", function () {
+        if (!songData.newSong) {
+            let newValue = get("searchTerms").value;
+            if (newValue.length > 500) return;
+            requestUpdate("updateSearchTerms", newValue);
+        } else {
+            get("searchTerms").value = "";
+        }
+    });
+
     // Song Notes
     get("cabinetNotes").addEventListener("change", function () {
         if (!songData.newSong) {
@@ -238,6 +249,22 @@ function setUpDBInputs() {
             });
         }
 
+    }
+
+
+    // Search Terms
+    get("searchTerms").value = "";
+
+    if (!songData.newSong) {
+        if (!!songData.searchTerms) {
+            get("searchTerms").value = songData.searchTerms;
+        } else {
+            fetch(dbUrl + "/song/" + songData.id + "/searchTerms").then(response => response.json()).then(responseJson => {
+                get("searchTerms").value = responseJson;
+                songData.searchTerms = responseJson;
+                saveTabs();
+            });
+        }
     }
 
     // Song Notes
@@ -485,6 +512,10 @@ function requestUpdate(updateEndpoint, newVaule) {
                 songData.isChartCompleted = newVaule;
                 saveTabs();
                 break;
+            case "SearchTerms":
+                songData.searchTerms = newVaule;
+                saveTabs();
+                break;
             case "Notes":
                 songData.notes = newVaule;
                 saveTabs();
@@ -606,6 +637,7 @@ function showAdjacentSong(responseJson, errorMessage) {
 
     // Save & Show data
     songData.notes = null;
+    songData.searchTerms = null;
     saveSongData(responseJson);
     saveSongMetadata(responseJson);
     showNewSong();

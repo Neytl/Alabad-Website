@@ -102,7 +102,7 @@ function loadTabs() {
 
     // Build tabs
     tabsData.forEach(tabData => buildTab(tabData));
-    tabsContainer.removeChild(tabsContainer.lastChild);
+    if (!!tabsContainer.lastChild) tabsContainer.removeChild(tabsContainer.lastChild);
 
     // Tab Overflow
     adjustTabsOverflow();

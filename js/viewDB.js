@@ -902,6 +902,10 @@ function uploadPowerPointFormData(slidesText, attemptNumber) {
 
         // Success!
         get("PowerPointSection").classList.remove("missing");
+        if (!songData.hasSlides) {
+            songData.hasSlides = true;
+            saveTabs();
+        }
     });
 }
 

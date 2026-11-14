@@ -149,7 +149,7 @@ window.addEventListener("load", function () {
     });
 
     // Metadata Checkboxes
-    if (localStorage.getItem("loggedInUser") == "BoxAdmin") get("metadataCheckboxes").classList.remove("hidden");
+    if (localStorage.getItem("loggedInUserDisplayName") == "BoxAdmin") get("metadataCheckboxes").classList.remove("hidden");
 
     // Prev/Next Song
     get("previousSongButton").addEventListener("click", function () {
@@ -656,12 +656,12 @@ let token = null;
 function setupLoginEvents() {
     get("logoutButton").addEventListener("click", runLogout);
     get("closeLoginPopupButton").addEventListener("click", closeLoginPopup);
-    get("loginUsername").addEventListener("focus", clearLoginMessage);
+    get("loginEmail").addEventListener("focus", clearLoginMessage);
     get("loginPassword").addEventListener("focus", clearLoginMessage);
 
-    get("loginUsername").addEventListener("keypress", event => {
+    get("loginEmail").addEventListener("keypress", event => {
         if (event.key == "Enter") {
-            get("loginUsername").blur();
+            get("loginEmail").blur();
             get("loginButton").click();
         }
     });
@@ -674,7 +674,7 @@ function setupLoginEvents() {
     });
 
     get("loginButton").addEventListener("click", function () {
-        if (!get("loginUsername").value) {
+        if (!get("loginEmail").value) {
             setLoginMessage("Enter your username");
             return;
         }
@@ -701,7 +701,7 @@ function clearLoginMessage() {
 
 // Clears the login username/password fields
 function clearLoginFields() {
-    get("loginUsername").value = "";
+    get("loginEmail").value = "";
     get("loginPassword").value = "";
 }
 
@@ -717,7 +717,7 @@ function runLogin() {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                Username: get("loginUsername").value,
+                Email: get("loginEmail").value,
                 Password: get("loginPassword").value
             })
         }
@@ -752,7 +752,7 @@ function runLogin() {
 async function onValidLogin(response) {
     let responseJson = await response.json();
     token = responseJson.accessToken;
-    if (!!responseJson.username) localStorage.setItem("loggedInUser", responseJson.username);
+    if (!!responseJson.displayName) localStorage.setItem("loggedInUserDisplayName", responseJson.displayName);
     localStorage.setItem("refreshToken", responseJson.refreshToken); // TODO: Remove once problem with mobile fixed
     onConnectionEstablished();
 }

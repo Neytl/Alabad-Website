@@ -203,78 +203,92 @@
 
                     <br />
 
-                    <!--Plan Info-->
-                    <div id="planHeader">
-                        <img src="imgs/icons/fullChart.png" />
-                        <div id="planType"></div>
+                    <div id="newDisplayNameSection" class="hidden">
+                        <div id="newDisplayNameHeader">Enter a new display name:</div>
+                        <input type="text" id="newDisplayName" />
+                        <div id="displayNameButtons">
+                            <div class="displayNameButon" id="cancelNewDisplayName">Cancel</div>
+                            <div class="displayNameButon" id="saveNewDisplayName">Save</div>
+                        </div>
+                        <div id="displayNameErrorMessage"></div>
                     </div>
+                    
+                    <div id="accountInfoBody">
 
-                    <div class="planUsageContainer">
-                        <div class="planUsageHeader">
-                            <div class="planUsageTitle">
-                                <img src="imgs/icons/note.png" />
-                                <div>Songs</div>
+                        <!--Plan Info-->
+                        <div id="planHeader">
+                            <img src="imgs/icons/fullChart.png" />
+                            <div id="planType"></div>
+                        </div>
+
+                        <div class="planUsageContainer">
+                            <div class="planUsageHeader">
+                                <div class="planUsageTitle">
+                                    <img src="imgs/icons/note.png" />
+                                    <div>Songs</div>
+                                </div>
+                                <a class="planUsageLink" href="registerSong.html">
+                                    <img src="imgs/icons/add.png" />
+                                </a>
                             </div>
-                            <a class="planUsageLink" href="registerSong.html">
-                                <img src="imgs/icons/add.png" />
-                            </a>
-                        </div>
-                        <div class="planUsageProgressBar">
-                            <div class="planUsageProgress" id="songUsageProgress"></div>
-                        </div>
-                        <div class="planUsageAmount">
-                            <span id="totalSongs">??</span>
-                        </div>
-                    </div>
-
-                    <div class="planUsageContainer">
-                        <div class="planUsageHeader">
-                            <div class="planUsageTitle">
-                                <img src="imgs/icons/setList.webp" />
-                                <div>Sets</div>
+                            <div class="planUsageProgressBar">
+                                <div class="planUsageProgress" id="songUsageProgress"></div>
                             </div>
-                            <a class="planUsageLink" href="mySets.html">
-                                <img src="imgs/icons/add.png" />
-                            </a>
+                            <div class="planUsageAmount">
+                                <span id="totalSongs">??</span>
+                            </div>
                         </div>
-                        <div class="planUsageProgressBar">
-                            <div class="planUsageProgress" id="setUsageProgress"></div>
-                        </div>
-                        <div class="planUsageAmount">
-                            <span id="totalSets">??</span>
-                        </div>
-                    </div>
 
-                    <br />
-
-                    <!--Account Buttons-->
-                    <div class="sectionGroup">
-                        <div class="accountButton">
-                            <img src="imgs/icons/lock.png" />
-                            <div>Change Password</div>
-                            <img src="imgs/icons/up.png" />
+                        <div class="planUsageContainer">
+                            <div class="planUsageHeader">
+                                <div class="planUsageTitle">
+                                    <img src="imgs/icons/setList.webp" />
+                                    <div>Sets</div>
+                                </div>
+                                <a class="planUsageLink" href="mySets.html">
+                                    <img src="imgs/icons/add.png" />
+                                </a>
+                            </div>
+                            <div class="planUsageProgressBar">
+                                <div class="planUsageProgress" id="setUsageProgress"></div>
+                            </div>
+                            <div class="planUsageAmount">
+                                <span id="totalSets">??</span>
+                            </div>
                         </div>
-                        <div class="accountButton">
-                            <img src="imgs/icons/account.png" />
-                            <div>Edit Username</div>
-                            <img src="imgs/icons/up.png" />
+
+                        <br />
+
+                        <!--Account Buttons-->
+                        <div class="sectionGroup">
+                            <div class="accountButton" id="editDisplayNameButton">
+                                <img src="imgs/icons/account.png" />
+                                <div>Edit Display Name</div>
+                                <img src="imgs/icons/up.png" />
+                            </div>
+                            <div class="accountButton">
+                                <img src="imgs/icons/lock.png" />
+                                <div>Change Password</div>
+                                <img src="imgs/icons/up.png" />
+                            </div>
+                            <div class="accountButton">
+                                <img src="imgs/icons/email.png" />
+                                <div>Change Email</div>
+                                <img src="imgs/icons/up.png" />
+                            </div>
                         </div>
-                        <div class="accountButton">
-                            <img src="imgs/icons/email.png" />
-                            <div>Change Email</div>
-                            <img src="imgs/icons/up.png" />
-                        </div>
-                    </div>
 
 
 
-                    <!--Delete Account-->
-                    <div class="sectionGroup">
-                        <div class="accountButton">
-                            <img src="imgs/icons/trash.png" />
-                            <div>Delete Account</div>
-                            <img src="imgs/icons/up.png" />
+                        <!--Delete Account-->
+                        <div class="sectionGroup">
+                            <div class="accountButton">
+                                <img src="imgs/icons/trash.png" />
+                                <div>Delete Account</div>
+                                <img src="imgs/icons/up.png" />
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>

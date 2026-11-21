@@ -257,7 +257,13 @@
                     <img src="imgs/icons/lock.png">
                     <label for="loginPassword">Password</label>
                 </div>
-                <input type="password" id="loginPassword" autocomplete="current-password">
+                <div class="password-container">
+                    <input type="password" id="loginPassword" autocomplete="current-password">
+
+                    <div id="togglePassword" class="togglePassword">
+                        <img src="imgs/icons/unhide.png" alt="Toggle Show Password" />
+                    </div>
+                </div>
             </form>
 
             <span id="loginMessage"></span>

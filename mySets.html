@@ -240,13 +240,21 @@
             </div>
         </div>
     </div>
-
+    
     <!--Login Popup-->
     <div id="loginPopupContainer" class="hidden">
         <div id="loginPopup">
             <div id="closeLoginPopupButton">
                 <span class="smallIconButton">&times;</span>
             </div>
+
+            <div class="center">
+                <div id="popupLogoContainer">
+                    <img src="imgs/Logo.png" alt="Logo">
+                    <span>Alabad</span>
+                </div>
+            </div>
+
             <form id="loginFields">
                 <div class="loginFieldLabel">
                     <img src="imgs/icons/email.png">
@@ -266,9 +274,14 @@
                 </div>
             </form>
 
+            <div id="loginButton">Log In</div>
+
             <span id="loginMessage"></span>
 
-            <div id="loginButton">Log In</div>
+            <a id="forgotPasswordLink" href="/forgotPassword">Forgot password?</a>
+            <div id="createAnAccountLink">
+                <span>New here? </span><a href="/createAccount">Create an account</a>
+            </div>
         </div>
     </div>
 

@@ -162,7 +162,7 @@
             <div id="nav">
                 <div class="navButtonGroup">
                     <!--Menu Button-->
-                    <div id="settingsMenuButton" >
+                    <div id="settingsMenuButton">
                         <img src="imgs/icons/menu.png" alt="Menu">
                     </div>
                 </div>
@@ -175,7 +175,7 @@
 
                 <div class="navButtonGroup">
                     <!--Search button-->
-                    <div id="searchButton" >
+                    <div id="searchButton">
                         <img src="imgs/icons/search.png" alt="Search">
                     </div>
                 </div>
@@ -183,15 +183,15 @@
 
             <!--Account-->
             <div id="mainContent">
-                <div id="loginPromptContainer" class="hidden">
+                <div id="loginPromptContainer" class="hidden shrinkToMobileWidthSection ">
                     <div>Your account is only viewable while logged in.</div>
                 </div>
-                <div id="accountSection" class="hidden">
+                <div id="accountSection" class="shrinkToMobileWidthSection hidden">
                     <!--Account Info-->
-                    <div id="accountPageTitle">My Account</div>
+                    <div class="pageHeader">My Account</div>
                     <div class="sectionGroup">
                         <div id="accountInfoContainer">
-                            <div id="accountIcon">
+                            <div class="iconCircle">
                                 <img src="imgs/icons/account.png" />
                             </div>
                             <div>
@@ -212,13 +212,13 @@
                         </div>
                         <div id="displayNameErrorMessage"></div>
                     </div>
-                    
+
                     <div id="accountInfoBody">
 
                         <!--Plan Info-->
                         <div id="planHeader">
                             <img src="imgs/icons/fullChart.png" />
-                            <div id="planType"></div>
+                            <div class="pageHeader" id="planType"></div>
                         </div>
 
                         <div class="planUsageContainer">
@@ -336,6 +336,14 @@
             <div id="closeLoginPopupButton">
                 <span class="smallIconButton">&times;</span>
             </div>
+
+            <div class="center">
+                <div id="popupLogoContainer">
+                    <img src="imgs/Logo.png" alt="Logo">
+                    <span>Alabad</span>
+                </div>
+            </div>
+
             <form id="loginFields">
                 <div class="loginFieldLabel">
                     <img src="imgs/icons/email.png">
@@ -355,9 +363,14 @@
                 </div>
             </form>
 
+            <div id="loginButton">Log In</div>
+
             <span id="loginMessage"></span>
 
-            <div id="loginButton">Log In</div>
+            <a id="forgotPasswordLink" href="/forgotPassword">Forgot password?</a>
+            <div id="createAnAccountLink">
+                <span>New here? </span><a href="/createAccount">Create an account</a>
+            </div>
         </div>
     </div>
 
@@ -369,7 +382,6 @@
     <script src="js/notViewerPage.js"></script>
     <script src="js/account.js"></script>
     <script src="js/login.js"></script>-->
-
     <!--PowerPoint script - Loads in last-->
     <script src="js/PowerPointUtility.js"></script>
 </body>

@@ -172,7 +172,7 @@
 
                 <div class="navButtonGroup">
                     <!--Search button-->
-                    <div id="searchButton" >
+                    <div id="searchButton">
                         <img src="imgs/icons/search.png" alt="Search">
                     </div>
                 </div>
@@ -244,10 +244,18 @@
             <div id="closeLoginPopupButton">
                 <span class="smallIconButton">&times;</span>
             </div>
+
+            <div class="center">
+                <div id="popupLogoContainer">
+                    <img src="imgs/Logo.png" alt="Logo">
+                    <span>Alabad</span>
+                </div>
+            </div>
+
             <form id="loginFields">
                 <div class="loginFieldLabel">
-                    <img src="imgs/icons/account.png">
-                    <label for="loginEmail">Usuario</label>
+                    <img src="imgs/icons/email.png">
+                    <label for="loginEmail">Email</label>
                 </div>
                 <input autocomplete="username" type="text" id="loginEmail">
                 <div class="loginFieldLabel">
@@ -263,12 +271,16 @@
                 </div>
             </form>
 
+            <div id="loginButton">Iniciar Sesión</div>
+
             <span id="loginMessage"></span>
 
-            <div id="loginButton">Iniciar Sesión</div>
+            <a id="forgotPasswordLink" href="/forgotPassword">¿Olvidó su contraseña?</a>
+            <div id="createAnAccountLink">
+                <span>¿Nuevo aquí? </span><a href="/createAccount">Regístrate</a>
+            </div>
         </div>
     </div>
-
 
     <!--Scripts-->
     <script src="js/viewerHome.min.js"></script>
